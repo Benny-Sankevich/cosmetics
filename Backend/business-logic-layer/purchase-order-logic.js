@@ -35,7 +35,7 @@ async function deletePurchaseOrderAsync(purchaseOrder) {
 async function getSumOfPurchaseOrdersBetweenDatesAsync(fromTime, toTime) {
     const purchaseOrders = await PurchaseOrderModel.find({
         $and: [{ isActive: true }, {
-            createdDate: {
+            orderDate: {
                 $gte: fromTime,
                 $lt: toTime
             }
