@@ -27,7 +27,7 @@ server.use("/api/products", productController);
 server.use("/api/purchase", purchaseController);
 server.use("/api/reports", reportsController);
 
-//server.use(express.static(path.join(__dirname, "./frontend")));
+server.use(express.static(path.join(__dirname, "./frontend")));
 
 server.use("*", (request, response) => {
     if (process.env.NODE_ENV === "production") {

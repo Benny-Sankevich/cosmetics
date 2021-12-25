@@ -6,9 +6,11 @@ import resolveDashboard from '../resolvers/dashboard/DashboardResolver';
 import LoginPage from 'pages/LoginPage.vue';
 import BlankLayout from 'layouts/BlankLayout.vue';
 import MainLayout from 'layouts/MainLayout.vue';
+import CustomerLayout from 'layouts/CustomerLayout.vue';
 import ProfileSettingsPage from '../pages/ProfileSettingsPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import CustomerPage from '../pages/CustomerPage.vue';
+import AboutPage from '../pages/AboutPage.vue';
 import { calendarRoutes } from './calendar/routes';
 import { appStore } from '../store/index';
 import { showError } from 'src/utils/notification-utils';
@@ -20,9 +22,14 @@ const routes: RouteRecordRaw[] = [
     component: BlankLayout,
     children: [
       {
-        path: '/',
+        path: '',
         name: AppConstants.Routes.Login,
         component: LoginPage,
+      },
+      {
+        path: 'about',
+        name: AppConstants.Routes.AboutPage,
+        component: AboutPage,
       },
     ],
     meta: {
@@ -84,7 +91,7 @@ const routes: RouteRecordRaw[] = [
       }
     },
     path: '/customer',
-    component: MainLayout,
+    component: CustomerLayout,
     children: [
       {
         path: '',

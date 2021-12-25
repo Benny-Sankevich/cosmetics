@@ -59,7 +59,7 @@ module.exports = configure(function (ctx) {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       env: {
         BASE_API_URL: ctx.dev ? "http://127.0.0.1:3001/api/" : "https://cosmetics-app.herokuapp.com/api/",
-        adminKey: '',
+        adminKey: 'sara-admin',
       },
       // transpile: false,
       // publicPath: '/',
