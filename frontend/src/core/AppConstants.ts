@@ -16,6 +16,7 @@ export namespace AppConstants {
     public static PurchaseList = 'PurchaseList';
     public static PurchaseDetails = 'PurchaseDetails';
     public static SuppliersList = 'SuppliersList';
+    public static AboutPage = 'AboutPage';
   }
 
   // Modules
@@ -28,19 +29,19 @@ export namespace AppConstants {
 
   export class Ui {
     public static GetIsFormDirty = 'getIsFormDirty';
-    public static GetPendingRequestsCount= 'getPendingRequestsCount';
+    public static GetPendingRequestsCount = 'getPendingRequestsCount';
     public static GetAllTranslations = 'getAllTranslations';
     public static GetRouteParamId = 'getRouteParamId';
     public static GetUserLangCode = 'getUserLangCode';
     public static ActionLoadTranslations = 'loadTranslations';
-    public static MutationSetIsFormDirty= 'setIsFormDirty';
+    public static MutationSetIsFormDirty = 'setIsFormDirty';
     public static MutationAddPendingRequest = 'addPendingRequest';
     public static MutationRemovePendingRequest = 'removePendingRequest';
     public static MutationSetTranslations = 'setTranslations';
     public static MutationSetRouteParamId = 'setRouteParamId';
     public static MutationSetUserLangCode = 'setUserLangCode';
   }
-  
+
   export class Treatments {
     public static GetTreatments = 'getTreatments';
     public static ActionLoadTreatments = 'loadTreatments';
@@ -59,7 +60,7 @@ export namespace AppConstants {
     public static ActionAuthLoggedIn = 'authLoggedIn';
     public static ActionAuthRegistered = 'authRegistered';
     public static ActionAuthLoggedOut = 'authLoggedOut';
-    public static ActionEditUserProfile = 'actionEditUserProfile'
+    public static ActionEditUserProfile = 'actionEditUserProfile';
     public static MutationAuthLoggedIn = 'saveUserAuth';
     public static MutationAuthRemove = 'removeUserAuth';
     public static MutationEditUserProfile = 'mutationEditUserProfile';
@@ -118,7 +119,7 @@ export namespace AppConstants {
     public static MutationSavePurchaseOrder = 'savePurchaseOrder';
     public static MutationUpdatePurchaseOrder = 'updatePurchaseOrder';
     public static MutationDeletePurchaseOrder = 'deletePurchaseOrder';
-    public static MutationSetPurchaseOrderToEdit = 'mutationSetPurchaseOrderToEdit';
-
+    public static MutationSetPurchaseOrderToEdit =
+      'mutationSetPurchaseOrderToEdit';
   }
 }

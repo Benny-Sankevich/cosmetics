@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <h5>Customer page</h5>
+    <h5>This page is under construction</h5>
   </q-page>
 </template>
 

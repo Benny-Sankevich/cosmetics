@@ -16,7 +16,7 @@
         </q-toolbar-title>
 
         <div>
-          <user-avatar></user-avatar>
+          <UserAvatar />
         </div>
       </q-toolbar>
     </q-header>

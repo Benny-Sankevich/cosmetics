@@ -1,40 +1,38 @@
 <template>
-  <div>
-    <div class="q-gutter-md">
-      <q-btn round size="sm">
-        <q-avatar size="sm">
-          <q-icon name="mdi-account-outline" />
-        </q-avatar>
+  <div class="q-gutter-md">
+    <q-btn round size="sm">
+      <q-avatar size="sm">
+        <q-icon name="mdi-account-outline" />
+      </q-avatar>
 
-        <q-menu transition-show="jump-down" transition-hide="jump-up">
-          <div class="row" style="width: 300px">
-            <q-toolbar class="bg-blue-grey-10 text-white q-pa-md">
-              <q-avatar>
-                <img src="https://cdn.quasar.dev/img/avatar.png" />
-              </q-avatar>
+      <q-menu transition-show="jump-down" transition-hide="jump-up">
+        <div class="row" style="width: 300px">
+          <q-toolbar class="bg-blue-grey-10 text-white q-pa-md">
+            <q-avatar>
+              <img src="https://cdn.quasar.dev/img/avatar.png" />
+            </q-avatar>
 
-              <span v-if="user" class="q-pl-sm"
-                >{{ user.firstName }} {{ user.lastName }}</span
-              >
-              <span v-if="!user" class="q-pl-sm">Guest</span>
+            <span v-if="user" class="q-pl-sm"
+              >{{ user.firstName }} {{ user.lastName }}</span
+            >
+            <span v-if="!user" class="q-pl-sm">Guest</span>
 
-              <q-space></q-space>
-              <q-btn @click="logout" flat round dense icon="logout" size="sm">
-                <q-tooltip>{{ $t('logout') }}</q-tooltip>
-              </q-btn>
-            </q-toolbar>
-          </div>
-          <div class="row">
-            <q-list style="width: 100%">
-              <q-item clickable :to="profileSettingsRoute">
-                <q-item-section>{{ $t('profileSettings') }}</q-item-section>
-              </q-item>
-            </q-list>
-          </div>
-        </q-menu>
-        <q-tooltip>{{ $t('settings') }}</q-tooltip>
-      </q-btn>
-    </div>
+            <q-space></q-space>
+            <q-btn @click="logout" flat round dense icon="logout" size="sm">
+              <q-tooltip>{{ $t('logout') }}</q-tooltip>
+            </q-btn>
+          </q-toolbar>
+        </div>
+        <div class="row">
+          <q-list style="width: 100%">
+            <q-item clickable :to="profileSettingsRoute">
+              <q-item-section>{{ $t('profileSettings') }}</q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+      </q-menu>
+      <q-tooltip>{{ $t('settings') }}</q-tooltip>
+    </q-btn>
   </div>
 </template>
 

@@ -5,11 +5,8 @@
         <q-toolbar-title>
           {{ $t('mainHeaderWebsite') }}
         </q-toolbar-title>
-
-        <div class="row">
-          <AboutIcon />
-          <q-space />
-          <LanguageAvatar />
+        <div>
+          <UserAvatar />
         </div>
       </q-toolbar>
     </q-header>
@@ -24,11 +21,8 @@ import { defineComponent, defineAsyncComponent } from 'vue';
 
 export default defineComponent({
   components: {
-    LanguageAvatar: defineAsyncComponent(
-      () => import('../components/avatar/LanguageAvatar.vue')
-    ),
-    AboutIcon: defineAsyncComponent(
-      () => import('../components/about/AboutIcon.vue')
+    UserAvatar: defineAsyncComponent(
+      () => import('../components/avatar/UserAvatar.vue')
     ),
   },
 });
