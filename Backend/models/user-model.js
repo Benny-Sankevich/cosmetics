@@ -27,6 +27,14 @@ const UserSchema = mongoose.Schema({
         unique: [true, "Phone number already exist."],
         match: [/^\d{10}$/, "Phone number must be 10 digits."]
     },
+    imageName: {
+        type: String,
+        required: [true, "Missing image name."],
+    },
+    oldImageName: {
+        type: String,
+        default: undefined,
+    },
     isActive: {
         type: Boolean,
     },

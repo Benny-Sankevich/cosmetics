@@ -9,7 +9,7 @@
         <div class="row" style="width: 300px">
           <q-toolbar class="bg-blue-grey-10 text-white q-pa-md">
             <q-avatar>
-              <img src="https://cdn.quasar.dev/img/avatar.png" />
+              <img :src="`${pathUrl + user.imageName}`" />
             </q-avatar>
 
             <span v-if="user" class="q-pl-sm"
@@ -46,7 +46,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
-
+    const pathUrl = process.env.BASE_API_URL + 'users/images/';
     const user = computed(
       () =>
         store.getters[
@@ -61,6 +61,7 @@ export default defineComponent({
       router.push('/');
     };
     return {
+      pathUrl,
       user,
       logout,
       logoutLink: '',

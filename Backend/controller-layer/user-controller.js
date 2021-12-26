@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const errorHelper = require("../helpers/errors-helper");
 const UserModel = require("../models/user-model");
 const userLogic = require("../business-logic-layer/user-logic");
@@ -6,6 +7,12 @@ const verifyIsAdmin = require("../middleware/verify-isAdmin");
 const verifyIsLoggedIn = require("../middleware/verify-logged-in");
 
 const router = express.Router();
+
+router.get("/images/:imageName", (request, response) => {
+    const imageName = request.params.imageName;
+    let reqPath = path.join(__dirname, "../");
+    response.sendFile(reqPath + "/assets/upload/" + imageName);
+});
 
 router.post("/get-users", verifyIsAdmin, async (request, response) => {
     try {
@@ -55,7 +62,7 @@ router.post("/update-user", verifyIsLoggedIn, async (request, response) => {
         const user = new UserModel(request.body);
         const error = user.validateSync();
         if (error) return response.status(400).send(error.message);
-        const userUpdated = await userLogic.updateUserAsync(user);
+        const userUpdated = await userLogic.updateUserAsync(user, (request.files ? request.files.image : null));
         if (!userUpdated) return response.status(404).send(`_id ${userUpdated._id} not found.`);
         response.status(201).json(userUpdated);
     }

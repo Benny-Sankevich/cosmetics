@@ -26,10 +26,10 @@
                   :key="index"
                   @click="selected_contact = user"
                 >
-                  <contact-item
-                    avatar="https://cdn.quasar.dev/img/avatar6.jpg"
+                  <ContactItem
+                    :imageName="user.imageName"
                     :name="`${user.firstName} ${user.lastName}`"
-                  ></contact-item>
+                  />
                 </span>
               </q-list>
             </q-tab-panel>
@@ -60,7 +60,7 @@
           <q-toolbar class="text-black">
             <q-btn round flat class="q-pa-sm">
               <q-avatar size="80px">
-                <img src="https://cdn.quasar.dev/img/avatar6.jpg" />
+                <img :src="`${pathUrl + selected_contact.imageName}`" />
               </q-avatar>
             </q-btn>
 
@@ -133,7 +133,7 @@
                 @click="selected_contact = user"
               >
                 <ContactItem
-                  avatar="https://cdn.quasar.dev/img/avatar6.jpg"
+                  :imageName="user.imageName"
                   :name="`${user.firstName} ${user.lastName}`"
                 />
               </span>
@@ -164,7 +164,7 @@
           <q-toolbar class="text-black">
             <q-btn round flat class="q-pa-sm">
               <q-avatar size="80px">
-                <img src="https://cdn.quasar.dev/img/avatar6.jpg" />
+                <img :src="`${pathUrl + selected_contact.imageName}`" />
               </q-avatar>
             </q-btn>
 
@@ -239,6 +239,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const pathUrl = process.env.BASE_API_URL + 'users/images/';
     const size = ref({ width: '200px', height: '200px' });
     const tab = ref('customers');
     const search = ref('');
@@ -317,6 +318,7 @@ export default defineComponent({
       size.value = size_dynamic;
     };
     return {
+      pathUrl,
       users,
       tab,
       search,

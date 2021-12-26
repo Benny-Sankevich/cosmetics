@@ -35,6 +35,10 @@ const AuthRegisterSchema = mongoose.Schema({
     isAdmin: {
         type: String,
     },
+    imageName: {
+        type: String,
+        default: 'default-image.jpg'
+    },
     isActive: {
         type: Boolean,
     },

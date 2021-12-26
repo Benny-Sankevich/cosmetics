@@ -2,7 +2,7 @@
   <q-item clickable>
     <q-item-section avatar>
       <q-avatar>
-        <img :src="avatar" />
+        <img :src="pathUrl + imageName" />
       </q-avatar>
     </q-item-section>
 
@@ -16,8 +16,13 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'ContactItem',
-  props: ['avatar', 'name'],
+  props: ['imageName', 'name'],
+  setup() {
+    const pathUrl = process.env.BASE_API_URL + 'users/images/';
+    return {
+      pathUrl,
+    };
+  },
 });
 </script>
 
