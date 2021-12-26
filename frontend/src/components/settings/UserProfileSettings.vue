@@ -11,16 +11,33 @@
             <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <q-item-section side>
                 <q-avatar size="100px">
-                  <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                  <img :src="`${pathUrl + userInfo.imageName}`" />
                 </q-avatar>
               </q-item-section>
-              <q-item-section>
+              <q-item-section v-if="isDefaultImage">
                 <q-btn
                   :label="$t('addPhoto')"
                   class="text-capitalize"
                   rounded
                   color="info"
                   style="max-width: 120px"
+                ></q-btn>
+              </q-item-section>
+              <q-item-section v-else>
+                <q-btn
+                  :label="$t('changeImage')"
+                  class="text-capitalize"
+                  rounded
+                  color="info"
+                  style="max-width: 120px"
+                ></q-btn>
+                <q-btn
+                  :label="$t('deleteImage')"
+                  class="text-capitalize"
+                  rounded
+                  color="info"
+                  style="max-width: 120px"
+                  @click="setDefaultImage"
                 ></q-btn>
               </q-item-section>
             </q-item>
@@ -95,6 +112,7 @@ import {
 export default defineComponent({
   setup() {
     const store = useStore();
+    const pathUrl = process.env.BASE_API_URL + 'users/images/';
     const currentUser = computed(
       () =>
         store.getters[
@@ -102,7 +120,9 @@ export default defineComponent({
         ]
     );
     const userInfo = ref({ ...currentUser.value });
-
+    const isDefaultImage = computed(() => {
+      return userInfo.value.imageName === process.env.defaultUserImage;
+    });
     const onChangeUserInfo = () => {
       store
         .dispatch(
@@ -113,12 +133,18 @@ export default defineComponent({
           showInfo(i18n.global.t('msgSavedSuccessfully'));
         });
     };
+    const setDefaultImage = () => {
+      userInfo.value.imageName = process.env.defaultUserImage;
+    };
     return {
+      isDefaultImage,
+      pathUrl,
       nameRules,
       emailRules,
       phoneNumberRules,
       userInfo,
       onChangeUserInfo,
+      setDefaultImage,
     };
   },
 });

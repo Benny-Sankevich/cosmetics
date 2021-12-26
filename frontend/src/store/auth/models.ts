@@ -10,6 +10,7 @@ export interface UserAuthInterface {
   phoneNumber: string;
   isAdmin: string;
   token: string;
+  imageName: string;
 }
 export class RegisterForm {
   firstName: string;

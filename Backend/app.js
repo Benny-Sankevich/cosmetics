@@ -2,6 +2,7 @@ global.config = require(process.env.NODE_ENV === "production" ? "./config-prod.j
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const imageUpload = require("express-fileupload");
 
 const authController = require("./controller-layer/auth-controller");
 const treatmentController = require("./controller-layer/treatment-controller");
@@ -15,6 +16,7 @@ const userController = require("./controller-layer/user-controller");
 
 const server = express();
 server.use(cors());
+server.use(imageUpload());
 server.use(express.json());
 
 server.use("/api/auth", authController);
@@ -27,7 +29,7 @@ server.use("/api/products", productController);
 server.use("/api/purchase", purchaseController);
 server.use("/api/reports", reportsController);
 
-server.use(express.static(path.join(__dirname, "./frontend")));
+//server.use(express.static(path.join(__dirname, "./frontend")));
 
 server.use("*", (request, response) => {
     if (process.env.NODE_ENV === "production") {
