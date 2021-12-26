@@ -8,14 +8,13 @@
       <q-menu transition-show="jump-down" transition-hide="jump-up">
         <div class="row" style="width: 300px">
           <q-toolbar class="bg-blue-grey-10 text-white q-pa-md">
-            <q-avatar>
+            <q-avatar v-if="user" >
               <img :src="`${pathUrl + user.imageName}`" />
             </q-avatar>
 
             <span v-if="user" class="q-pl-sm"
               >{{ user.firstName }} {{ user.lastName }}</span
             >
-            <span v-if="!user" class="q-pl-sm">Guest</span>
 
             <q-space></q-space>
             <q-btn @click="logout" flat round dense icon="logout" size="sm">

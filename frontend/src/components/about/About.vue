@@ -3,7 +3,7 @@
     <q-item>
       <q-item-section avatar>
         <q-avatar size="60px" class="shadow-10">
-          <img src="../../../public/images/Benny.jpg" />
+          <img src="../../assets/images/Benny.jpg" />
         </q-avatar>
       </q-item-section>
 
@@ -27,7 +27,7 @@
             href="https://www.linkedin.com/in/benny-sankevich"
           >
             <q-avatar size="42px">
-              <q-img src="../../../public/images/linkedin.png" />
+              <q-img src="../../assets/images/linkedin.png" />
             </q-avatar>
           </q-btn>
         </q-item-label>
@@ -40,7 +40,7 @@
             href="https://github.com/Benny-Sankevich"
           >
             <q-avatar size="42px">
-              <img src="../../../public/images/GitHub.png" />
+              <img src="../../assets/images/GitHub.png" />
             </q-avatar>
           </q-btn>
         </q-item-label>
