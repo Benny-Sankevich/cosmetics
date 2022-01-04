@@ -70,7 +70,6 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, PropType } from 'vue';
-import { Product } from '../../../models/general-models';
 import { PurchaseItem } from '../../../store/purchase/models';
 import {
   priceRules,
@@ -95,7 +94,7 @@ export default defineComponent({
     const products = ref([]);
 
     apiService.getAllProducts().then((res) => {
-      products.value = res as Product[];
+      products.value = res;
     });
     const onSaveItem = () => {
       purchaseItemForm.value.price = functionsService.fixNumber(

@@ -34,7 +34,7 @@ const actions: ActionTree<UsersStateInterface, MainStateInterface> = {
     return httpClient
       .post('users/update-user', payload)
       .then((response) => {
-        if (response.status.toString() === '201') {
+        if (response.status.toString() === '201') {         
           context.commit(
             AppConstants.Users.MutationUpdateUser,
             response.data as UserInterface

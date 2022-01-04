@@ -41,3 +41,13 @@ export interface Product {
 export interface RouteMetaInterface {
   resolve(): Promise<any>;
 }
+
+export interface ChartReportInterface {
+  type: string;
+  label: string;
+  treatmentId: string;
+  data: Array<number>;
+  borderWidth: number;
+  backgroundColor: string;
+  stack: string;
+}
