@@ -1,16 +1,22 @@
-import { PurchaseItem } from '../store/purchase/models';
-import { DateStartEnd, ResetPassword } from 'src/models/general-models';
 import { httpClient } from 'src/utils/http-client';
+import {
+  ChartReportInterface,
+  DateStartEnd,
+  ResetPassword,
+} from '../models/general-models';
+import { Product } from './../models/general-models';
+import { PurchaseItem } from '../store/purchase/models';
+import { Appointment } from '../store/appointments/models';
 
 class ApiService {
-  getTotalUsers() {
+  getTotalUsers(): Promise<number> {
     return httpClient.post('users/get-total-users').then((response) => {
       if (response.status.toString() === '200') {
         return response.data;
       }
     });
   }
-  getSumOfOrdersBetweenDate(dateRange: DateStartEnd) {
+  getSumOfOrdersBetweenDate(dateRange: DateStartEnd): Promise<number> {
     return httpClient
       .post('appointments/get-sum-between-date', dateRange)
       .then((response) => {
@@ -19,39 +25,14 @@ class ApiService {
         }
       });
   }
-  getTodayNewUsersAsync() {
+  getTodayNewUsersAsync(): Promise<number> {
     return httpClient.post('users/get-new-users-today').then((response) => {
       if (response.status.toString() === '200') {
         return response.data;
       }
     });
   }
-  getAllAppointmentsToday() {
-    return httpClient
-      .post('appointments/get-appointments-today')
-      .then((response) => {
-        if (response.status.toString() === '200') {
-          return response.data;
-        }
-      });
-  }
-  resetPassword(passwordData: ResetPassword) {
-    return httpClient
-      .post('auth/change-password', passwordData)
-      .then((response) => {
-        if (response.status.toString() === '200') {
-          return response.data;
-        }
-      });
-  }
-  getAllProducts() {
-    return httpClient.post('products/get-all-products').then((response) => {
-      if (response.status.toString() === '200') {
-        return response.data;
-      }
-    });
-  }
-  getSumOfPurchaseOrdersBetweenDate(dateRange: DateStartEnd) {
+  getSumOfPurchaseOrdersBetweenDate(dateRange: DateStartEnd): Promise<number> {
     return httpClient
       .post('purchase/get-sum-between-date', dateRange)
       .then((response) => {
@@ -60,7 +41,26 @@ class ApiService {
         }
       });
   }
-  getReportDataByYear(year: number) {
+  getAllAppointmentsToday(): Promise<Appointment[]> {
+    return httpClient
+      .post('appointments/get-appointments-today')
+      .then((response) => {
+        if (response.status.toString() === '200') {
+          return response.data;
+        }
+      });
+  }
+  resetPassword(passwordData: ResetPassword): Promise<void> {
+    return httpClient.post('auth/change-password', passwordData);
+  }
+  getAllProducts(): Promise<Product[]> {
+    return httpClient.post('products/get-all-products').then((response) => {
+      if (response.status.toString() === '200') {
+        return response.data;
+      }
+    });
+  }
+  getReportDataByYear(year: number): Promise<ChartReportInterface[]> {
     return httpClient
       .post('reports/get-year-data-report', { year })
       .then((response) => {
@@ -69,7 +69,7 @@ class ApiService {
         }
       });
   }
-  getItemsByOrderId(purchaseOrderId: string) {
+  getItemsByOrderId(purchaseOrderId: string): Promise<PurchaseItem[]> {
     return httpClient
       .post('purchase/get-items-by-orderId', { purchaseOrderId })
       .then((response) => {
@@ -78,7 +78,7 @@ class ApiService {
         }
       });
   }
-  addPurchaseItem(purchaseItem: PurchaseItem) {
+  addPurchaseItem(purchaseItem: PurchaseItem): Promise<PurchaseItem> {
     return httpClient
       .post('purchase/add-purchase-item', purchaseItem)
       .then((response) => {
@@ -87,7 +87,7 @@ class ApiService {
         }
       });
   }
-  updatePurchaseItem(purchaseItem: PurchaseItem) {
+  updatePurchaseItem(purchaseItem: PurchaseItem): Promise<PurchaseItem> {
     return httpClient
       .post('purchase/update-purchase-item', purchaseItem)
       .then((response) => {
@@ -96,16 +96,10 @@ class ApiService {
         }
       });
   }
-  deletePurchaseItem(purchaseItem: PurchaseItem) {
-    return httpClient
-      .post('purchase/delete-purchase-item', purchaseItem)
-      .then((response) => {
-        if (response.status.toString() === '204') {
-          return response.status;
-        }
-      });
+  deletePurchaseItem(purchaseItem: PurchaseItem): Promise<void> {
+    return httpClient.post('purchase/delete-purchase-item', purchaseItem);
   }
-  checkEmailNotExist(email: string) {
+  checkEmailNotExist(email: string): Promise<boolean> {
     return httpClient
       .post('auth/check-email', { email: email })
       .then((response) => {

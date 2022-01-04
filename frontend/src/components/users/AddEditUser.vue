@@ -144,7 +144,6 @@ export default defineComponent({
     };
     const closeDialog = (userForm) => {
       emit('onCloseDialog', userForm);
-      onReset();
     };
     return {
       show_dialog,

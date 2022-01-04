@@ -14,6 +14,9 @@ export class Supplier {
 }
 
 export class PurchaseOrder {
+  constructor(){
+    this.addVAT = false;
+  }
   _id: string;
   isConfirmed: boolean;
   addVAT: boolean;

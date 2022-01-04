@@ -29,7 +29,6 @@
 <script lang="ts">
 import { defineComponent, defineAsyncComponent, ref } from 'vue';
 import { apiService } from '../../core/Export';
-import { Appointment } from '../../store/appointments/models';
 
 export default defineComponent({
   components: {
@@ -42,7 +41,7 @@ export default defineComponent({
 
     apiService
       .getAllAppointmentsToday()
-      .then((res) => (appointmentsToday.value = res as Appointment[]));
+      .then((res) => (appointmentsToday.value = res));
     return {
       appointmentsToday,
     };
