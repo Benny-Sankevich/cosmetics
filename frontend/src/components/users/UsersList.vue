@@ -304,6 +304,7 @@ export default defineComponent({
         formData.value = { ...userData };
       } else {
         formData.value.isActive = true;
+        formData.value.imageName = process.env.defaultUserImage;
       }
       model.value = type;
       show_dialog.value = true;

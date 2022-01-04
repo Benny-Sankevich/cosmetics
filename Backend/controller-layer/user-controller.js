@@ -62,7 +62,7 @@ router.post("/update-user", verifyIsLoggedIn, async (request, response) => {
         const user = new UserModel(request.body);
         const error = user.validateSync();
         if (error) return response.status(400).send(error.message);
-        const userUpdated = await userLogic.updateUserAsync(user, (request.files ? request.files.image : null));
+        const userUpdated = await userLogic.updateUserAsync(user, (request.files?.profileImage ? request.files.profileImage : null));
         if (!userUpdated) return response.status(404).send(`_id ${userUpdated._id} not found.`);
         response.status(201).json(userUpdated);
     }

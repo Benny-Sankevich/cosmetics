@@ -22,7 +22,8 @@ const mutation: MutationTree<AuthStateInterface> = {
     state.user.lastName = payload.lastName;
     state.user.email = payload.email;
     state.user.phoneNumber = payload.phoneNumber;
-    sessionStorage.setItem('user', JSON.stringify(state.user));
+    state.user.imageName = payload.imageName;
+    sessionStorage.setItem('user', JSON.stringify(state.user));    
   },
   [AppConstants.Auth.MutationSetSystemRole]: (state, payload: boolean) => {
     state.isAdminRole = payload;

@@ -16,15 +16,16 @@ function addUserAsync(user) {
 
 async function updateUserAsync(user, image) {
     if (image && checkImageExtension(image.name)) {
-        await removeOldUserImage(user.imageName);
-        user.imageName = getNewImageName(image.name);
+        await removeOldImage(user.imageName);
+        user.imageName = await changeImageName(image.name);
         saveImage(image, user.imageName);
     }
-    if (user.oldImageName) {
-        await removeOldUserImage(user.oldImageName);
-        user.oldImageName = undefined;
+    else if (user.oldImageName && user.oldImageName != 'undefined' && user.oldImageName != null) {
+        await removeOldImage(user.oldImageName);
+        user.imageName = config.defaultUserImage;
     }
     user.lastModified = helpers.getDateTimeNow();
+    user.oldImageName = null;
     const info = await UserModel.updateOne({ _id: user._id }, user).exec();
     return info.n ? user : null;
 }
@@ -35,13 +36,13 @@ function checkImageExtension(imageName) {
     return true;
 }
 
-async function removeOldUserImage(imageName) {
-    if (imageName !== config.defaultUserImage) {
+async function removeOldImage(imageName) {
+    if (imageName && imageName !== config.defaultUserImage) {
         await fs.unlinkSync("./assets/upload/" + imageName);
     }
 }
 
-function getNewImageName(imageName) {
+function changeImageName(imageName) {
     const extension = imageName.substr(imageName.lastIndexOf("."));
     return uuid.v4() + extension;
 }
