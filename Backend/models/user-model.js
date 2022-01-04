@@ -33,7 +33,6 @@ const UserSchema = mongoose.Schema({
     },
     oldImageName: {
         type: String,
-        default: undefined,
     },
     isActive: {
         type: Boolean,

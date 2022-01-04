@@ -12,7 +12,7 @@ export class UserInterface {
   lastModified: string;
   createdDate: string;
   lastLogin: string;
-  image: FileList;
+  profileImage: FileList;
   imageName: string;
   oldImageName: string;
 }
