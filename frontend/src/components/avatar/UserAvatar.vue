@@ -8,7 +8,7 @@
       <q-menu transition-show="jump-down" transition-hide="jump-up">
         <div class="row" style="width: 300px">
           <q-toolbar class="bg-blue-grey-10 text-white q-pa-md">
-            <q-avatar v-if="user" >
+            <q-avatar v-if="user">
               <img :src="`${pathUrl + user.imageName}`" />
             </q-avatar>
 
@@ -52,12 +52,12 @@ export default defineComponent({
           `${AppConstants.AuthModule}/${AppConstants.Auth.GetAuthUser}`
         ]
     );
-    const logout = () => {
+    const logout = (): void => {
       store.dispatch(
         `${AppConstants.AuthModule}/${AppConstants.Auth.ActionAuthLoggedOut}`
       );
       showInfo(i18n.global.t('msgYouHaveBeenLogout'));
-      router.push('/');
+      router.push({ name: AppConstants.Routes.Login });
     };
     return {
       pathUrl,

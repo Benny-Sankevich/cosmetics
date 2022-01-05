@@ -51,7 +51,7 @@
   </q-card>
 </template>
 
-<script ang="ts">
+<script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 import { AppConstants, i18n, showInfo } from '../../core/Export';
 import { useStore } from '../../store';
@@ -143,7 +143,7 @@ export default defineComponent({
         },
       ];
     });
-    const approveData = () => {
+    const approveData = (): void => {
       store
         .dispatch(
           `${AppConstants.AppointmentModule}/${AppConstants.Appointment.ActionApproveAwaitingAppointments}`,

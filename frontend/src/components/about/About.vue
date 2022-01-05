@@ -52,6 +52,8 @@
       <div class="q-pa-sm text-grey-8">
         <span class="text-h6"
           >The website was built for a freelance beautician.<br />
+          Using lately Program language Frontend: Vue.js TS, Backend Node.js,
+          Database MongoDB. <br />
           The website contains a variety of options following needs: </span
         ><br /><br />
         <span class="text-body1">

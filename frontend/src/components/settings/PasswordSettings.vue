@@ -122,13 +122,13 @@ export default defineComponent({
       store.getters[
         `${AppConstants.AuthModule}/${AppConstants.Auth.GetAuthUser}`
       ];
-    const onResetPassword = () => {
+    const onResetPassword = (): void => {
       resetPasswordForm.value.email = user.email;
       apiService.resetPassword(resetPasswordForm.value).then(() => {
         showInfo(i18n.global.t('msgDoneSuccessfully'));
       });
     };
-    const switchVisibility = () => {
+    const switchVisibility = (): void => {
       visibility.value = !visibility.value;
       passwordFieldType.value = visibility.value ? 'text' : 'password';
       visibilityIcon.value = visibility.value ? 'visibility_off' : 'visibility';

@@ -100,6 +100,10 @@ const actions: ActionTree<PurchaseStateInterface, MainStateInterface> = {
             AppConstants.Purchase.MutationUpdatePurchaseOrder,
             response.data as PurchaseOrder
           );
+          context.commit(
+            AppConstants.Purchase.MutationSetPurchaseOrderToEdit,
+            response.data as PurchaseOrder
+          );
         }
       });
   },

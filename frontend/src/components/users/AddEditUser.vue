@@ -98,7 +98,7 @@
 import { defineComponent, ref, PropType } from 'vue';
 import { AppConstants, i18n, showInfo } from '../../core/Export';
 import { useStore } from '../../store';
-import { UserInterface } from '../../store/users/models';
+import { User } from '../../store/users/models';
 import {
   nameRules,
   emailRules,
@@ -108,7 +108,7 @@ import {
 export default defineComponent({
   props: {
     user: {
-      type: Object as PropType<UserInterface>,
+      type: Object as PropType<User>,
       required: true,
     },
     model: {
@@ -119,31 +119,27 @@ export default defineComponent({
   emits: ['onCloseDialog'],
   setup(props, { emit }) {
     const store = useStore();
-    const userForm = ref(props.user);
+    const userForm = ref(JSON.parse(JSON.stringify(props.user)));
     const show_dialog = ref(true);
-    const onSaveUser = () => {
+    const onSaveUser = (): void => {
+      let actionType = AppConstants.Users.ActionSaveUser;
       if (userForm.value._id) {
-        store.dispatch(
-          `${AppConstants.UsersModule}/${AppConstants.Users.ActionEditUser}`,
-          userForm.value
-        );
-      } else {
-        store.dispatch(
-          `${AppConstants.UsersModule}/${AppConstants.Users.ActionSaveUser}`,
-          userForm.value
-        );
+        actionType = AppConstants.Users.ActionEditUser;
       }
+      store.dispatch(
+        `${AppConstants.UsersModule}/${actionType}`,
+        userForm.value
+      );
       showInfo(i18n.global.t('msgSavedSuccessfully'));
       closeDialog(userForm.value);
     };
-    const onReset = () => {
-      userForm.value.firstName = null;
-      userForm.value.lastName = null;
-      userForm.value.phoneNumber = null;
-      userForm.value.email = null;
-    };
-    const closeDialog = (userForm) => {
+
+    const closeDialog = (userForm): void => {
       emit('onCloseDialog', userForm);
+      onReset();
+    };
+    const onReset = () => {
+      userForm.value = new User();
     };
     return {
       show_dialog,

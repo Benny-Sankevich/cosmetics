@@ -105,7 +105,7 @@ export default defineComponent({
     if (props.purchaseOrder.addVAT) {
       VAT.value = 1.17;
     }
-    const getPurchaseItems = () => {
+    const getPurchaseItems = (): void => {
       apiService.getItemsByOrderId(props.purchaseOrder?._id).then((res) => {
         data.value = res as PurchaseItem[];
         if (data.value.length > 0) {
@@ -158,26 +158,26 @@ export default defineComponent({
       totalPrice: 0,
     });
 
-    const openDialog = (purchaseItemData, type) => {
+    const openDialog = (purchaseItemData, type): void => {
       model.value = type;
       if (purchaseItemData) {
         purchaseItem.value = { ...purchaseItemData };
       }
       show_dialog.value = true;
     };
-    const addItem = (payload) => {
+    const addItem = (payload): void => {
       apiService.addPurchaseItem(payload).then(() => {
         showInfo(i18n.global.t('msgSavedSuccessfully'));
         getPurchaseItems();
       });
     };
-    const editItem = (payload) => {
+    const editItem = (payload): void => {
       apiService.updatePurchaseItem(payload).then(() => {
         showInfo(i18n.global.t('msgSavedSuccessfully'));
         getPurchaseItems();
       });
     };
-    const deleteItem = (payload) => {
+    const deleteItem = (payload): void => {
       $q.dialog({
         title: `${i18n.global.t('confirm')}`,
         message: `${i18n.global.t('msgAreYouSure?')}`,
@@ -195,7 +195,7 @@ export default defineComponent({
         showInfo(i18n.global.t('msgDoneSuccessfully'));
       });
     };
-    const closeDialog = (event) => {
+    const closeDialog = (event): void => {
       show_dialog.value = false;
       if (event) {
         if (event._id) {

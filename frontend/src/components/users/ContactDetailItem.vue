@@ -64,25 +64,25 @@ export default defineComponent({
   props: ['icon', 'text_color', 'value', 'label'],
   setup() {
     const adminKey = process.env.adminKey;
-    const checkFieldRegular = (label) => {
+    const checkFieldRegular = (label): boolean => {
       if (label === 'phoneNumber' || label === 'email') {
         return true;
       }
       return false;
     };
-    const checkFieldDate = (label) => {
+    const checkFieldDate = (label): boolean => {
       if (label === 'lastLogin' || label === 'createdDate') {
         return true;
       }
       return false;
     };
-    const checkFieldAdmin = (field) => {
+    const checkFieldAdmin = (field): boolean => {
       if (field === 'admin') {
         return true;
       }
       return false;
     };
-    const checkFieldActive = (field) => {
+    const checkFieldActive = (field): boolean => {
       if (field === 'active') {
         return true;
       }

@@ -1,7 +1,7 @@
 import { apiService, i18n } from '../core/Export';
 
 const capitalLetterReg = /^[A-Zא-ת].*$/;
-const emailReg = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+const emailReg = /^[a-z0-9_.+-]+@[a-z0-9-]+\.[a-z0-9-.]+$/;
 const phoneReg = /^\d{10}$/;
 
 export const nameRules = [

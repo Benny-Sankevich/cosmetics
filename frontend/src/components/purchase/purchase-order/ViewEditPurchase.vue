@@ -61,7 +61,7 @@
       <q-card-section class="q-pa-none q-ma-none">
         <AddEditPurchase
           v-if="show_dialog"
-          :purchaseOrderForm="purchaseData"
+          :purchaseFormData="purchaseData"
           @onCloseDialog="openCloseDialog"
         />
         <PurchaseItemsTable :purchaseOrder="purchaseData" />
@@ -70,7 +70,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, defineAsyncComponent, ref } from 'vue';
+import { defineComponent, defineAsyncComponent, ref, computed } from 'vue';
 import { useStore } from '../../../store';
 import { AppConstants } from '../../../core/Export';
 export default defineComponent({
@@ -78,16 +78,19 @@ export default defineComponent({
     PurchaseItemsTable: defineAsyncComponent(
       () => import('../order-items/PurchaseItemsTable.vue')
     ),
-    AddEditPurchase: defineAsyncComponent(() => import('./AddEditPurchase.vue')),
+    AddEditPurchase: defineAsyncComponent(
+      () => import('./AddEditPurchase.vue')
+    ),
   },
   setup() {
     const store = useStore();
     const show_dialog = ref(false);
-    const purchaseData =
-      store.getters[
+    const purchaseData = computed(() => {
+      return store.getters[
         `${AppConstants.PurchaseModule}/${AppConstants.Purchase.GetPurchaseOrderToEdit}`
       ];
-    const openCloseDialog = () => {
+    });
+    const openCloseDialog = (): void => {
       show_dialog.value = !show_dialog.value;
     };
     return {

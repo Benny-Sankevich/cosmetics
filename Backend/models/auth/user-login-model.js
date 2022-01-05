@@ -6,7 +6,7 @@ const AuthLoginSchema = mongoose.Schema({
         required: [true, "Missing Email."],
         minLength: [7, "Email must be minimum 7 chars."],
         maxLength: [50, "Email can`t exceed 50 chars."],
-        match: [/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, "Email must be valid."]
+        match: [/^[a-z0-9_.+-]+@[a-z0-9-]+\.[a-z0-9-.]+$/, "Email must be valid."]
     },
     password: {
         type: String,

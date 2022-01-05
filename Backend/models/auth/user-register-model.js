@@ -19,7 +19,7 @@ const AuthRegisterSchema = mongoose.Schema({
         type: String,
         required: [true, "Missing Email."],
         unique: [true, "Email already exist."],
-        match: [/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, "Email must be valid."]
+        match: [/^[a-z0-9_.+-]+@[a-z0-9-]+\.[a-z0-9-.]+$/, "Email must be valid."]
     },
     password: {
         type: String,

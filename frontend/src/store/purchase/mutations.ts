@@ -1,10 +1,6 @@
 import { AppConstants } from 'src/core/Export';
 import { MutationTree } from 'vuex';
-import {
-  PurchaseStateInterface,
-  Supplier,
-  PurchaseOrder,
-} from './models';
+import { PurchaseStateInterface, Supplier, PurchaseOrder } from './models';
 
 const mutation: MutationTree<PurchaseStateInterface> = {
   [AppConstants.Supplier.MutationSetSuppliers]: (
@@ -13,10 +9,7 @@ const mutation: MutationTree<PurchaseStateInterface> = {
   ) => {
     state.suppliers = payload;
   },
-  [AppConstants.Supplier.MutationSaveSupplier]: (
-    state,
-    payload: Supplier
-  ) => {
+  [AppConstants.Supplier.MutationSaveSupplier]: (state, payload: Supplier) => {
     state.suppliers.push(payload);
   },
   [AppConstants.Supplier.MutationUpdateSupplier]: (
@@ -28,8 +21,13 @@ const mutation: MutationTree<PurchaseStateInterface> = {
     );
     state.suppliers[indexToUpdate] = payload;
   },
-  [AppConstants.Supplier.MutationDeleteSupplier]: (state, payload: Supplier) => {
-    const IndexToDelete = state.suppliers.findIndex((x) => x._id === payload._id);
+  [AppConstants.Supplier.MutationDeleteSupplier]: (
+    state,
+    payload: Supplier
+  ) => {
+    const IndexToDelete = state.suppliers.findIndex(
+      (x) => x._id === payload._id
+    );
     state.suppliers.splice(IndexToDelete, 1);
   },
 

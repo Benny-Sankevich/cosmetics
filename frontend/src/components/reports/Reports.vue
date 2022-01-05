@@ -82,7 +82,7 @@ export default defineComponent({
       yearOptions.value.push(i);
     }
 
-    const getData = (year) => {
+    const getData = (year): void => {
       apiService.getReportDataByYear(year).then((res) => {
         barChart.value.data.datasets = res as YearReportData[];
         reportsChart.value.update();

@@ -8,8 +8,8 @@ import {
   UserAuthInterface,
   AuthStateInterface,
 } from './models';
-import { UserInterface } from '../users/models';
-// user login
+import { User } from '../users/models';
+
 const actions: ActionTree<AuthStateInterface, MainStateInterface> = {
   [AppConstants.Auth.ActionAuthLoggedIn]: (context, payload: LoginForm) => {
     return httpClient.post('auth/login', payload).then((response) => {
@@ -25,7 +25,7 @@ const actions: ActionTree<AuthStateInterface, MainStateInterface> = {
       }
     });
   },
-  // user register
+
   [AppConstants.Auth.ActionAuthRegistered]: (
     context,
     payload: RegisterForm
@@ -43,7 +43,7 @@ const actions: ActionTree<AuthStateInterface, MainStateInterface> = {
       }
     });
   },
-  // user logout
+
   [AppConstants.Auth.ActionAuthLoggedOut]: (context, payload: any) => {
     context.commit(AppConstants.Auth.MutationAuthRemove, payload);
     context.commit(AppConstants.Auth.MutationSetSystemRole, false);
@@ -51,7 +51,7 @@ const actions: ActionTree<AuthStateInterface, MainStateInterface> = {
 
   [AppConstants.Auth.ActionEditUserProfile]: (
     context,
-    payload: UserInterface
+    payload: User
   ) => {
     return httpClient.post('users/update-user', payload).then((response) => {
       if (response.status.toString() === '201') {

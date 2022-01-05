@@ -101,7 +101,7 @@ class ApiService {
   }
   checkEmailNotExist(email: string): Promise<boolean> {
     return httpClient
-      .post('auth/check-email', { email: email })
+      .post('auth/check-email', { email: email.toLowerCase() })
       .then((response) => {
         if (response.status.toString() === '200') {
           return response.data;

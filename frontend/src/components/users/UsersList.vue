@@ -228,7 +228,7 @@
 import { defineComponent, defineAsyncComponent, ref, computed } from 'vue';
 import { AppConstants } from '../../core/Export';
 import { useStore } from '../../store';
-import { UserInterface } from '../../store/users/models';
+import { User } from '../../store/users/models';
 export default defineComponent({
   components: {
     AddEditUser: defineAsyncComponent(() => import('./AddEditUser.vue')),
@@ -244,7 +244,7 @@ export default defineComponent({
     const tab = ref('customers');
     const search = ref('');
     const show_dialog = ref(false);
-    const formData = ref(new UserInterface());
+    const formData = ref(new User());
     const model = ref(null);
     const selected_contact = ref({});
 
@@ -299,7 +299,7 @@ export default defineComponent({
         ]
     );
 
-    const onAddEditUser = (userData, type) => {
+    const onAddEditUser = (userData, type): void => {
       if (userData) {
         formData.value = { ...userData };
       } else {
@@ -309,13 +309,13 @@ export default defineComponent({
       model.value = type;
       show_dialog.value = true;
     };
-    const closeDialog = (userForm) => {
+    const closeDialog = (userForm): void => {
       if (userForm?._id) {
         selected_contact.value = userForm;
       }
       show_dialog.value = false;
     };
-    const onResize = (size_dynamic) => {
+    const onResize = (size_dynamic): void => {
       size.value = size_dynamic;
     };
     return {
