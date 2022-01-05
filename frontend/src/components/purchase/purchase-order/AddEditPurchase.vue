@@ -107,7 +107,9 @@ export default defineComponent({
   setup(props, { emit }) {
     const store = useStore();
     const router = useRouter();
-    let purchaseForm = ref(props.purchaseFormData);
+    const purchaseForm = ref(
+      JSON.parse(JSON.stringify(props.purchaseFormData))
+    );
     const show_dialog = ref(true);
     const suppliers = computed(
       () =>
@@ -116,25 +118,32 @@ export default defineComponent({
         ]
     );
 
-    const onSaveOrder = () => {
+    const onSaveOrder = (): void => {
+      let actionType = AppConstants.Purchase.ActionSavePurchaseOrder;
+      if (purchaseForm.value?._id) {
+        actionType = AppConstants.Purchase.ActionEditPurchaseOrder;
+      }
       store
         .dispatch(
-          `${AppConstants.PurchaseModule}/${AppConstants.Purchase.ActionSavePurchaseOrder}`,
+          `${AppConstants.PurchaseModule}/${actionType}`,
           purchaseForm.value
         )
         .then(() => {
+          // need to pass the data to the parent component
           showInfo(i18n.global.t('msgSavedSuccessfully'));
+          closeDialog();
+          if (actionType == AppConstants.Purchase.ActionSavePurchaseOrder) {
+            router.push({
+              name: AppConstants.Routes.PurchaseDetails,
+            });
+          }
         });
-      closeDialog();
-      router.push({
-        name: AppConstants.Routes.PurchaseDetails,
-      });
     };
-    const closeDialog = () => {
-      emit('onCloseDialog', false);
+    const closeDialog = (): void => {
+      emit('onCloseDialog');
       onReset();
     };
-    const onReset = () => {
+    const onReset = (): void => {
       purchaseForm.value = new PurchaseOrder();
     };
     return {

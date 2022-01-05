@@ -78,22 +78,19 @@ export default defineComponent({
     const treatmentPriceRef = ref(null);
     const treatmentDurationRef = ref(null);
 
-    const onSaveTreatment = () => {
+    const onSaveTreatment = (): void => {
+      let actionType = AppConstants.Treatments.ActionSaveTreatment;
       if (treatmentForm.value._id) {
-        store.dispatch(
-          `${AppConstants.TreatmentModule}/${AppConstants.Treatments.ActionEditTreatment}`,
-          treatmentForm.value
-        );
-      } else {
-        store.dispatch(
-          `${AppConstants.TreatmentModule}/${AppConstants.Treatments.ActionSaveTreatment}`,
-          treatmentForm.value
-        );
+        actionType = AppConstants.Treatments.ActionEditTreatment;
       }
+      store.dispatch(
+        `${AppConstants.TreatmentModule}/${actionType}`,
+        treatmentForm.value
+      );
       showInfo(i18n.global.t('msgSaveSavedSuccessfully'));
       closeWindow();
     };
-    const closeWindow = () => {
+    const closeWindow = (): void => {
       emit('onClose');
       treatmentForm.value = null;
     };

@@ -37,7 +37,7 @@ import { AppConstants } from '../../core/Export';
 export default defineComponent({
   setup() {
     const store = useStore();
-    const changeLanguage = (lang) => {
+    const changeLanguage = (lang): void => {
       localStorage.setItem('lang', JSON.stringify(lang));
       store.commit(
         `${AppConstants.UiModule}/${AppConstants.Ui.MutationSetUserLangCode}`,

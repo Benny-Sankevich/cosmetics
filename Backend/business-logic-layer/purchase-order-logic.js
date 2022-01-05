@@ -6,6 +6,10 @@ async function getAllPurchaseOrdersAsync() {
     return PurchaseOrderModel.find({ isActive: true }).populate("supplier").exec();
 }
 
+async function getPurchaseOrderAsync(_id) {
+    return PurchaseOrderModel.findOne({ _id }).populate("supplier").exec();
+}
+
 async function addPurchaseOrderAsync(purchaseOrder) {
     purchaseOrder.orderNumber = await createNewOrderNumberAsync(purchaseOrder)
     purchaseOrder.createdDate = helpers.getDateTimeNow();
@@ -24,7 +28,7 @@ function getCountPurchaseOrderAsync() {
 async function updatePurchaseOrderAsync(purchaseOrder) {
     purchaseOrder.lastModified = helpers.getDateTimeNow();
     const info = await PurchaseOrderModel.updateOne({ _id: purchaseOrder._id }, purchaseOrder).exec();
-    return info.n ? purchaseOrder : null;
+    return info.n ? await getPurchaseOrderAsync(purchaseOrder._id) : null;
 }
 
 async function deletePurchaseOrderAsync(purchaseOrder) {

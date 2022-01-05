@@ -152,20 +152,20 @@ export default defineComponent({
       return userInfo.value.imageName === process.env.defaultUserImage;
     });
 
-    const openEditProfile = () => {
+    const openEditProfile = (): void => {
       isEditProfile.value = true;
     };
-    const setDefaultImage = () => {
+    const setDefaultImage = (): void => {
       userInfo.value.oldImageName = userInfo.value.imageName;
       userInfo.value.imageName = process.env.defaultUserImage;
       newUserImage.value = null;
     };
-    const cancelEditProfile = () => {
+    const cancelEditProfile = (): void => {
       isEditProfile.value = false;
       newUserImage.value = null;
       userInfo = { ...currentUser.value };
     };
-    const openQFile = () => {
+    const openQFile = (): void => {
       if (!blindFieldRef.value) {
         return;
       }
@@ -179,7 +179,7 @@ export default defineComponent({
         fileReader.readAsDataURL(image.target.files[0]);
       }
     };
-    const updateUserData = () => {
+    const updateUserData = (): void => {
       let formData = new FormData();
       formData.append('_id', userInfo.value._id);
       formData.append('firstName', userInfo.value.firstName);

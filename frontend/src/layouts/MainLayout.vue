@@ -84,7 +84,7 @@ export default defineComponent({
         link: '/manager/settings',
       },
     ];
-    const toggleLeftDrawer = () => {
+    const toggleLeftDrawer = (): void => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
     };
     return {

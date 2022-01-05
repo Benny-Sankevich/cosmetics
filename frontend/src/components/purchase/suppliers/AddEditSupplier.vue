@@ -105,29 +105,26 @@ export default defineComponent({
   emits: ['onCloseDialog'],
   setup(props, { emit }) {
     const store = useStore();
-    let supplierForm = ref(props.supplier);
+    let supplierForm = ref(JSON.parse(JSON.stringify(props.supplier)));
     const show_dialog = ref(true);
 
-    const onSave = () => {
+    const onSave = (): void => {
+      let actionType = AppConstants.Supplier.ActionSaveSupplier;
       if (supplierForm.value._id) {
-        store.dispatch(
-          `${AppConstants.PurchaseModule}/${AppConstants.Supplier.ActionEditSupplier}`,
-          supplierForm.value
-        );
-      } else {
-        store.dispatch(
-          `${AppConstants.PurchaseModule}/${AppConstants.Supplier.ActionSaveSupplier}`,
-          supplierForm.value
-        );
+        actionType = AppConstants.Supplier.ActionEditSupplier;
       }
+      store.dispatch(
+        `${AppConstants.PurchaseModule}/${actionType}`,
+        supplierForm.value
+      );
       showInfo(i18n.global.t('msgSavedSuccessfully'));
       closeDialog();
     };
-    const closeDialog = () => {
+    const closeDialog = (): void => {
       emit('onCloseDialog');
       onReset();
     };
-    const onReset = () => {
+    const onReset = (): void => {
       supplierForm.value = new Supplier();
     };
     return {

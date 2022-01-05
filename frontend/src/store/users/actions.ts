@@ -2,7 +2,7 @@ import { AppConstants } from 'src/core/Export';
 import { MainStateInterface } from './../index';
 import { ActionTree } from 'vuex';
 import { httpClient } from 'src/utils/http-client';
-import { UserInterface, UsersStateInterface } from './models';
+import { User, UsersStateInterface } from './models';
 
 const actions: ActionTree<UsersStateInterface, MainStateInterface> = {
   [AppConstants.Users.ActionLoadUsers]: (context) => {
@@ -10,14 +10,14 @@ const actions: ActionTree<UsersStateInterface, MainStateInterface> = {
       if (response.status.toString() === '200') {
         context.commit(          
           AppConstants.Users.MutationSetUsers,
-          response.data as UserInterface[]
+          response.data as User[]
         );
       }
     });
   },
   [AppConstants.Users.ActionSaveUser]: (
     context,
-    payload: UserInterface
+    payload: User
   ) => {
     return httpClient
       .post('users/add-user', payload)
@@ -25,19 +25,19 @@ const actions: ActionTree<UsersStateInterface, MainStateInterface> = {
         if (response.status.toString() === '201') {
           context.commit(
             AppConstants.Users.MutationSaveUser,
-            response.data as UserInterface
+            response.data as User
           );
         }
       });
   },
-  [AppConstants.Users.ActionEditUser]: (context, payload: UserInterface) => {
+  [AppConstants.Users.ActionEditUser]: (context, payload: User) => {
     return httpClient
       .post('users/update-user', payload)
       .then((response) => {
         if (response.status.toString() === '201') {         
           context.commit(
             AppConstants.Users.MutationUpdateUser,
-            response.data as UserInterface
+            response.data as User
           );
         }
       });

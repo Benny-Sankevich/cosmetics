@@ -166,16 +166,17 @@ export default defineComponent({
         field: 'actions',
       },
     ];
-    const openCloseDialog = () => {
-      show_dialog.value = !show_dialog.value;
-    };
+
     const purchaseOrders = computed(
       () =>
         store.getters[
           `${AppConstants.PurchaseModule}/${AppConstants.Purchase.GetAllPurchaseOrders}`
         ]
     );
-    const editOrder = (payload) => {
+    const openCloseDialog = (): void => {
+      show_dialog.value = !show_dialog.value;
+    };
+    const editOrder = (payload): void => {
       store.commit(
         `${AppConstants.PurchaseModule}/${AppConstants.Purchase.MutationSetPurchaseOrderToEdit}`,
         payload
@@ -185,7 +186,7 @@ export default defineComponent({
         name: AppConstants.Routes.PurchaseDetails,
       });
     };
-    const deleteOrder = (payload) => {
+    const deleteOrder = (payload): void => {
       $q.dialog({
         title: `${i18n.global.t('confirm')}`,
         message: `${i18n.global.t('msgAreYouSure?')}`,

@@ -62,7 +62,7 @@ export default defineComponent({
     const visibility = ref(false);
     const visibilityIcon = ref('visibility');
     const currentScreen = ref('login');
-    const switchTypeForm = (type) => {
+    const switchTypeForm = (type): void => {
       currentScreen.value = type;
     };
     return {

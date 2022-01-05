@@ -1,7 +1,7 @@
 export interface UsersStateInterface {
-  users: UserInterface[];
+  users: User[];
 }
-export class UserInterface {
+export class User {
   _id: string;
   firstName: string;
   lastName: string;

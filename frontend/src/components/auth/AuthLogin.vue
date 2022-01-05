@@ -65,26 +65,30 @@ export default defineComponent({
     let loginForm = ref(new LoginForm());
     loginForm.value.email = 'admin@gmail.com';
     loginForm.value.password = 'pass4admin!';
-    const onLogin = () => {
+    const onLogin = (): void => {
       store
         .dispatch(
           `${AppConstants.AuthModule}/${AppConstants.Auth.ActionAuthLoggedIn}`,
           loginForm.value
         )
         .then((response) => {
-          showInfo(`${i18n.global.t('msgWelcome')} ${response.firstName} ${response.lastName}`);
+          showInfo(
+            `${i18n.global.t('msgWelcome')} ${response.firstName} ${
+              response.lastName
+            }`
+          );
           if (
             store.getters[
               `${AppConstants.AuthModule}/${AppConstants.Auth.GetSystemRole}`
             ]
           ) {
-            router.push('/manager');
+            router.push({ name: AppConstants.Routes.HomePage });
           } else {
-            router.push('/customer');
+            router.push({ name: AppConstants.Routes.CustomerPage });
           }
         });
     };
-    const switchVisibility = () => {
+    const switchVisibility = (): void => {
       visibility.value = !visibility.value;
       passwordFieldType.value = visibility.value ? 'text' : 'password';
       visibilityIcon.value = visibility.value ? 'visibility_off' : 'visibility';

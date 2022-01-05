@@ -186,17 +186,14 @@ export default defineComponent({
       );
       eventForm.value.price = treatment.price;
       eventForm.value.bgColor = treatment.bgColor;
+      let actionType = AppConstants.Appointment.ActionSaveAppointment;
       if (eventForm.value._id) {
-        store.dispatch(
-          `${AppConstants.AppointmentModule}/${AppConstants.Appointment.ActionEditAppointment}`,
-          eventForm.value
-        );
-      } else {
-        store.dispatch(
-          `${AppConstants.AppointmentModule}/${AppConstants.Appointment.ActionSaveAppointment}`,
-          eventForm.value
-        );
+        actionType = AppConstants.Appointment.ActionEditAppointment;
       }
+      store.dispatch(
+        `${AppConstants.AppointmentModule}/${actionType}`,
+        eventForm.value
+      );
       showInfo(i18n.global.t('msgSavedSuccessfully'));
       closeDialog();
     };

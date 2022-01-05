@@ -96,7 +96,7 @@ export default defineComponent({
     apiService.getAllProducts().then((res) => {
       products.value = res;
     });
-    const onSaveItem = () => {
+    const onSaveItem = (): void => {
       purchaseItemForm.value.price = functionsService.fixNumber(
         +purchaseItemForm.value.price
       );
@@ -106,15 +106,15 @@ export default defineComponent({
       );
       closeDialog(purchaseItemForm.value);
     };
-    const calculateTotalPrice = (price, amount) => {
+    const calculateTotalPrice = (price, amount): number => {
       return functionsService.fixNumber(price * amount);
     };
 
-    const closeDialog = (dataToSave) => {
+    const closeDialog = (dataToSave): void => {
       emit('onCloseDialog', dataToSave);
       onReset();
     };
-    const onReset = () => {
+    const onReset = (): void => {
       purchaseItemForm.value._id = null;
       purchaseItemForm.value.productId = null;
       purchaseItemForm.value.price = null;
