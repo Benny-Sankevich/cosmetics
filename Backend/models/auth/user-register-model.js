@@ -30,7 +30,7 @@ const AuthRegisterSchema = mongoose.Schema({
     phoneNumber: {
         type: String,
         required: [true, "Missing phone number."],
-        match: [/^\d{10}$/, "Phone number must be 10 digits."]
+        match: [/\d{3}-\d{7}/, "Phone number must be 10 digits."]
     },
     isAdmin: {
         type: String,

@@ -25,7 +25,7 @@ const SupplierSchema = mongoose.Schema({
         type: String,
         required: [true, "Missing phone number."],
         unique: [true, "Phone number already exist."],
-        match: [/^\d{9,10}$/, "Phone number must be 9 or 10 digits."]
+        match: [/\d{3}-\d{7}/, "Phone number must be 9 or 10 digits."]
     },
     address: {
         type: String,
