@@ -29,10 +29,10 @@ export default defineComponent({
       () => import('../components/appointments/AppointmentsList.vue')
     ),
     Reports: defineAsyncComponent(
-      () => import('../components/reports/Reports.vue')
+      () => import('../components/dashboard/Chart.vue')
     ),
     TodayData: defineAsyncComponent(
-      () => import('../components/reports/TodayData.vue')
+      () => import('../components/dashboard/TodayData.vue')
     ),
   },
 });
