@@ -15,7 +15,17 @@
           {{ $t('mainHeaderWebsite') }}
         </q-toolbar-title>
 
-        <div>
+        <div class="row">
+          <q-btn
+            round
+            dense
+            flat
+            color="white"
+            :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+            @click="$q.fullscreen.toggle()"
+            v-if="$q.screen.gt.sm"
+          >
+          </q-btn>
           <UserAvatar />
         </div>
       </q-toolbar>
