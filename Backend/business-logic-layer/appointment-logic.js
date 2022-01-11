@@ -1,5 +1,6 @@
 require("../data-access-layer/dal");
 const AppointmentModel = require("../models/appointment-model");
+const summariesLogic = require("./summaries-logic");
 const helpers = require("../helpers/helpers");
 
 function getAllAppointmentsAsync() {
@@ -25,15 +26,21 @@ function getAllAppointmentsAwaitingApprovalAsync() {
     return AppointmentModel.find({ $and: [{ isConfirmed: false }, { isActive: true }] }).populate('user', ['_id', 'firstName', 'lastName', 'email', 'phoneNumber']).populate('treatment', ['_id', 'name']).exec();
 }
 
-function addAppointmentAsync(appointment) {
+async function addAppointmentAsync(appointment) {
     appointment.createdDate = helpers.getDateTimeNow();
-    return appointment.save();
+    const addedAppointment = await appointment.save();
+    updateAppointmentSummaries(addedAppointment.dateTimeStart.getFullYear(), addedAppointment.dateTimeStart.getMonth() + 1, addedAppointment.treatmentId);
+    return addedAppointment;
 }
 
 async function updateAppointmentAsync(appointment) {
     appointment.lastModified = helpers.getDateTimeNow();
     const info = await AppointmentModel.updateOne({ _id: appointment._id }, appointment).exec();
-    return info.n ? appointment : null;
+    if (info.n) {
+        updateAppointmentSummaries(appointment.dateTimeStart.getFullYear(), appointment.dateTimeStart.getMonth() + 1, appointment.treatmentId);
+        return appointment;
+    }
+    return null;
 }
 
 async function deleteAppointmentAsync(appointment) {
@@ -51,6 +58,17 @@ async function getSumOfOrdersBetweenDatesAsync(fromTime, toTime, condition) {
         }]
     }).select("price").exec();
     return helpers.calculateSumOfArray(sumOfOrdersArr);
+}
+
+async function updateAppointmentSummaries(year, month, treatmentId) {
+    const monthlySummary = await getSumOfOrdersBetweenDatesAsync(`${year}-${month}-01`, `${year}-${month}-31`, { treatmentId: treatmentId });
+    await summariesLogic.updateSummariesData(null, treatmentId, year, month, monthlySummary);
+    await updateOrdersSummaries(year, month);
+}
+
+async function updateOrdersSummaries(year, month) {
+    const monthlySummary = await getSumOfOrdersBetweenDatesAsync(`${year}-${month}-01`, `${year}-${month}-31`, {});
+    await summariesLogic.updateSummariesData('orders', null, year, month, monthlySummary);
 }
 
 async function approveAwaitingAppointmentAsync(appointments) {

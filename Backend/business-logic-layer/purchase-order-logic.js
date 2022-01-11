@@ -1,13 +1,18 @@
 require("../data-access-layer/dal");
 const PurchaseOrderModel = require("../models/purchase/purchase-order-model");
+const summariesLogic = require("./summaries-logic");
 const helpers = require("../helpers/helpers");
 
-async function getAllPurchaseOrdersAsync() {
+function getAllPurchaseOrdersAsync() {
     return PurchaseOrderModel.find({ isActive: true }).populate("supplier").exec();
 }
 
-async function getPurchaseOrderAsync(_id) {
+function getPurchaseOrderAsync(_id) {
     return PurchaseOrderModel.findOne({ _id }).populate("supplier").exec();
+}
+
+function getCountPurchaseOrderAsync() {
+    return PurchaseOrderModel.countDocuments().exec();
 }
 
 async function addPurchaseOrderAsync(purchaseOrder) {
@@ -21,14 +26,15 @@ async function createNewOrderNumberAsync(purchaseOrder) {
     return `PO${purchaseOrder.orderDate.getFullYear()}0${ordersCount + 1}`;
 }
 
-function getCountPurchaseOrderAsync() {
-    return PurchaseOrderModel.countDocuments().exec();
-}
-
 async function updatePurchaseOrderAsync(purchaseOrder) {
     purchaseOrder.lastModified = helpers.getDateTimeNow();
     const info = await PurchaseOrderModel.updateOne({ _id: purchaseOrder._id }, purchaseOrder).exec();
-    return info.n ? await getPurchaseOrderAsync(purchaseOrder._id) : null;
+    if (info.n) {
+        const purchaseOrderUpdated = await getPurchaseOrderAsync(purchaseOrder._id);
+        updateSummaries(purchaseOrderUpdated.orderDate.getFullYear(), purchaseOrderUpdated.orderDate.getMonth() + 1)
+        return purchaseOrderUpdated;
+    }
+    return null;
 }
 
 async function deletePurchaseOrderAsync(purchaseOrder) {
@@ -46,6 +52,11 @@ async function getSumOfPurchaseOrdersBetweenDatesAsync(fromTime, toTime) {
         }]
     }).select("totalPrice").exec();
     return helpers.calculateTotalPriceOfArray(purchaseOrders);
+}
+
+async function updateSummaries(year, month) {
+    const monthlySummary = await getSumOfPurchaseOrdersBetweenDatesAsync(`${year}-${month}-01`, `${year}-${month}-31`);
+    summariesLogic.updateSummariesData('purchaseOrders', null, year, month, monthlySummary)
 }
 
 module.exports = {
