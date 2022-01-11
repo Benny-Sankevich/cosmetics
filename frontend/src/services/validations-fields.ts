@@ -2,7 +2,7 @@ import { apiService, i18n } from '../core/Export';
 
 const capitalLetterReg = /^[A-Zא-ת].*$/;
 const emailReg = /^[a-z0-9_.+-]+@[a-z0-9-]+\.[a-z0-9-.]+$/;
-const phoneReg = /^\d{10}$/;
+const phoneReg = /\d{3}-\d{7}/;
 
 export const nameRules = [
   (val) => !!val || i18n.global.t('msgRequired'),

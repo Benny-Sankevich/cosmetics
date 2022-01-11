@@ -19,13 +19,13 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: [true, "Missing Email."],
         unique: [true, "Email already exist."],
-        match: [/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, "Email must be valid."]
+        match: [/^[a-z0-9_.+-]+@[a-z0-9-]+\.[a-z0-9-.]+$/, "Email must be valid."]
     },
     phoneNumber: {
         type: String,
         required: [true, "Missing phone number."],
         unique: [true, "Phone number already exist."],
-        match: [/^\d{10}$/, "Phone number must be 10 digits."]
+        match: [/\d{3}-\d{7}/, "Phone number must be 10 digits."]
     },
     imageName: {
         type: String,
