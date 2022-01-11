@@ -21,7 +21,7 @@ router.post("/add-product", async (request, response) => {
     try {
         const product = new ProductModel(request.body);
         const error = product.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         const productAdded = await productLogic.addProductAsync(product);
         response.status(201).json(productAdded);
     }
@@ -34,9 +34,9 @@ router.post("/update-product", async (request, response) => {
     try {
         const product = new ProductModel(request.body);
         const error = product.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         const productUpdated = await productLogic.updateProductAsync(product);
-        if (!productUpdated) return response.status(404).send(`_id ${productUpdated._id} not found.`);
+        if (!productUpdated) return response.status(404).send('Product has not found please try again');
         response.status(201).json(productUpdated);
     }
     catch (err) {
@@ -48,7 +48,7 @@ router.post("/delete-product", async (request, response) => {
     try {
         const product = new ProductModel(request.body);
         const error = product.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         await productLogic.deleteProductAsync(product);
         response.sendStatus(204);
     }

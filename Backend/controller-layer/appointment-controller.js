@@ -63,7 +63,7 @@ router.post("/add-appointment", async (request, response) => {
     try {
         const appointment = new AppointmentModel(request.body);
         const error = appointment.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         const addedAppointment = await appointmentLogic.addAppointmentAsync(appointment);
         response.status(201).json(addedAppointment);
     }
@@ -101,9 +101,9 @@ router.post("/update-appointment", async (request, response) => {
     try {
         const appointment = new AppointmentModel(request.body);
         const error = appointment.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         const updatedAppointment = await appointmentLogic.updateAppointmentAsync(appointment);
-        if (!updatedAppointment) return response.status(404).send(`_id ${updatedAppointment._id} not found.`);
+        if (!updatedAppointment) return response.status(404).send('Appointment has not found please try again');
         response.status(201).json(updatedAppointment);
     }
     catch (err) {
