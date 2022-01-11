@@ -12,7 +12,7 @@ router.post("/register", async (request, response) => {
     try {
         const user = new UserRegisterModel(request.body);
         const error = user.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         const userAdded = await authLogic.registerAsync(user);
         response.json(userAdded);
     }
@@ -25,7 +25,7 @@ router.post("/login", async (request, response) => {
     try {
         const user = new UserLoginModel(request.body);
         const error = user.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         const userLoggedIn = await authLogic.loginAsync(user.email, user.password);
         if (!userLoggedIn) return response.status(401).send('msgIncorrectUsernameOrPassword');
         response.json(userLoggedIn);
@@ -39,7 +39,7 @@ router.post("/change-password", verifyIsLoggedIn, async (request, response) => {
     try {
         const user = new ResetPasswordModel(request.body);
         const error = user.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         const passwordChanged = await authLogic.userChangePasswordAsync(user);
         if (!passwordChanged) return response.status(401).send('msgOldPasswordWrong');
         response.json(passwordChanged);

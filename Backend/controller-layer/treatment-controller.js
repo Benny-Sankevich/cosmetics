@@ -21,7 +21,7 @@ router.post("/add-treatment", verifyIsAdmin, async (request, response) => {
     try {
         const treatment = new TreatmentModel(request.body);
         const error = treatment.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         const treatmentAdded = await treatmentLogic.addTreatmentAsync(treatment);
         response.status(201).json(treatmentAdded);
     }
@@ -34,9 +34,9 @@ router.post("/update-treatment", verifyIsAdmin, async (request, response) => {
     try {
         const treatment = new TreatmentModel(request.body);
         const error = treatment.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         const treatmentUpdated = await treatmentLogic.updateTreatmentAsync(treatment);
-        if (!treatmentUpdated) return response.status(404).send(`_id ${treatmentUpdated._id} not found.`);
+        if (!treatmentUpdated) return response.status(404).send('Treatment has not found please try again');
         response.status(201).json(treatmentUpdated);
     }
     catch (err) {
@@ -48,7 +48,7 @@ router.post("/delete-treatment", verifyIsAdmin, async (request, response) => {
     try {
         const treatment = new TreatmentModel(request.body);
         const error = treatment.validateSync();
-        if (error) return response.status(400).send(error.message);
+        if (error) return response.status(400).send(errorsHelper.getError(error));
         await treatmentLogic.deleteTreatmentAsync(treatment);
         response.sendStatus(204);
     }
