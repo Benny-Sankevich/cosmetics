@@ -13,6 +13,7 @@ const productController = require("./controller-layer/product-controller");
 const purchaseController= require("./controller-layer/purchase-controller");
 const reportsController= require("./controller-layer/reports-controller");
 const userController = require("./controller-layer/user-controller");
+const summariesController = require("./controller-layer/summaries-controller");
 
 const server = express();
 server.use(cors());
@@ -28,6 +29,7 @@ server.use("/api/suppliers", supplierController);
 server.use("/api/products", productController);
 server.use("/api/purchase", purchaseController);
 server.use("/api/reports", reportsController);
+server.use("/api/summaries", summariesController);
 
 //server.use(express.static(path.join(__dirname, "./frontend")));
 

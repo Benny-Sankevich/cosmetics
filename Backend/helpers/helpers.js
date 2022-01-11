@@ -30,6 +30,11 @@ function chartDataBarAdapter(label, treatmentId, data, backgroundColor, stack) {
         type: 'bar', label, treatmentId, data, borderWidth: 1, backgroundColor, stack
     }
 }
+
+function getRandomColor() {
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
+
 module.exports = {
     getDateTimeNow,
     getToday,
@@ -38,5 +43,6 @@ module.exports = {
     calculateTotalPriceOfArray,
     calculateTotalPriceOfItem,
     chartDataLineAdapter,
-    chartDataBarAdapter
+    chartDataBarAdapter,
+    getRandomColor
 }

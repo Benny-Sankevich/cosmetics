@@ -6,6 +6,9 @@ function getAllTreatmentsAsync() {
     return TreatmentModel.find({ isActive: true }).exec();
 }
 
+function getTreatmentByIdAsync(_id) {
+    return TreatmentModel.findOne({ _id }).exec();
+}
 function addTreatmentAsync(treatment) {
     treatment.createdDate = helpers.getDateTimeNow();
     return treatment.save();
@@ -24,6 +27,7 @@ async function deleteTreatmentAsync(treatment) {
 
 module.exports = {
     getAllTreatmentsAsync,
+    getTreatmentByIdAsync,
     addTreatmentAsync,
     updateTreatmentAsync,
     deleteTreatmentAsync

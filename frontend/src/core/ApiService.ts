@@ -62,7 +62,7 @@ class ApiService {
   }
   getReportDataByYear(year: number): Promise<ChartReportInterface[]> {
     return httpClient
-      .post('reports/get-year-data-report', { year })
+      .post('summaries/get-summaries-yearly', { year })
       .then((response) => {
         if (response.status.toString() === '200') {
           return response.data;
