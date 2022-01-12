@@ -35,7 +35,7 @@ router.post("/add-purchase-order", async (request, response) => {
     try {
         const purchaseOrder = new PurchaseOrderModel(request.body);
         const error = purchaseOrder.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));   
+        if (error) return response.status(400).send(errorHelper.getError(error));   
         const purchaseOrderAdded = await purchaseOrderLogic.addPurchaseOrderAsync(purchaseOrder);
         response.status(201).json(purchaseOrderAdded);
     }
@@ -48,7 +48,7 @@ router.post("/update-purchase-order", async (request, response) => {
     try {
         const purchaseOrder = new PurchaseOrderModel(request.body);
         const error = purchaseOrder.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         const purchaseOrderUpdated = await purchaseOrderLogic.updatePurchaseOrderAsync(purchaseOrder);
         if (!purchaseOrderUpdated) return response.status(404).send('Purchase order has not found please try again');
         response.status(201).json(purchaseOrderUpdated);
@@ -62,7 +62,7 @@ router.post("/delete-purchase-order", async (request, response) => {
     try {
         const purchaseOrder = new PurchaseOrderModel(request.body);
         const error = purchaseOrder.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         await purchaseOrderLogic.deletePurchaseOrderAsync(purchaseOrder);
         response.sendStatus(204);
     }
@@ -87,7 +87,7 @@ router.post("/add-purchase-item", async (request, response) => {
     try {
         const purchaseItem = new PurchaseItemModel(request.body);
         const error = purchaseItem.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         const purchaseItemAdded = await purchaseItemLogic.addPurchaseItemAsync(purchaseItem);
         response.status(201).json(purchaseItemAdded);
     }
@@ -100,7 +100,7 @@ router.post("/update-purchase-item", async (request, response) => {
     try {
         const purchaseItem = new PurchaseItemModel(request.body);
         const error = purchaseItem.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         const purchaseItemUpdated = await purchaseItemLogic.updatePurchaseItemAsync(purchaseItem);
         if (!purchaseItemUpdated) return response.status(404).send('Item has not found please try again');
         response.status(201).json(purchaseItemUpdated);
@@ -114,7 +114,7 @@ router.post("/delete-purchase-item", async (request, response) => {
     try {
         const purchaseItem = new PurchaseItemModel(request.body);
         const error = purchaseItem.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         await purchaseItemLogic.deletePurchaseItemAsync(purchaseItem);
         response.sendStatus(204);
     }

@@ -21,7 +21,7 @@ router.post("/add-supplier", async (request, response) => {
     try {
         const supplier = new SupplierModel(request.body);
         const error = supplier.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         const supplierAdded = await supplierLogic.addSupplierAsync(supplier);
         response.status(201).json(supplierAdded);
     }
@@ -34,7 +34,7 @@ router.post("/update-supplier", async (request, response) => {
     try {
         const supplier = new SupplierModel(request.body);
         const error = supplier.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         const supplierUpdated = await supplierLogic.updateSupplierAsync(supplier);
         if (!supplierUpdated) return response.status(404).send('Supplier has not found please try again');
         response.status(201).json(supplierUpdated);
@@ -48,7 +48,7 @@ router.post("/delete-supplier", async (request, response) => {
     try {
         const supplier = new SupplierModel(request.body);
         const error = supplier.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         await supplierLogic.deleteSupplierAsync(supplier);
         response.sendStatus(204);
     }
