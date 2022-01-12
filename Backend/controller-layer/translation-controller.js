@@ -21,7 +21,7 @@ router.post("/add-translation", async (request, response) => {
     try {
         const translation = new TranslationModel(request.body);
         const error = translation.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         const addedTranslation = await translationsLogic.addTranslationAsync(translation)
         response.status(201).json(addedTranslation);
     }

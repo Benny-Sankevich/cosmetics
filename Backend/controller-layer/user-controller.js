@@ -48,7 +48,7 @@ router.post("/add-user", verifyIsAdmin, async (request, response) => {
     try {
         const user = new UserModel(request.body);
         const error = user.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         const userAdded = await userLogic.addUserAsync(user);
         response.status(201).json(userAdded);
     }
@@ -61,7 +61,7 @@ router.post("/update-user", verifyIsLoggedIn, async (request, response) => {
     try {
         const user = new UserModel(request.body);
         const error = user.validateSync();
-        if (error) return response.status(400).send(errorsHelper.getError(error));
+        if (error) return response.status(400).send(errorHelper.getError(error));
         const userUpdated = await userLogic.updateUserAsync(user, (request.files?.profileImage ? request.files.profileImage : null));
         if (!userUpdated) return response.status(404).send('User has not found please try again');
         response.status(201).json(userUpdated);
