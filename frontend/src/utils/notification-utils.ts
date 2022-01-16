@@ -3,9 +3,9 @@ import { errorsService } from '../services/errors.service';
 const showError = (message: any) => {
   Notify.create({
     message: errorsService.getError(message),
-    color: 'red',
+    color: 'negative',
     position: 'top-right',
-    icon: 'error',
+    icon: 'warning',
     timeout: 5000
   });
 };

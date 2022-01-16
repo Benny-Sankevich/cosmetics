@@ -96,7 +96,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, PropType } from 'vue';
-import { AppConstants, i18n, showInfo } from '../../core/Export';
+import { AppConstants, functionsService, i18n, showInfo } from '../../core/Export';
 import { useStore } from '../../store';
 import { User } from '../../store/users/models';
 import {
@@ -119,7 +119,7 @@ export default defineComponent({
   emits: ['onCloseDialog'],
   setup(props, { emit }) {
     const store = useStore();
-    const userForm = ref(JSON.parse(JSON.stringify(props.user)));
+    const userForm = ref(functionsService.copyStoreData(props.user));
     const show_dialog = ref(true);
     const onSaveUser = (): void => {
       let actionType = AppConstants.Users.ActionSaveUser;

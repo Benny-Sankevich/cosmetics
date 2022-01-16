@@ -22,5 +22,8 @@ class FunctionsService {
   getCurrentYear(): number {
     return new Date().getFullYear();
   }
+  copyStoreData(storeData: any): any {
+    return JSON.parse(JSON.stringify(storeData));
+  }
 }
 export const functionsService = new FunctionsService();
