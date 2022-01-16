@@ -17,6 +17,10 @@ export namespace AppConstants {
     public static PurchaseDetails = 'PurchaseDetails';
     public static SuppliersList = 'SuppliersList';
     public static AboutPage = 'AboutPage';
+    public static Reports = 'Reports';
+    public static GeneralReports = 'GeneralReports';
+    public static ReportGenerator = 'ReportGenerator';
+    public static ReportTable = 'ReportTable';
   }
 
   // Modules
@@ -26,6 +30,7 @@ export namespace AppConstants {
   export const PurchaseModule = 'purchase';
   export const AppointmentModule = 'appointment';
   export const UsersModule = 'users';
+  export const ReportModule = 'reports';
 
   export class Ui {
     public static GetIsFormDirty = 'getIsFormDirty';
@@ -121,5 +126,10 @@ export namespace AppConstants {
     public static MutationDeletePurchaseOrder = 'deletePurchaseOrder';
     public static MutationSetPurchaseOrderToEdit =
       'mutationSetPurchaseOrderToEdit';
+  }
+
+  export class Report {
+    public static GetReportProperties = 'getReportProperties';
+    public static MutationSetReportProperties = 'mutationSetReportProperties';
   }
 }

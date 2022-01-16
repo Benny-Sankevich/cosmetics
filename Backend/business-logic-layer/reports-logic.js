@@ -1,42 +1,50 @@
 require("../data-access-layer/dal");
-const treatmentLogic = require("./treatment-logic");
-const appointmentsLogic = require("./appointment-logic");
-const purchaseOrderLogic = require("./purchase-order-logic");
+const ReportModel = require("../models/report-model");
+const summariesLogic = require("./summaries-logic");
 const helpers = require("../helpers/helpers");
 
-async function getDataReportByYearAsync(year) {
-    const yearReportData = [];
-    const treatmentReportData = await getTreatmentYearDataAsync(year)
-    yearReportData.push(...treatmentReportData);
-    yearReportData.push(await getOrdersYearDataAsync(year));
-    yearReportData.push(await getPurchaseOrdersYearDataAsync(year));
-    return yearReportData;
+function getReportsListAsync() {
+    return ReportModel.find({ isActive: true }).select(['title', 'description', 'letter']).exec();
 }
-async function getTreatmentYearDataAsync(year) {
-    const treatmentYearData = [];
-    const treatments = await treatmentLogic.getAllTreatmentsAsync();
-    for (const [index, treatment] of treatments.entries()) {
-        const treatmentsYearSum = await calculateYearDataAsync(year, appointmentsLogic.getSumOfOrdersBetweenDatesAsync, { treatmentId: treatment._id });
-        treatmentYearData.push(await helpers.chartDataBarAdapter(treatment.name, treatment._id, treatmentsYearSum, treatment.backgroundColor, `Stack ${index}`))
+
+function getReportDataByReportIdAsync(_id) {
+    return ReportModel.findOne({ $and: [{ _id }, { isActive: true }] }).exec();
+}
+
+async function getReportDataAsync(_id, year) {
+    const reportData = await getReportDataByReportIdAsync(_id);
+    if (!reportData) return null;
+    reportData.rows = await getReportRows(reportData.visibleColumns, reportData.parameters, year);
+    return reportData;
+}
+
+async function getReportRows(visibleColumns, parameters, year) {
+    const rows = [];
+    for (const parameter of parameters) {
+        const yearlySummary = await summariesLogic.getSummaryByDataTypeOrTreatmentIdAsync(parameter.name, year);
+        if (yearlySummary) {
+            rows.push(getObjReportRow(visibleColumns, yearlySummary.label, yearlySummary.data));
+        }
     }
-    return treatmentYearData;
+    return rows;
 }
-async function getOrdersYearDataAsync(year) {
-    const ordersYearSum = await calculateYearDataAsync(year, appointmentsLogic.getSumOfOrdersBetweenDatesAsync, {});
-    return await helpers.chartDataLineAdapter('Orders', ordersYearSum, '#228B22', '#228B22');
-}
-async function getPurchaseOrdersYearDataAsync(year) {
-    const purchaseYearSum = await calculateYearDataAsync(year, purchaseOrderLogic.getSumOfPurchaseOrdersBetweenDatesAsync, {});
-    return await helpers.chartDataLineAdapter('Purchase orders', purchaseYearSum, '#DC143C', '#DC143C')
-}
-async function calculateYearDataAsync(year, functionName, condition) {
-    const yearSum = [];
-    for (let i = 1; i <= 12; i++) {
-        const itemSum = await functionName(`${year}-${i}-01`, `${year}-${i}-31`, condition);
-        yearSum.push(itemSum);
+
+function getObjReportRow(visibleColumns, label, yearlySumData) {
+    let rowObject = {};
+    rowObject['name'] = label;
+    for (let i = 0; i < visibleColumns.length; i++) {
+        rowObject[visibleColumns[i]] = yearlySumData[i];
     }
-    return yearSum;
+    return rowObject;
 }
+
+function addReportAsync(report) {
+    report.createdDate = helpers.getDateTimeNow();
+    return report.save()
+}
+
 module.exports = {
-    getDataReportByYearAsync
+    addReportAsync,
+    getReportsListAsync,
+    getReportDataAsync
 }

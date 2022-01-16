@@ -3,18 +3,19 @@ import { usersRoutes } from './users/routes';
 import { AppConstants, i18n } from '../core/Export';
 import resolveMainData from '../resolvers/MainResolver';
 import resolveDashboard from '../resolvers/dashboard/DashboardResolver';
-import LoginPage from 'pages/LoginPage.vue';
-import BlankLayout from 'layouts/BlankLayout.vue';
-import MainLayout from 'layouts/MainLayout.vue';
-import CustomerLayout from 'layouts/CustomerLayout.vue';
+import LoginPage from '../pages/LoginPage.vue';
+import BlankLayout from '../layouts/BlankLayout.vue';
+import MainLayout from '../layouts/MainLayout.vue';
+import CustomerLayout from '../layouts/CustomerLayout.vue';
 import ProfileSettingsPage from '../pages/ProfileSettingsPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import CustomerPage from '../pages/CustomerPage.vue';
 import AboutPage from '../pages/AboutPage.vue';
 import { calendarRoutes } from './calendar/routes';
 import { appStore } from '../store/index';
-import { showError } from 'src/utils/notification-utils';
+import { showError } from '../utils/notification-utils';
 import { purchaseRoutes } from './purchase/routes';
+import { reportsRoutes } from './reports/routes';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -58,16 +59,13 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', name: AppConstants.Routes.HomePage, component: HomePage },
       {
-        path: 'reports',
-        component: () => import('../components/reports/Reports.vue'),
-      },
-      {
         path: 'settings',
         component: () => import('../pages/SettingsPage.vue'),
       },
       calendarRoutes,
       usersRoutes,
       purchaseRoutes,
+      reportsRoutes,
     ],
     meta: {
       resolve: resolveDashboard,

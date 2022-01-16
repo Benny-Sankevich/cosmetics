@@ -12,12 +12,14 @@ import { AppConstants } from '../core/Export';
 import { AuthStateInterface } from './auth/models';
 import { UsersStateInterface } from './users/models';
 import { TreatmentsStateInterface } from './treatments/models';
+import { ReportStateInterface } from './reports/models';
 import treatments from './treatments';
 import auth from './auth';
 import users from './users';
 import ui from './ui';
 import appointments from './appointments';
 import purchase from './purchase';
+import reports from './reports';
 
 export interface MainStateInterface {
   [AppConstants.UiModule]: UIStateInterface;
@@ -26,6 +28,7 @@ export interface MainStateInterface {
   [AppConstants.UsersModule]: UsersStateInterface;
   [AppConstants.AppointmentModule]: AppointmentStateInterface;
   [AppConstants.PurchaseModule]: PurchaseStateInterface;
+  [AppConstants.ReportModule]: ReportStateInterface;
 }
 
 // provide typings for `this.$store`
@@ -49,6 +52,7 @@ export default store(function (/* { ssrContext } */) {
       [AppConstants.UsersModule]: users,
       [AppConstants.AppointmentModule]: appointments,
       [AppConstants.PurchaseModule]: purchase,
+      [AppConstants.ReportModule]: reports,
     },
 
     // enable strict mode (adds overhead!)
