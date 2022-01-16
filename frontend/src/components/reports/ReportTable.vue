@@ -114,7 +114,7 @@ export default defineComponent({
 
       const status = exportFile('table-export.csv', content, 'text/csv');
 
-      if (status) showError(i18n.global.t('msgBrowserDeniedFileDownload'));
+      if (!status) showError(i18n.global.t('msgBrowserDeniedFileDownload'));
     };
     const wrapCsvValue = (val, formatFn) => {
       let formatted = formatFn !== void 0 ? formatFn(val) : val;
