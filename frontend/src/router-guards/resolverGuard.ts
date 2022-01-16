@@ -1,4 +1,4 @@
-import { RouteMetaInterface } from 'src/models/general-models';
+import { RouteMetaInterface } from '../models/general-models';
 
 export default (to:any, _from:any, next:any) => {
 

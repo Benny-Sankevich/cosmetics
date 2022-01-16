@@ -3,7 +3,7 @@ import { showError } from './notification-utils';
 import { Store } from 'vuex';
 import { appStore, MainStateInterface } from '../store/index';
 import { Loading, QSpinnerPuff } from 'quasar';
-import { AppConstants, i18n } from 'src/core/Export';
+import { AppConstants, i18n } from '../core/Export';
 import { Router } from '../router/index';
 
 const httpClient: AxiosInstance = axios.create({

@@ -1,4 +1,4 @@
-import { AppConstants } from 'src/core/Export';
+import { AppConstants } from '../../core/Export';
 import { GetterTree } from 'vuex';
 import { MainStateInterface } from '../index';
 import { UIStateInterface } from './models';

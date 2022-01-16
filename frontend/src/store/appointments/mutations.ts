@@ -1,4 +1,4 @@
-import { AppConstants } from 'src/core/Export';
+import { AppConstants } from '../../core/Export';
 import { MutationTree } from 'vuex';
 import { AppointmentStateInterface, Appointment } from './models';
 

@@ -1,4 +1,4 @@
-import { AppConstants } from 'src/core/Export';
+import { AppConstants } from '../../core/Export';
 import { appStore, MainStateInterface } from '../../store/index';
 
 import { Store } from 'vuex';

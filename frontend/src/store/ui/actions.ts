@@ -1,8 +1,8 @@
 import { TranslationInterface, UIStateInterface } from './models';
 import { ActionTree } from 'vuex';
 import { MainStateInterface } from '../index';
-import { httpClient } from 'src/utils/http-client';
-import { AppConstants } from 'src/core/Export';
+import { httpClient } from '../../utils/http-client';
+import { AppConstants } from '../../core/Export';
 
 const actions: ActionTree<UIStateInterface, MainStateInterface> = {
   [AppConstants.Ui.ActionLoadTranslations]: (context) => {

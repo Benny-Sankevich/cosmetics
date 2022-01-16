@@ -1,6 +1,6 @@
 import { AppConstants } from '../../core/Export';
 import { RouteRecordRaw } from 'vue-router';
-import resolveUsers from 'src/resolvers/users/usersResolver';
+import resolveUsers from '../../resolvers/users/usersResolver';
 
 const usersRoutes: RouteRecordRaw = {
   path: 'users',
