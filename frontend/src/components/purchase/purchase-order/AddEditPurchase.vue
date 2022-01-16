@@ -86,7 +86,12 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, computed, PropType } from 'vue';
-import { AppConstants, i18n, showInfo } from '../../../core/Export';
+import {
+  AppConstants,
+  functionsService,
+  i18n,
+  showInfo,
+} from '../../../core/Export';
 import { useStore } from '../../../store';
 import { useRouter } from 'vue-router';
 import { requiredRules } from '../../../services/validations-fields';
@@ -108,7 +113,7 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
     const purchaseForm = ref(
-      JSON.parse(JSON.stringify(props.purchaseFormData))
+      functionsService.copyStoreData(props.purchaseFormData)
     );
     const show_dialog = ref(true);
     const suppliers = computed(

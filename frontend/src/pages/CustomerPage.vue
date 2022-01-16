@@ -1,6 +1,16 @@
 <template>
   <q-page padding>
-    <h5>This page is under construction</h5>
+    <div
+      class="flex items-center justify-center text-center"
+      style="height: calc(100vh - 218px)"
+    >
+      <div>
+        <q-icon name="info" size="80px" color="faded" />
+        <p class="text-faded text-bold">
+          {{ $t('notImplemented') }}
+        </p>
+      </div>
+    </div>
   </q-page>
 </template>
 
