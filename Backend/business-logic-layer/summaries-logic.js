@@ -14,6 +14,9 @@ function getSummaryByDataType(dataType) {
 function getSummaryByTreatmentId(treatmentId) {
     return SummariesModel.findOne({ treatmentId }).exec();
 }
+function getSummaryByDataTypeOrTreatmentIdAsync(parameter, year) {
+    return SummariesModel.findOne({ $or: [{ dataType: parameter }, { label: parameter }] }).and({ year }).exec();
+}
 function addSummaries(summaries) {
     return summaries.save();
 }
@@ -35,5 +38,6 @@ module.exports = {
     getAllSummariesByYear,
     updateSummariesData,
     getSummaryByDataType,
-    getSummaryByTreatmentId
+    getSummaryByTreatmentId,
+    getSummaryByDataTypeOrTreatmentIdAsync
 }

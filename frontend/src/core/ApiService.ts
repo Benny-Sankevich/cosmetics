@@ -1,12 +1,13 @@
-import { httpClient } from 'src/utils/http-client';
+import { httpClient } from '../utils/http-client';
 import {
   ChartReportInterface,
   DateStartEnd,
   ResetPassword,
+  Product,
 } from '../models/general-models';
-import { Product } from './../models/general-models';
 import { PurchaseItem } from '../store/purchase/models';
 import { Appointment } from '../store/appointments/models';
+import { ReportInterface, ReportPropertiesToView } from '../store/reports/models';
 
 class ApiService {
   getTotalUsers(): Promise<number> {
@@ -72,6 +73,24 @@ class ApiService {
   getItemsByOrderId(purchaseOrderId: string): Promise<PurchaseItem[]> {
     return httpClient
       .post('purchase/get-items-by-orderId', { purchaseOrderId })
+      .then((response) => {
+        if (response.status.toString() === '200') {
+          return response.data;
+        }
+      });
+  }
+  getReportsList(): Promise<ReportPropertiesToView[]> {
+    return httpClient.post('reports/get-report-list').then((response) => {
+      if (response.status.toString() === '200') {
+        return response.data;
+      }
+    });
+  }
+  getReportsData(
+    reportParameters: ReportPropertiesToView
+  ): Promise<ReportInterface> {
+    return httpClient
+      .post('reports/get-report-data', reportParameters)
       .then((response) => {
         if (response.status.toString() === '200') {
           return response.data;
