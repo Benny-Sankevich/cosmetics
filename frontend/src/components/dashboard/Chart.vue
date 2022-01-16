@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { apiService, i18n } from '../../core/Export';
+import { apiService, functionsService, i18n } from '../../core/Export';
 import { defineComponent, defineAsyncComponent, ref, watch } from 'vue';
 import { YearReportData } from '../../models/general-models';
 
@@ -36,11 +36,10 @@ export default defineComponent({
   },
   setup() {
     const reportsChart = ref(null);
-    const currentYear = ref(new Date().getFullYear());
-    let yearOptions = ref([]);
-    const minYear = ref(2020);
+    const currentYear = ref(functionsService.getCurrentYear());
+    const yearOptions = ref(functionsService.getYearsList());
+    const selectedYear = ref(currentYear);
 
-    let selectedYear = ref(currentYear);
     let barChart = ref({
       options: {
         min: 0,
@@ -75,10 +74,6 @@ export default defineComponent({
         datasets: [],
       },
     });
-
-    for (let i = currentYear.value; i >= minYear.value; i--) {
-      yearOptions.value.push(i);
-    }
 
     const getData = (year): void => {
       apiService.getReportDataByYear(year).then((res) => {
