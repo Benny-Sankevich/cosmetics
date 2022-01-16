@@ -22,7 +22,7 @@
           :placeholder="$t('search')"
         >
           <template v-slot:append>
-            <q-icon :name="$t('search')" />
+            <q-icon name="search" />
           </template>
         </q-input>
         <q-space />
@@ -44,7 +44,7 @@
         <q-btn
           color="primary"
           icon-right="archive"
-          label="Export to csv"
+          :label="$t('exportToCsv')"
           no-caps
           @click="exportTable"
         />
