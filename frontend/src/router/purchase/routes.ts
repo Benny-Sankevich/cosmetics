@@ -1,6 +1,6 @@
 import { AppConstants } from '../../core/Export';
 import { RouteRecordRaw } from 'vue-router';
-import resolvePurchase from 'src/resolvers/purchase/PurchaseResolver';
+import resolvePurchase from '../../resolvers/purchase/PurchaseResolver';
 
 const purchaseRoutes: RouteRecordRaw = {
   path: 'purchase',

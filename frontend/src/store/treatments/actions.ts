@@ -1,8 +1,8 @@
-import { AppConstants } from 'src/core/Export';
+import { AppConstants } from '../../core/Export';
 import { MainStateInterface } from './../index';
 import { Treatment, TreatmentsStateInterface } from './models';
 import { ActionTree } from 'vuex';
-import { httpClient } from 'src/utils/http-client';
+import { httpClient } from '../../utils/http-client';
 
 const actions: ActionTree<TreatmentsStateInterface, MainStateInterface> = {
   [AppConstants.Treatments.ActionLoadTreatments]: (context) => {

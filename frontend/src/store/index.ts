@@ -8,7 +8,7 @@ import {
   useStore as vuexUseStore,
 } from 'vuex';
 import { UIStateInterface } from './ui/models';
-import { AppConstants } from 'src/core/Export';
+import { AppConstants } from '../core/Export';
 import { AuthStateInterface } from './auth/models';
 import { UsersStateInterface } from './users/models';
 import { TreatmentsStateInterface } from './treatments/models';

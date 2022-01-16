@@ -1,5 +1,5 @@
 import { UserAuthInterface, AuthStateInterface } from './models';
-import { AppConstants } from 'src/core/Export';
+import { AppConstants } from '../../core/Export';
 import { MutationTree } from 'vuex';
 
 const mutation: MutationTree<AuthStateInterface> = {

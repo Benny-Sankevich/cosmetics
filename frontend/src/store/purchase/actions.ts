@@ -1,4 +1,4 @@
-import { AppConstants } from 'src/core/Export';
+import { AppConstants } from '../../core/Export';
 import { MainStateInterface } from './../index';
 import {
   Supplier,
@@ -6,7 +6,7 @@ import {
   PurchaseOrder,
 } from './models';
 import { ActionTree } from 'vuex';
-import { httpClient } from 'src/utils/http-client';
+import { httpClient } from '../../utils/http-client';
 
 const actions: ActionTree<PurchaseStateInterface, MainStateInterface> = {
   [AppConstants.Supplier.ActionLoadAllSuppliers]: (context) => {

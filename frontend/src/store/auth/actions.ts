@@ -1,7 +1,7 @@
-import { AppConstants } from 'src/core/Export';
+import { AppConstants } from '../../core/Export';
 import { MainStateInterface } from './../index';
 import { ActionTree } from 'vuex';
-import { httpClient } from 'src/utils/http-client';
+import { httpClient } from '../../utils/http-client';
 import {
   LoginForm,
   RegisterForm,
