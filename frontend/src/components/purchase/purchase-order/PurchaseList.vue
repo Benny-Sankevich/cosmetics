@@ -6,7 +6,7 @@
       :title="$t('purchaseOrders')"
       row-key="name"
       binary-state-sort
-      :rows-per-page-options="[15]"
+      :rows-per-page-options="[15, 20, 30, 40, 0]"
       :filter="filter"
     >
       <template v-slot:top-right>
