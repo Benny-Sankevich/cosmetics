@@ -1,7 +1,7 @@
 <template>
   <div class="col-10" style="max-width: 1350px">
     <q-toolbar class="bg-primary text-white shadow-2">
-      <q-toolbar-title>{{$t('reports')}}</q-toolbar-title>
+      <q-toolbar-title>{{ $t('reports') }}</q-toolbar-title>
     </q-toolbar>
 
     <q-list bordered separator>
@@ -18,9 +18,9 @@
         </q-item-section>
 
         <q-item-section>
-          <q-item-label>{{ report.title }}</q-item-label>
+          <q-item-label>{{ $t(report.title) }}</q-item-label>
           <q-item-label caption lines="1">{{
-            report.description
+            $t(report.description)
           }}</q-item-label>
         </q-item-section>
         <q-select
