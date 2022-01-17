@@ -51,3 +51,16 @@ export interface ChartReportInterface {
   backgroundColor: string;
   stack: string;
 }
+
+export interface CustomerListInterface {
+  icon: string;
+  label: string;
+  field: any;
+  textColor: string;
+  type: any;
+}
+
+export interface SizeInterface {
+  width: string;
+  height: string;
+}
