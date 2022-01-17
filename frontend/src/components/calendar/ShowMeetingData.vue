@@ -103,15 +103,16 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, PropType } from 'vue';
 import { useStore } from '../../store';
 import { AppConstants, i18n, showInfo } from '../../core/Export';
 import { useQuasar } from 'quasar';
+import { Appointment } from '../../store/appointments/models';
 
 export default defineComponent({
   props: {
     eventToShow: {
-      type: Object,
+      type: Object as PropType<Appointment>,
       required: true,
     },
   },
