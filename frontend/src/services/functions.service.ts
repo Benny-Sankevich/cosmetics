@@ -1,3 +1,5 @@
+import { User } from '../store/users/models';
+
 class FunctionsService {
   fixNumber(num: number): number {
     return +num.toFixed(2);
@@ -24,6 +26,13 @@ class FunctionsService {
   }
   copyStoreData(storeData: any): any {
     return JSON.parse(JSON.stringify(storeData));
+  }
+  getUsersSearchResult(search, usersArray): User[] {
+    return usersArray.filter(
+      (s) =>
+        s.firstName.toLowerCase().includes(search.toLowerCase()) ||
+        s.lastName.toLowerCase().includes(search.toLowerCase())
+    );
   }
 }
 export const functionsService = new FunctionsService();
