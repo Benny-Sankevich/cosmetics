@@ -56,13 +56,13 @@
   </q-item>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { PurchaseOrder } from '../../../store/purchase/models';
 
 export default defineComponent({
   props: {
     purchaseData: {
-      type: PurchaseOrder,
+      type: Object as PropType<PurchaseOrder>,
       required: false,
     },
   },

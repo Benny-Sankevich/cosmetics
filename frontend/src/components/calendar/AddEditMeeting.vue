@@ -128,15 +128,16 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue';
+import { defineComponent, computed, ref, PropType } from 'vue';
 import { useStore } from '../../store';
 import { AppConstants, i18n, showInfo } from '../../core/Export';
 import { requiredRules } from '../../services/validations-fields';
+import { Appointment } from '../../store/appointments/models';
 
 export default defineComponent({
   props: {
     eventToEdit: {
-      type: Object,
+      type: Object as PropType<Appointment>,
       required: false,
     },
     model: {
