@@ -1,72 +1,70 @@
 <template>
-  <div>
-    <q-dialog v-model="show_dialog" persistent>
-      <q-card style="width: 400px">
-        <q-toolbar class="bg-primary text-white">
-          <q-toolbar-title>{{
-            model === 'add' ? $t('addItem') : $t('updateItem')
-          }}</q-toolbar-title>
-          <q-btn
-            flat
-            round
-            color="white"
-            icon="close"
-            @click="closeDialog(null)"
-          ></q-btn>
-        </q-toolbar>
-        <q-card-section class="inset-shadow">
-          <q-form @submit="onSaveItem" @reset="onReset" class="q-gutter-md">
-            <q-select
-              transition-show="scale"
-              transition-hide="scale"
-              square
-              v-model="purchaseItemForm.productId"
-              :options="products"
-              option-label="name"
-              option-value="_id"
-              :emit-value="true"
-              map-options
-              :rules="requiredRules"
-              :label="$t('product')"
+  <q-dialog v-model="show_dialog" persistent>
+    <q-card style="width: 400px">
+      <q-toolbar class="bg-primary text-white">
+        <q-toolbar-title>{{
+          model === 'add' ? $t('addItem') : $t('updateItem')
+        }}</q-toolbar-title>
+        <q-btn
+          flat
+          round
+          color="white"
+          icon="close"
+          @click="closeDialog(null)"
+        ></q-btn>
+      </q-toolbar>
+      <q-card-section class="inset-shadow">
+        <q-form @submit="onSaveItem" @reset="onReset" class="q-gutter-md">
+          <q-select
+            transition-show="scale"
+            transition-hide="scale"
+            square
+            v-model="purchaseItemForm.productId"
+            :options="products"
+            option-label="name"
+            option-value="_id"
+            :emit-value="true"
+            map-options
+            :rules="requiredRules"
+            :label="$t('product')"
+          />
+          <q-input
+            square
+            clearable
+            v-model="purchaseItemForm.amount"
+            lazy-rules
+            :rules="priceRules"
+            :label="$t('amount')"
+          />
+          <q-input
+            square
+            clearable
+            v-model="purchaseItemForm.price"
+            lazy-rules
+            :rules="priceRules"
+            :label="$t('price')"
+          />
+          <q-card-actions align="right">
+            <q-btn
+              v-if="model === 'add'"
+              unelevated
+              type="reset"
+              color="secondary"
+              class="text-white"
+              :label="$t('reset')"
             />
-            <q-input
-              square
-              clearable
-              v-model="purchaseItemForm.amount"
-              lazy-rules
-              :rules="priceRules"
-              :label="$t('amount')"
-            />
-            <q-input
-              square
-              clearable
-              v-model="purchaseItemForm.price"
-              lazy-rules
-              :rules="priceRules"
-              :label="$t('price')"
-            />
-            <q-card-actions align="right">
-              <q-btn
-                v-if="model === 'add'"
-                unelevated
-                type="reset"
-                color="secondary"
-                class="text-white"
-                :label="$t('reset')"
-              />
-              <q-btn
-                unelevated
-                type="submit"
-                color="primary"
-                class="text-white"
-                >{{ model === 'add' ? $t('save') : $t('update') }}</q-btn
-              >
-            </q-card-actions>
-          </q-form>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-  </div>
+            <q-btn
+              unelevated
+              type="submit"
+              color="primary"
+              class="text-white"
+              >{{ model === 'add' ? $t('save') : $t('update') }}</q-btn
+            >
+          </q-card-actions>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 <script lang="ts">
 import { defineComponent, ref, PropType } from 'vue';
@@ -106,11 +104,10 @@ export default defineComponent({
       );
       closeDialog(purchaseItemForm.value);
     };
-    const calculateTotalPrice = (price, amount): number => {
+    const calculateTotalPrice = (price: number, amount: number): number => {
       return functionsService.fixNumber(price * amount);
     };
-
-    const closeDialog = (dataToSave): void => {
+    const closeDialog = (dataToSave: PurchaseItem): void => {
       emit('onCloseDialog', dataToSave);
       onReset();
     };

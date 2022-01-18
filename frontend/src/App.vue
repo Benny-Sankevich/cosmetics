@@ -16,22 +16,23 @@ export default defineComponent({
     const store = useStore();
 
     const userLangCode = computed(() => {
-      return store.getters[`${AppConstants.UiModule}/${AppConstants.Ui.GetUserLangCode}`];
+      return store.getters[
+        `${AppConstants.UiModule}/${AppConstants.Ui.GetUserLangCode}`
+      ];
     });
     const allTranslations = computed(() => {
-      return store.getters[`${AppConstants.UiModule}/${AppConstants.Ui.GetAllTranslations}`];
+      return store.getters[
+        `${AppConstants.UiModule}/${AppConstants.Ui.GetAllTranslations}`
+      ];
     });
 
-    const setTranslationsFromState = async () => {
+    const setTranslationsFromState = async (): Promise<void> => {
       i18n.global.locale = userLangCode.value;
       i18n.global.setLocaleMessage(userLangCode.value, allTranslations.value);
       try {
         const langIso =
           userLangCode.value == 'en' ? 'en-US' : userLangCode.value;
-        await import(
-          /* webpackInclude: /(he|en-US)\.js$/ */
-          'quasar/lang/' + langIso
-        ).then((lang) => {
+        await import('quasar/lang/' + langIso).then((lang) => {
           Quasar.lang.set(lang.default);
         });
       } catch (err) {

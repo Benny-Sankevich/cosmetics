@@ -75,7 +75,7 @@ export default defineComponent({
       },
     });
 
-    const getData = (year): void => {
+    const getData = (year: number): void => {
       apiService.getReportDataByYear(year).then((res) => {
         barChart.value.data.datasets = res as YearReportData[];
         reportsChart.value.update();
@@ -83,7 +83,7 @@ export default defineComponent({
     };
     getData(currentYear.value);
 
-    watch(selectedYear, (year) => {
+    watch(selectedYear, (year: number) => {
       getData(year);
     });
 

@@ -52,6 +52,7 @@ import { defineComponent, ref } from 'vue';
 import { apiService, AppConstants, functionsService } from '../../core/Export';
 import { useRouter } from 'vue-router';
 import { useStore } from '../../store';
+import { ReportPropertiesToView } from '../../store/reports/models';
 
 export default defineComponent({
   setup() {
@@ -65,14 +66,13 @@ export default defineComponent({
     apiService.getReportsList().then((res) => {
       reportsList.value = res;
     });
-    const showReport = (reportParameters) => {
+    const showReport = (reportParameters: ReportPropertiesToView): void => {
       reportParameters.year = selectedYear.value;
       apiService.getReportsData(reportParameters).then((res) => {
         store.commit(
           `${AppConstants.ReportModule}/${AppConstants.Report.MutationSetReportProperties}`,
           res
         );
-
         router.push({
           name: AppConstants.Routes.ReportTable,
         });

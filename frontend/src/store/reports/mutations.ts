@@ -6,7 +6,7 @@ const mutation: MutationTree<ReportStateInterface> = {
   [AppConstants.Report.MutationSetReportProperties]: (
     state,
     payload: ReportInterface
-  ) => {
+  ): void => {
     state.reportProperties = payload;
   },
 };

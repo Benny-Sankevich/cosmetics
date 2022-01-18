@@ -3,22 +3,14 @@ import { MutationTree } from 'vuex';
 import { UsersStateInterface, User } from './models';
 
 const mutation: MutationTree<UsersStateInterface> = {
-  [AppConstants.Users.MutationSetUsers]: (state, payload: User[]) => {
+  [AppConstants.Users.MutationSetUsers]: (state, payload: User[]): void => {
     state.users = payload;
   },
-  [AppConstants.Users.MutationSaveUser]: (
-    state,
-    payload: User
-  ) => {
-    state.users.push(payload);    
+  [AppConstants.Users.MutationSaveUser]: (state, payload: User): void => {
+    state.users.push(payload);
   },
-  [AppConstants.Users.MutationUpdateUser]: (
-    state,
-    payload: User
-  ) => {
-    const indexToUpdate = state.users.findIndex(
-      (x) => x._id === payload._id
-    );
+  [AppConstants.Users.MutationUpdateUser]: (state, payload: User): void => {
+    const indexToUpdate = state.users.findIndex((x) => x._id === payload._id);
     state.users[indexToUpdate] = payload;
   },
 };

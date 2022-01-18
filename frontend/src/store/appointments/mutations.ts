@@ -6,26 +6,29 @@ const mutation: MutationTree<AppointmentStateInterface> = {
   [AppConstants.Appointment.MutationSetAppointments]: (
     state,
     payload: Appointment[]
-  ) => {
+  ): void => {
     state.appointments = payload;
   },
 
   [AppConstants.Appointment.MutationSaveAppointment]: (
     state,
     payload: Appointment
-  ) => {
+  ): void => {
     state.appointments.unshift(payload);
   },
   [AppConstants.Appointment.MutationUpdateAppointment]: (
     state,
     payload: Appointment
-  ) => {
+  ): void => {
     const indexToUpdate = state.appointments.findIndex(
       (x) => x._id === payload._id
     );
     state.appointments[indexToUpdate] = payload;
   },
-  [AppConstants.Appointment.MutationDeleteAppointment]: (state, payload: string) => {
+  [AppConstants.Appointment.MutationDeleteAppointment]: (
+    state,
+    payload: string
+  ): void => {
     const IndexToDelete = state.appointments.findIndex(
       (x) => x._id === payload
     );
@@ -34,13 +37,13 @@ const mutation: MutationTree<AppointmentStateInterface> = {
   [AppConstants.Appointment.MutationSetAwaitingAppointments]: (
     state,
     payload: Appointment[]
-  ) => {
+  ): void => {
     state.awaitingApproval = payload;
   },
   [AppConstants.Appointment.MutationRemoveAwaitingAppointments]: (
     state,
     payload: Appointment[]
-  ) => {
+  ): void => {
     for (const item of payload) {
       const IndexToDelete = state.awaitingApproval.findIndex(
         (x) => x._id === item._id

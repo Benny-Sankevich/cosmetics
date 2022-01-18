@@ -22,12 +22,12 @@
           <template v-slot:append>
             <q-img
               v-if="selectedLanguage === 'en'"
-              src="~/assets/flags/en.svg"
+              src="../../assets/flags/en.svg"
               style="width: 20px; height: 23px; margin-bottom: 10px"
             ></q-img>
             <q-img
               v-if="selectedLanguage === 'he'"
-              src="~/assets/flags/il.jpg"
+              src="../../assets/flags/il.jpg"
               style="width: 20px; height: 23px; margin-bottom: 10px"
             ></q-img>
           </template>
@@ -39,12 +39,12 @@
               <q-item-section avatar>
                 <q-img
                   v-if="scope.opt.value === 'en'"
-                  src="~/assets/flags/en.svg"
+                  src="../../assets/flags/en.svg"
                   style="width: 20px"
                 ></q-img>
                 <q-img
                   v-if="scope.opt.value === 'he'"
-                  src="~/assets/flags/il.jpg"
+                  src="../../assets/flags/il.jpg"
                   style="width: 20px"
                 ></q-img>
               </q-item-section>
@@ -84,7 +84,7 @@ export default defineComponent({
       },
     ];
 
-    watch(selectedLanguage, (lang) => {
+    watch(selectedLanguage, (lang: string) => {
       store.commit(
         `${AppConstants.UiModule}/${AppConstants.Ui.MutationSetUserLangCode}`,
         lang

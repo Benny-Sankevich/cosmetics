@@ -21,6 +21,7 @@
 <script lang="ts">
 import { defineComponent, defineAsyncComponent, ref, computed } from 'vue';
 import { AppConstants } from '../../core/Export';
+import { SizeInterface } from '../../models/general-models';
 import { useStore } from '../../store';
 export default defineComponent({
   components: {
@@ -86,8 +87,8 @@ export default defineComponent({
         ]
     );
 
-    const onResize = (size_dynamic): void => {
-      size.value = size_dynamic;
+    const onResize = (sizeDynamic: SizeInterface): void => {
+      size.value = sizeDynamic;
     };
     return {
       pathUrl,

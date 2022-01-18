@@ -176,7 +176,7 @@ export default defineComponent({
     const openCloseDialog = (): void => {
       show_dialog.value = !show_dialog.value;
     };
-    const editOrder = (payload): void => {
+    const editOrder = (payload: PurchaseOrder): void => {
       store.commit(
         `${AppConstants.PurchaseModule}/${AppConstants.Purchase.MutationSetPurchaseOrderToEdit}`,
         payload
@@ -186,7 +186,7 @@ export default defineComponent({
         name: AppConstants.Routes.PurchaseDetails,
       });
     };
-    const deleteOrder = (payload): void => {
+    const deleteOrder = (payload: PurchaseOrder): void => {
       $q.dialog({
         title: `${i18n.global.t('confirm')}`,
         message: `${i18n.global.t('msgAreYouSure?')}`,

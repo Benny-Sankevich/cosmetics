@@ -1,5 +1,4 @@
 <template>
-  <div>
     <q-card-section>
       <q-form @submit="onRegister" class="q-px-sm q-pt-xl">
         <q-input
@@ -102,7 +101,6 @@
         </q-card-actions>
       </q-form>
     </q-card-section>
-  </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';

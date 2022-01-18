@@ -144,7 +144,7 @@ export default defineComponent({
         ]
     );
 
-    const deleteSupplier = (supplier): void => {
+    const deleteSupplier = (supplier: Supplier): void => {
       $q.dialog({
         title: `${i18n.global.t('confirm')}`,
         message: `${i18n.global.t('msgAreYouSure?')}`,
@@ -163,7 +163,7 @@ export default defineComponent({
           });
       });
     };
-    const openDialog = (supplierData, type): void => {
+    const openDialog = (supplierData: Supplier, type: string): void => {
       if (supplierData) {
         formData.value = supplierData;
       } else {
