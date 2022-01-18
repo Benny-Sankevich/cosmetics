@@ -80,9 +80,13 @@
 <script lang="ts">
 import { defineComponent, defineAsyncComponent, ref, computed } from 'vue';
 import { useStore } from '../../../store';
-import { AppConstants, i18n, showInfo } from '../../../core/Export';
+import {
+  AppConstants,
+  areYouSureDialog,
+  i18n,
+  showInfo,
+} from '../../../core/Export';
 import { Supplier } from '../../../store/purchase/models';
-import { useQuasar } from 'quasar';
 
 export default defineComponent({
   components: {
@@ -91,7 +95,6 @@ export default defineComponent({
     ),
   },
   setup() {
-    const $q = useQuasar();
     const store = useStore();
     const filter = ref('');
     const model = ref(null);
@@ -145,14 +148,7 @@ export default defineComponent({
     );
 
     const deleteSupplier = (supplier: Supplier): void => {
-      $q.dialog({
-        title: `${i18n.global.t('confirm')}`,
-        message: `${i18n.global.t('msgAreYouSure?')}`,
-        color: 'negative',
-        ok: `${i18n.global.t('msgYesImSure')}`,
-        cancel: true,
-        focus: 'cancel',
-      }).onOk(() => {
+      areYouSureDialog().onOk(() =>
         store
           .dispatch(
             `${AppConstants.PurchaseModule}/${AppConstants.Supplier.ActionDeleteSupplier}`,
@@ -160,8 +156,8 @@ export default defineComponent({
           )
           .then(() => {
             showInfo(i18n.global.t('msgDoneSuccessfully'));
-          });
-      });
+          })
+      );
     };
     const openDialog = (supplierData: Supplier, type: string): void => {
       if (supplierData) {

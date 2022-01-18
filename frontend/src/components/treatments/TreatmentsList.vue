@@ -105,10 +105,14 @@
 
 <script lang="ts">
 import { defineComponent, defineAsyncComponent, computed, ref } from 'vue';
-import { AppConstants, i18n, showInfo } from '../../core/Export';
+import {
+  AppConstants,
+  i18n,
+  showInfo,
+  areYouSureDialog,
+} from '../../core/Export';
 import { useStore } from '../../store';
 import { Treatment } from '../../store/treatments/models';
-import { useQuasar } from 'quasar';
 
 export default defineComponent({
   components: {
@@ -118,7 +122,6 @@ export default defineComponent({
   },
 
   setup() {
-    const $q = useQuasar();
     const store = useStore();
     const tab = ref('treatments');
     const formData = ref(new Treatment());
@@ -130,14 +133,7 @@ export default defineComponent({
         ]
     );
     const deleteTreatment = (payload: Treatment): void => {
-      $q.dialog({
-        title: `${i18n.global.t('confirm')}`,
-        message: `${i18n.global.t('msgAreYouSure?')}`,
-        color: 'negative',
-        ok: `${i18n.global.t('msgYesImSure')}`,
-        cancel: true,
-        focus: 'cancel',
-      }).onOk(() => {
+      areYouSureDialog().onOk(() =>
         store
           .dispatch(
             `${AppConstants.TreatmentModule}/${AppConstants.Treatments.ActionDeleteTreatment}`,
@@ -145,8 +141,8 @@ export default defineComponent({
           )
           .then(() => {
             showInfo(i18n.global.t('msgDoneSuccessfully'));
-          });
-      });
+          })
+      );
     };
     const addEditTreatment = (treatmentData: Treatment, type: string): void => {
       if (treatmentData) {
