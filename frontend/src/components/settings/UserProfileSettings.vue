@@ -134,7 +134,7 @@ import {
 export default defineComponent({
   setup() {
     const store = useStore();
-    const pathUrl = ref(process.env.BASE_API_URL + 'users/images/');
+    const pathUrl = process.env.imagesUrl;
     const isEditProfile = ref(false);
     const blindFieldRef = ref(null);
     const newUserImage = ref(null);

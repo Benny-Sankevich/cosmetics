@@ -18,7 +18,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   props: ['imageName', 'name'],
   setup() {
-    const pathUrl = process.env.BASE_API_URL + 'users/images/';
+    const pathUrl = process.env.imagesUrl;
     return {
       pathUrl,
     };
