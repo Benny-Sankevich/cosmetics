@@ -71,10 +71,10 @@ import {
   i18n,
   showInfo,
   functionsService,
+  areYouSureDialog,
 } from '../../../core/Export';
 import { PurchaseItem } from '../../../models/general-models';
 import { PurchaseOrder } from '../../../store/purchase/models';
-import { useQuasar } from 'quasar';
 
 export default defineComponent({
   props: {
@@ -89,7 +89,6 @@ export default defineComponent({
     ),
   },
   setup(props) {
-    const $q = useQuasar();
     const show_dialog = ref(false);
     const totalSum = ref(0);
     const data = ref([]);
@@ -178,14 +177,7 @@ export default defineComponent({
       });
     };
     const deleteItem = (payload: PurchaseItem): void => {
-      $q.dialog({
-        title: `${i18n.global.t('confirm')}`,
-        message: `${i18n.global.t('msgAreYouSure?')}`,
-        color: 'negative',
-        ok: `${i18n.global.t('msgYesImSure')}`,
-        cancel: true,
-        focus: 'cancel',
-      }).onOk(async () => {
+      areYouSureDialog().onOk(async () => {
         await apiService.deletePurchaseItem(payload);
         data.value.splice(
           functionsService.findIndex(data.value, payload._id),
