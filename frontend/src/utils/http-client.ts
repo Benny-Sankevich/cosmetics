@@ -7,7 +7,7 @@ import { AppConstants, i18n } from '../core/Export';
 import { Router } from '../router/index';
 
 const httpClient: AxiosInstance = axios.create({
-  baseURL: process.env.BASE_API_URL,
+  baseURL: process.env.baseApiUrl,
 });
 // Spinner interceptor
 httpClient.interceptors.request.use((config) => {

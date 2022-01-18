@@ -45,7 +45,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
-    const pathUrl = process.env.BASE_API_URL + 'users/images/';
+    const pathUrl = process.env.imagesUrl;
     const user = computed(
       () =>
         store.getters[

@@ -32,7 +32,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const pathUrl = process.env.BASE_API_URL + 'users/images/';
+    const pathUrl = process.env.imagesUrl;
     const size = ref({ width: '200px', height: '200px' });
     const model = ref(null);
 
