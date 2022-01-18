@@ -1,5 +1,5 @@
 export class ErrorsService {
-  public getError(err: any) {
+  public getError(err: any): any {
     if (typeof err === 'string') {
       return err;
     }

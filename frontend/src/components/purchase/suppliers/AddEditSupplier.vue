@@ -1,85 +1,83 @@
 <template>
-  <div>
-    <q-dialog v-model="show_dialog" persistent>
-      <q-card style="width: 400px">
-        <q-toolbar class="bg-primary text-white">
-          <q-toolbar-title>{{
-            model === 'add' ? $t('addSupplier') : $t('updateSupplier')
-          }}</q-toolbar-title>
-          <q-btn
-            flat
-            round
-            color="white"
-            icon="close"
-            @click="closeDialog"
-          ></q-btn>
-        </q-toolbar>
-        <q-card-section class="inset-shadow">
-          <q-form @submit="onSave" @reset="onReset" class="q-gutter-md">
-            <q-input
-              autofocus
-              clearable
-              square
-              v-model="supplierForm.companyName"
-              lazy-rules
-              :rules="nameRules"
-              :label="$t('companyName')"
-            />
-            <q-input
-              square
-              clearable
-              v-model="supplierForm.email"
-              lazy-rules
-              :rules="emailRules"
-              :label="$t('email')"
-            />
-            <q-input
-              square
-              clearable
-              v-model="supplierForm.phoneNumber"
-              lazy-rules
-              :rules="phoneNumberRules"
-              :label="$t('phoneNumber')"
-            />
-            <q-input
-              square
-              clearable
-              v-model="supplierForm.address"
-              lazy-rules
-              :rules="nameRules"
-              :label="$t('address')"
-            />
-            <q-input
-              square
-              clearable
-              v-model="supplierForm.contact"
-              lazy-rules
-              :rules="nameRules"
-              :label="$t('contact')"
-            />
+  <q-dialog v-model="show_dialog" persistent>
+    <q-card style="width: 400px">
+      <q-toolbar class="bg-primary text-white">
+        <q-toolbar-title>{{
+          model === 'add' ? $t('addSupplier') : $t('updateSupplier')
+        }}</q-toolbar-title>
+        <q-btn
+          flat
+          round
+          color="white"
+          icon="close"
+          @click="closeDialog"
+        ></q-btn>
+      </q-toolbar>
+      <q-card-section class="inset-shadow">
+        <q-form @submit="onSave" @reset="onReset" class="q-gutter-md">
+          <q-input
+            autofocus
+            clearable
+            square
+            v-model="supplierForm.companyName"
+            lazy-rules
+            :rules="nameRules"
+            :label="$t('companyName')"
+          />
+          <q-input
+            square
+            clearable
+            v-model="supplierForm.email"
+            lazy-rules
+            :rules="emailRules"
+            :label="$t('email')"
+          />
+          <q-input
+            square
+            clearable
+            v-model="supplierForm.phoneNumber"
+            lazy-rules
+            :rules="phoneNumberRules"
+            :label="$t('phoneNumber')"
+          />
+          <q-input
+            square
+            clearable
+            v-model="supplierForm.address"
+            lazy-rules
+            :rules="nameRules"
+            :label="$t('address')"
+          />
+          <q-input
+            square
+            clearable
+            v-model="supplierForm.contact"
+            lazy-rules
+            :rules="nameRules"
+            :label="$t('contact')"
+          />
 
-            <q-card-actions align="right">
-              <q-btn
-                v-if="model === 'add'"
-                unelevated
-                type="reset"
-                color="secondary"
-                class="text-white"
-                :label="$t('reset')"
-              />
-              <q-btn
-                unelevated
-                type="submit"
-                color="primary"
-                class="text-white"
-                :label="model === 'add' ? $t('save') : $t('update')"
-              />
-            </q-card-actions>
-          </q-form>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-  </div>
+          <q-card-actions align="right">
+            <q-btn
+              v-if="model === 'add'"
+              unelevated
+              type="reset"
+              color="secondary"
+              class="text-white"
+              :label="$t('reset')"
+            />
+            <q-btn
+              unelevated
+              type="submit"
+              color="primary"
+              class="text-white"
+              :label="model === 'add' ? $t('save') : $t('update')"
+            />
+          </q-card-actions>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 <script lang="ts">
 import { defineComponent, ref, PropType } from 'vue';

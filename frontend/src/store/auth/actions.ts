@@ -11,14 +11,17 @@ import {
 import { User } from '../users/models';
 
 const actions: ActionTree<AuthStateInterface, MainStateInterface> = {
-  [AppConstants.Auth.ActionAuthLoggedIn]: (context, payload: LoginForm) => {
+  [AppConstants.Auth.ActionAuthLoggedIn]: (
+    context,
+    payload: LoginForm
+  ): Promise<UserAuthInterface> => {
     return httpClient.post('auth/login', payload).then((response) => {
       if (response.status.toString() === '200') {
         context.commit(
           AppConstants.Auth.MutationAuthLoggedIn,
           response.data as UserAuthInterface
         );
-        if ((response.data.isAdmin === process.env.adminKey)) {
+        if (response.data.isAdmin === process.env.adminKey) {
           context.commit(AppConstants.Auth.MutationSetSystemRole, true);
         }
         return response.data as UserAuthInterface;
@@ -29,14 +32,14 @@ const actions: ActionTree<AuthStateInterface, MainStateInterface> = {
   [AppConstants.Auth.ActionAuthRegistered]: (
     context,
     payload: RegisterForm
-  ) => {
+  ): Promise<UserAuthInterface> => {
     return httpClient.post('auth/register', payload).then((response) => {
       if (response.status.toString() === '200') {
         context.commit(
           AppConstants.Auth.MutationAuthLoggedIn,
           response.data as UserAuthInterface
         );
-        if ((response.data.isAdmin === process.env.adminKey)) {
+        if (response.data.isAdmin === process.env.adminKey) {
           context.commit(AppConstants.Auth.MutationSetSystemRole, true);
         }
         return response.data as UserAuthInterface;
@@ -44,7 +47,7 @@ const actions: ActionTree<AuthStateInterface, MainStateInterface> = {
     });
   },
 
-  [AppConstants.Auth.ActionAuthLoggedOut]: (context, payload: any) => {
+  [AppConstants.Auth.ActionAuthLoggedOut]: (context, payload: any): void => {
     context.commit(AppConstants.Auth.MutationAuthRemove, payload);
     context.commit(AppConstants.Auth.MutationSetSystemRole, false);
   },
@@ -52,7 +55,7 @@ const actions: ActionTree<AuthStateInterface, MainStateInterface> = {
   [AppConstants.Auth.ActionEditUserProfile]: (
     context,
     payload: User
-  ) => {
+  ): Promise<void | UserAuthInterface> => {
     return httpClient.post('users/update-user', payload).then((response) => {
       if (response.status.toString() === '201') {
         context.commit(

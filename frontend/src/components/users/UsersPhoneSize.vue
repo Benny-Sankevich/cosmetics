@@ -162,7 +162,7 @@ export default defineComponent({
     const model = ref(null);
     const show_dialog = ref(false);
 
-    const onAddEditUser = (userData, type): void => {
+    const onAddEditUser = (userData: User, type: string): void => {
       if (userData) {
         formData.value = { ...userData };
       } else {
@@ -172,7 +172,7 @@ export default defineComponent({
       model.value = type;
       show_dialog.value = true;
     };
-    const closeDialog = (userForm): void => {
+    const closeDialog = (userForm: User): void => {
       if (userForm?._id) {
         selectedContact.value = userForm;
       }

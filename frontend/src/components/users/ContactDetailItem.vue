@@ -29,7 +29,7 @@ import { i18n } from '../../core/Export';
 export default defineComponent({
   props: ['icon', 'textColor', 'value', 'label', 'type'],
   setup() {
-    const getValue = (type, value, label): any => {
+    const getValue = (type: any, value: any, label: string): any => {
       if (type === Boolean) {
         if (label === 'admin') {
           return value && value === process.env.adminKey

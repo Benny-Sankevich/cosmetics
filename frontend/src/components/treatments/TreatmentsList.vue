@@ -129,7 +129,7 @@ export default defineComponent({
           `${AppConstants.TreatmentModule}/${AppConstants.Treatments.GetTreatments}`
         ]
     );
-    const deleteTreatment = (payload): void => {
+    const deleteTreatment = (payload: Treatment): void => {
       $q.dialog({
         title: `${i18n.global.t('confirm')}`,
         message: `${i18n.global.t('msgAreYouSure?')}`,
@@ -148,7 +148,7 @@ export default defineComponent({
           });
       });
     };
-    const addEditTreatment = (treatmentData, type): void => {
+    const addEditTreatment = (treatmentData: Treatment, type: string): void => {
       if (treatmentData) {
         formData.value = { ...treatmentData };
       } else {

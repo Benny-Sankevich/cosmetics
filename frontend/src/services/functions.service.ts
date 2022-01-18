@@ -27,7 +27,7 @@ class FunctionsService {
   copyStoreData(storeData: any): any {
     return JSON.parse(JSON.stringify(storeData));
   }
-  getUsersSearchResult(search, usersArray): User[] {
+  getUsersSearchResult(search: string, usersArray: User[]): User[] {
     return usersArray.filter(
       (s) =>
         s.firstName.toLowerCase().includes(search.toLowerCase()) ||

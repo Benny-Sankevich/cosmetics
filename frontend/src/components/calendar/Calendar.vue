@@ -78,7 +78,13 @@ import {
 import '@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass';
 import '@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass';
 import '@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass';
-import { defineComponent, defineAsyncComponent, computed, ref } from 'vue';
+import {
+  defineComponent,
+  defineAsyncComponent,
+  computed,
+  ref,
+  watch,
+} from 'vue';
 import { useStore } from '../../store';
 import { AppConstants } from '../../core/Export';
 import { Appointment } from '../../store/appointments/models';
@@ -119,6 +125,7 @@ export default defineComponent({
     };
     const updateData = () => {
       if (appointments.value.length > 0) {
+        events.value = [];
         appointments.value.forEach((appointment) => {
           events.value.push({
             _id: appointment._id,
@@ -142,6 +149,9 @@ export default defineComponent({
       }
     };
     updateData();
+    watch(appointments.value, () => {
+      updateData();
+    });
     const badgeClasses = (computedEvent) => {
       if (computedEvent.event !== undefined) {
         return {

@@ -1,15 +1,13 @@
 import { AppConstants } from '../../core/Export';
 import { MainStateInterface } from './../index';
-import {
-  Supplier,
-  PurchaseStateInterface,
-  PurchaseOrder,
-} from './models';
+import { Supplier, PurchaseStateInterface, PurchaseOrder } from './models';
 import { ActionTree } from 'vuex';
 import { httpClient } from '../../utils/http-client';
 
 const actions: ActionTree<PurchaseStateInterface, MainStateInterface> = {
-  [AppConstants.Supplier.ActionLoadAllSuppliers]: (context) => {
+  [AppConstants.Supplier.ActionLoadAllSuppliers]: (
+    context
+  ): Promise<void | Supplier[]> => {
     return httpClient.post('suppliers/get-suppliers').then((response) => {
       if (response.status.toString() === '200') {
         context.commit(
@@ -22,7 +20,7 @@ const actions: ActionTree<PurchaseStateInterface, MainStateInterface> = {
   [AppConstants.Supplier.ActionSaveSupplier]: (
     context,
     payload: Supplier
-  ) => {
+  ): Promise<void | Supplier> => {
     return httpClient
       .post('suppliers/add-supplier', payload)
       .then((response) => {
@@ -37,7 +35,7 @@ const actions: ActionTree<PurchaseStateInterface, MainStateInterface> = {
   [AppConstants.Supplier.ActionEditSupplier]: (
     context,
     payload: Supplier
-  ) => {
+  ): Promise<void | Supplier> => {
     return httpClient
       .post('suppliers/update-supplier', payload)
       .then((response) => {
@@ -49,7 +47,10 @@ const actions: ActionTree<PurchaseStateInterface, MainStateInterface> = {
         }
       });
   },
-  [AppConstants.Supplier.ActionDeleteSupplier]: (context, payload: string) => {
+  [AppConstants.Supplier.ActionDeleteSupplier]: (
+    context,
+    payload: string
+  ): Promise<void | Supplier> => {
     return httpClient
       .post('suppliers/delete-supplier', payload)
       .then((response) => {
@@ -59,7 +60,9 @@ const actions: ActionTree<PurchaseStateInterface, MainStateInterface> = {
       });
   },
 
-  [AppConstants.Purchase.ActionLoadAllPurchaseOrders]: (context) => {
+  [AppConstants.Purchase.ActionLoadAllPurchaseOrders]: (
+    context
+  ): Promise<void | PurchaseOrder[]> => {
     return httpClient.post('purchase/get-all-orders').then((response) => {
       if (response.status.toString() === '200') {
         context.commit(
@@ -72,7 +75,7 @@ const actions: ActionTree<PurchaseStateInterface, MainStateInterface> = {
   [AppConstants.Purchase.ActionSavePurchaseOrder]: (
     context,
     payload: PurchaseOrder
-  ) => {
+  ): Promise<void | PurchaseOrder> => {
     return httpClient
       .post('purchase/add-purchase-order', payload)
       .then((response) => {
@@ -91,7 +94,7 @@ const actions: ActionTree<PurchaseStateInterface, MainStateInterface> = {
   [AppConstants.Purchase.ActionEditPurchaseOrder]: (
     context,
     payload: PurchaseOrder
-  ) => {
+  ): Promise<void | PurchaseOrder> => {
     return httpClient
       .post('purchase/update-purchase-order', payload)
       .then((response) => {
@@ -110,7 +113,7 @@ const actions: ActionTree<PurchaseStateInterface, MainStateInterface> = {
   [AppConstants.Purchase.ActionDeletePurchaseOrder]: (
     context,
     payload: PurchaseOrder
-  ) => {
+  ): Promise<void | PurchaseOrder> => {
     return httpClient
       .post('purchase/delete-purchase-order', payload)
       .then((response) => {

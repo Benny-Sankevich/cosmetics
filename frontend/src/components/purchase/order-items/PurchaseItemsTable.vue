@@ -158,26 +158,26 @@ export default defineComponent({
       totalPrice: 0,
     });
 
-    const openDialog = (purchaseItemData, type): void => {
+    const openDialog = (purchaseItemData: PurchaseItem, type: string): void => {
       model.value = type;
       if (purchaseItemData) {
         purchaseItem.value = { ...purchaseItemData };
       }
       show_dialog.value = true;
     };
-    const addItem = (payload): void => {
+    const addItem = (payload: PurchaseItem): void => {
       apiService.addPurchaseItem(payload).then(() => {
         showInfo(i18n.global.t('msgSavedSuccessfully'));
         getPurchaseItems();
       });
     };
-    const editItem = (payload): void => {
+    const editItem = (payload: PurchaseItem): void => {
       apiService.updatePurchaseItem(payload).then(() => {
         showInfo(i18n.global.t('msgSavedSuccessfully'));
         getPurchaseItems();
       });
     };
-    const deleteItem = (payload): void => {
+    const deleteItem = (payload: PurchaseItem): void => {
       $q.dialog({
         title: `${i18n.global.t('confirm')}`,
         message: `${i18n.global.t('msgAreYouSure?')}`,
@@ -195,7 +195,7 @@ export default defineComponent({
         showInfo(i18n.global.t('msgDoneSuccessfully'));
       });
     };
-    const closeDialog = (event): void => {
+    const closeDialog = (event: PurchaseItem): void => {
       show_dialog.value = false;
       if (event) {
         if (event._id) {
@@ -205,7 +205,7 @@ export default defineComponent({
         }
       }
     };
-    const calculateTotalSumOfOrder = () => {
+    const calculateTotalSumOfOrder = (): void => {
       totalSum.value =
         functionsService.calculateTotalPriceArray(data.value) * VAT.value;
     };

@@ -2,7 +2,7 @@ const express = require("express");
 const translationsLogic = require("../business-logic-layer/translations-logic");
 const TranslationModel = require("../models/translation-model");
 const errorHelper = require("../helpers/errors-helper");
-//const verifyIsAdmin = require("../middleware/verify-isAdmin");
+const verifyIsAdmin = require("../middleware/verify-isAdmin");
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router.post("/get-translations", async (request, response) => {
     }
 });
 
-router.post("/add-translation", async (request, response) => {
+router.post("/add-translation", verifyIsAdmin, async (request, response) => {
     try {
         const translation = new TranslationModel(request.body);
         const error = translation.validateSync();

@@ -171,12 +171,15 @@ export default defineComponent({
       }
       blindFieldRef.value.pickFiles();
     };
-    const handleImage = (image): void => {
-      if (image.target.files && image.target.files[0]) {
+    const handleImage = (image: Event): void => {
+      if (
+        (image.target as HTMLInputElement).files &&
+        (image.target as HTMLInputElement).files[0]
+      ) {
         const fileReader = new FileReader();
         fileReader.onload = (args) =>
           (newUserImage.value = args.target.result.toString());
-        fileReader.readAsDataURL(image.target.files[0]);
+        fileReader.readAsDataURL((image.target as HTMLInputElement).files[0]);
       }
     };
     const updateUserData = (): void => {

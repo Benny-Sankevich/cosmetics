@@ -1,57 +1,55 @@
 <template>
-  <div>
-    <q-card>
-      <q-card-section>
-        <q-form @submit="onSaveTreatment">
-          <q-input
-            autofocus
-            square
-            clearable
-            v-model="treatmentForm.name"
-            lazy-rules
-            :rules="nameRules"
-            :label="$t('name')"
-          >
-          </q-input>
-          <q-input
-            square
-            clearable
-            v-model="treatmentForm.price"
-            lazy-rules
-            :rules="priceRules"
-            :label="$t('price')"
-          >
-          </q-input>
-          <q-input
-            square
-            clearable
-            v-model="treatmentForm.duration"
-            lazy-rules
-            :rules="nameRules"
-            :label="$t('treatmentDuration')"
-          >
-          </q-input>
+  <q-card>
+    <q-card-section>
+      <q-form @submit="onSaveTreatment">
+        <q-input
+          autofocus
+          square
+          clearable
+          v-model="treatmentForm.name"
+          lazy-rules
+          :rules="nameRules"
+          :label="$t('name')"
+        >
+        </q-input>
+        <q-input
+          square
+          clearable
+          v-model="treatmentForm.price"
+          lazy-rules
+          :rules="priceRules"
+          :label="$t('price')"
+        >
+        </q-input>
+        <q-input
+          square
+          clearable
+          v-model="treatmentForm.duration"
+          lazy-rules
+          :rules="nameRules"
+          :label="$t('treatmentDuration')"
+        >
+        </q-input>
 
-          <q-card-actions align="right">
-            <q-btn
-              unelevated
-              @click="closeWindow"
-              color="secondary"
-              class="text-white"
-              :label="$t('cancel')"
-            />
-            <q-btn
-              unelevated
-              type="submit"
-              color="primary"
-              class="text-white"
-              :label="model === 'add' ? $t('save') : $t('update')"
-            />
-          </q-card-actions>
-        </q-form>
-      </q-card-section>
-    </q-card>
-  </div>
+        <q-card-actions align="right">
+          <q-btn
+            unelevated
+            @click="closeWindow"
+            color="secondary"
+            class="text-white"
+            :label="$t('cancel')"
+          />
+          <q-btn
+            unelevated
+            type="submit"
+            color="primary"
+            class="text-white"
+            :label="model === 'add' ? $t('save') : $t('update')"
+          />
+        </q-card-actions>
+      </q-form>
+    </q-card-section>
+  </q-card>
 </template>
 <script lang="ts">
 import { useStore } from '../../store';
