@@ -12,7 +12,7 @@
         style="overflow: auto"
       />
       <span class="text-h5 col-md-4 col-sm-12 col-xs-12">
-        {{ $t('yearReport') }}: {{ selectedYear }}</span
+        {{ $t('reportForYear') }}: {{ selectedYear }}</span
       >
     </div>
     <div class="col-12">

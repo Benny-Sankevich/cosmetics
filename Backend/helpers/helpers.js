@@ -35,6 +35,14 @@ function getRandomColor() {
     return '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
 
+function translationAdapter(translation) {
+    return {
+        _id: translation._id,
+        code: translation.code,
+        value: translation.en ? translation.en : translation.he,
+    }
+}
+
 module.exports = {
     getDateTimeNow,
     getToday,
@@ -44,5 +52,6 @@ module.exports = {
     calculateTotalPriceOfItem,
     chartDataLineAdapter,
     chartDataBarAdapter,
-    getRandomColor
+    getRandomColor,
+    translationAdapter
 }
