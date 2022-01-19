@@ -11,10 +11,9 @@ function addProductAsync(product) {
     return product.save();
 }
 
-async function updateProductAsync(product) {
+function updateProductAsync(product) {
     product.lastModified = helpers.getDateTimeNow();
-    const info = await ProductModel.updateOne({ _id: product._id }, product).exec();
-    return info.n ? product : null;
+    return ProductModel.findByIdAndUpdate(product._id, product, { returnOriginal: false }).exec();
 }
 
 async function deleteProductAsync(product) {

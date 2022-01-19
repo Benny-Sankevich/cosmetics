@@ -23,7 +23,6 @@ async function getTreatmentSummaryData(year, treatmentId) {
     }
     else {
         treatment = await treatmentLogic.getTreatmentByIdAsync(treatmentId);
-        // need to change the stack parameter
         return getDefaultSummaries('treatment', 'bar', treatment.name, treatmentId, year, 1, null, null, 'Stack 3', null);
     }
 }

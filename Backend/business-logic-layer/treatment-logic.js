@@ -7,17 +7,16 @@ function getAllTreatmentsAsync() {
 }
 
 function getTreatmentByIdAsync(_id) {
-    return TreatmentModel.findOne({ _id }).exec();
+    return TreatmentModel.findById(_id).exec();
 }
 function addTreatmentAsync(treatment) {
     treatment.createdDate = helpers.getDateTimeNow();
     return treatment.save();
 }
 
-async function updateTreatmentAsync(treatment) {
+function updateTreatmentAsync(treatment) {
     treatment.lastModified = helpers.getDateTimeNow();
-    const info = await TreatmentModel.updateOne({ _id: treatment._id }, treatment).exec();
-    return info.n ? treatment : null;
+    return TreatmentModel.findByIdAndUpdate(treatment._id, treatment, { returnOriginal: false }).exec();
 }
 
 async function deleteTreatmentAsync(treatment) {

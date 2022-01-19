@@ -29,8 +29,7 @@ async function updateSummariesData(dataType, treatmentId, year, month, monthlySu
         existingSummary = await addSummaries(newSummaries);
     }
     existingSummary.data[month - 1] = monthlySummary;
-    const info = await SummariesModel.updateOne({ _id: existingSummary._id }, existingSummary).exec();
-    return info.n ? existingSummary : null;
+    return SummariesModel.findByIdAndUpdate(existingSummary._id, existingSummary, { returnOriginal: false }).exec();
 }
 
 

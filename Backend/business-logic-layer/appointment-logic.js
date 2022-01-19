@@ -26,7 +26,7 @@ function getAllAppointmentsAwaitingApprovalAsync() {
     return AppointmentModel.find({ $and: [{ isConfirmed: false }, { isActive: true }] }).populate('user', ['_id', 'firstName', 'lastName', 'email', 'phoneNumber']).populate('treatment', ['_id', 'name']).exec();
 }
 function getAppointmentByIdAsync(_id) {
-    return AppointmentModel.findOne({ _id }).populate('user', ['_id', 'firstName', 'lastName', 'email', 'phoneNumber']).populate('treatment', ['_id', 'name']).exec();
+    return AppointmentModel.findById(_id).populate('user', ['_id', 'firstName', 'lastName', 'email', 'phoneNumber']).populate('treatment', ['_id', 'name']).exec();
 }
 
 async function addAppointmentAsync(appointment) {
@@ -38,10 +38,10 @@ async function addAppointmentAsync(appointment) {
 
 async function updateAppointmentAsync(appointment) {
     appointment.lastModified = helpers.getDateTimeNow();
-    const info = await AppointmentModel.updateOne({ _id: appointment._id }, appointment).exec();
-    if (info.n) {
-        updateAppointmentSummaries(appointment.dateTimeStart.getFullYear(), appointment.dateTimeStart.getMonth() + 1, appointment.treatmentId);
-        return getAppointmentByIdAsync(appointment._id);
+    const appointmentUpdated = await AppointmentModel.findByIdAndUpdate(appointment._id, appointment, { returnOriginal: false }).exec();
+    if (appointmentUpdated) {
+        updateAppointmentSummaries(appointmentUpdated.dateTimeStart.getFullYear(), appointmentUpdated.dateTimeStart.getMonth() + 1, appointmentUpdated.treatmentId);
+        return getAppointmentByIdAsync(appointmentUpdated._id);
     }
     return null;
 }
