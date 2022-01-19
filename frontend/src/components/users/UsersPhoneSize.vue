@@ -175,6 +175,7 @@ export default defineComponent({
     const closeDialog = (userForm: User): void => {
       if (userForm?._id) {
         selectedContact.value = userForm;
+        formData.value = new User();
       }
       show_dialog.value = false;
     };

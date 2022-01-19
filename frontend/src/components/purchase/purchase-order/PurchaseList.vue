@@ -3,13 +3,14 @@
     <q-table
       :rows="purchaseOrders"
       :columns="columns"
-      :title="$t('purchaseOrders')"
       row-key="name"
       binary-state-sort
       :rows-per-page-options="[15, 20, 30, 40, 0]"
       :filter="filter"
     >
-      <template v-slot:top-right>
+      <template v-slot:top>
+        <div class="col-2 q-table__title">{{ $t('purchaseOrders') }}</div>
+        <q-space />
         <q-input
           borderless
           dense
@@ -21,19 +22,15 @@
             <q-icon name="search" />
           </template>
         </q-input>
-      </template>
-
-      <template v-slot:top-left>
-        <div>
-          <q-btn
-            color="primary"
-            :label="$t('addOrder')"
-            @click="openCloseDialog()"
-            no-caps
-            icon="add"
-            class="q-mr-md"
-          ></q-btn>
-        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <q-btn
+          color="primary"
+          :label="$t('addOrder')"
+          @click="openCloseDialog()"
+          no-caps
+          icon="add"
+          class="q-mr-md"
+        ></q-btn>
         <AddEditPurchase
           v-if="show_dialog"
           :purchaseFormData="newPurchase"
@@ -119,6 +116,7 @@ export default defineComponent({
         label: i18n.global.t('orderNumber'),
         align: 'left',
         sortable: true,
+        field: 'orderNumber',
       },
       {
         name: 'companyName',
@@ -126,6 +124,7 @@ export default defineComponent({
         label: i18n.global.t('supplier'),
         align: 'left',
         sortable: true,
+        field: 'companyName',
       },
       {
         name: 'addVAT',
@@ -133,6 +132,7 @@ export default defineComponent({
         label: i18n.global.t('vat'),
         align: 'left',
         sortable: true,
+        field: 'addVAT',
       },
       {
         name: 'totalPrice',
@@ -140,6 +140,7 @@ export default defineComponent({
         label: i18n.global.t('total'),
         align: 'left',
         sortable: true,
+        field: 'totalPrice',
       },
       {
         name: 'orderDate',
@@ -147,6 +148,7 @@ export default defineComponent({
         label: i18n.global.t('orderDate'),
         align: 'left',
         sortable: true,
+        field: 'orderDate',
       },
       {
         name: 'createdDate',
@@ -154,14 +156,15 @@ export default defineComponent({
         label: i18n.global.t('createdDate'),
         align: 'left',
         sortable: true,
+        field: 'createdDate',
       },
-
       {
         name: 'isConfirmed',
         required: true,
         label: i18n.global.t('status'),
         align: 'left',
         sortable: true,
+        field: 'isConfirmed',
       },
       {
         name: 'actions',

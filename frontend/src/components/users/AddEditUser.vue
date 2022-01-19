@@ -134,11 +134,11 @@ export default defineComponent({
         userForm.value
       );
       showInfo(i18n.global.t('msgSavedSuccessfully'));
-      closeDialog(userForm.value);
+      closeDialog();
     };
 
-    const closeDialog = (userForm: User): void => {
-      emit('onCloseDialog', userForm);
+    const closeDialog = (): void => {
+      emit('onCloseDialog', userForm.value);
       onReset();
     };
     const onReset = (): void => {

@@ -19,7 +19,7 @@ export class ResetPassword {
   oldPassword: string;
 }
 
-export interface PurchaseItem {
+export interface PurchaseItemInterface {
   _id: string;
   purchaseOrderId: string;
   productId: string;
