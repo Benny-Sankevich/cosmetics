@@ -48,7 +48,7 @@ function getDefaultSummaries(dataType, type, label, treatmentId, year, borderWid
         borderColor: borColor ? borColor : undefined,
         backgroundColor: bgColor ? bgColor : helpers.getRandomColor(),
         stack: stack ? stack : undefined,
-        fill: fill ? fill : undefined,
+        fill: fill === false ? fill : undefined,
     });
 }
 
