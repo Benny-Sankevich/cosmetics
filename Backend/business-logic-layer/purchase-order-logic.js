@@ -8,7 +8,7 @@ function getAllPurchaseOrdersAsync() {
 }
 
 function getPurchaseOrderAsync(_id) {
-    return PurchaseOrderModel.findOne({ _id }).populate("supplier").exec();
+    return PurchaseOrderModel.findById(_id).populate("supplier").exec();
 }
 
 function getCountPurchaseOrderAsync() {
@@ -28,11 +28,10 @@ async function createNewOrderNumberAsync(purchaseOrder) {
 
 async function updatePurchaseOrderAsync(purchaseOrder) {
     purchaseOrder.lastModified = helpers.getDateTimeNow();
-    const info = await PurchaseOrderModel.updateOne({ _id: purchaseOrder._id }, purchaseOrder).exec();
-    if (info.n) {
-        const purchaseOrderUpdated = await getPurchaseOrderAsync(purchaseOrder._id);
+    const purchaseOrderUpdated = await PurchaseOrderModel.findByIdAndUpdate(purchaseOrder._id, purchaseOrder, { returnOriginal: false }).exec();
+    if (purchaseOrderUpdated) {
         updateSummaries(purchaseOrderUpdated.orderDate.getFullYear(), purchaseOrderUpdated.orderDate.getMonth() + 1)
-        return purchaseOrderUpdated;
+        return await getPurchaseOrderAsync(purchaseOrderUpdated._id);;
     }
     return null;
 }

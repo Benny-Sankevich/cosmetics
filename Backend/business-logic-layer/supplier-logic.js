@@ -11,10 +11,9 @@ function addSupplierAsync(supplier) {
     return supplier.save();
 }
 
-async function updateSupplierAsync(supplier) {
+function updateSupplierAsync(supplier) {
     supplier.lastModified = helpers.getDateTimeNow();
-    const info = await SupplierModel.updateOne({ _id: supplier._id }, supplier).exec();
-    return info.n ? supplier : null;
+    return SupplierModel.findByIdAndUpdate(supplier._id, supplier, { returnOriginal: false }).exec();
 }
 
 async function deleteSupplierAsync(supplier) {

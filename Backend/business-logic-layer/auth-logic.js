@@ -36,17 +36,16 @@ async function updateUserDataAsync(user) {
     user.password = cryptoHelper.hash(user.password);
     user.oldPassword = undefined;
     user.lastModified = helpers.getDateTimeNow();
-    const info = await ResetPasswordModel.updateOne({ _id: user._id }, user).exec();
-    return info.n ? changeTokenAndPasswordOfUser(user) : null;
+    const info = await ResetPasswordModel.findByIdAndUpdate(user._id, user, { returnOriginal: false }).exec();
+    return info ? changeTokenAndPasswordOfUser(user) : null;
 }
 
-async function updateLastLoginAsync(userId) {
+function updateLastLoginAsync(userId) {
     const user = new UserRegisterModel({
         _id: userId,
         lastLogin: helpers.getDateTimeNow(),
     });
-    const info = await UserRegisterModel.updateOne({ _id: user._id }, user).exec();
-    return info.n ? user : null;
+    return UserRegisterModel.findByIdAndUpdate(user._id, user, { returnOriginal: false }).exec();
 }
 
 function changeTokenAndPasswordOfUser(user) {

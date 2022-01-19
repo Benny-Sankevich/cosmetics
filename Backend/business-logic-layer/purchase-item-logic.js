@@ -18,9 +18,12 @@ async function addPurchaseItemAsync(item) {
 async function updatePurchaseItemAsync(item) {
     item.lastModified = helpers.getDateTimeNow();
     item.totalPrice = await helpers.calculateTotalPriceOfItem(item);
-    const info = await PurchaseItemModel.updateOne({ _id: item._id }, item).exec();
-    calculateTotalPriceOfOrder(item.purchaseOrderId);
-    return info.n ? item : null;
+    const itemUpdated = await PurchaseItemModel.findByIdAndUpdate(item._id, item, { returnOriginal: false }).exec();
+    if (itemUpdated) {
+        calculateTotalPriceOfOrder(item.purchaseOrderId);
+        return itemUpdated;
+    }
+    return null;
 }
 
 async function deletePurchaseItemAsync(item) {

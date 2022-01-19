@@ -35,7 +35,7 @@ router.post("/add-purchase-order", async (request, response) => {
     try {
         const purchaseOrder = new PurchaseOrderModel(request.body);
         const error = purchaseOrder.validateSync();
-        if (error) return response.status(400).send(errorHelper.getError(error));   
+        if (error) return response.status(400).send(errorHelper.getError(error));
         const purchaseOrderAdded = await purchaseOrderLogic.addPurchaseOrderAsync(purchaseOrder);
         response.status(201).json(purchaseOrderAdded);
     }

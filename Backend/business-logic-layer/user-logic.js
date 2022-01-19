@@ -26,8 +26,7 @@ async function updateUserAsync(user, image) {
     }
     user.lastModified = helpers.getDateTimeNow();
     user.oldImageName = null;
-    const info = await UserModel.updateOne({ _id: user._id }, user).exec();
-    return info.n ? user : null;
+    return UserModel.findByIdAndUpdate(user._id, user, { returnOriginal: false }).exec();
 }
 
 function checkImageExtension(imageName) {
