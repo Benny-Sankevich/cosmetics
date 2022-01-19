@@ -14,7 +14,9 @@ export class Supplier {
 }
 
 export class PurchaseOrder {
-  constructor(){
+  constructor() {
+    this.supplierId = null;
+    this.orderDate = null;
     this.addVAT = false;
   }
   _id: string;

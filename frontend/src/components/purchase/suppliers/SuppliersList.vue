@@ -3,13 +3,14 @@
     <q-table
       :rows="suppliers"
       :columns="columns"
-      title="Suppliers"
       row-key="name"
       binary-state-sort
-      :rows-per-page-options="[20]"
+      :rows-per-page-options="[15, 20, 30, 40, 0]"
       :filter="filter"
     >
-      <template v-slot:top-right>
+      <template v-slot:top>
+        <div class="col-2 q-table__title">{{ $t('supplierList') }}</div>
+        <q-space />
         <q-input
           borderless
           dense
@@ -21,20 +22,15 @@
             <q-icon name="search" />
           </template>
         </q-input>
-      </template>
-
-      <template v-slot:top-left>
-        <div>
-          <q-btn
-            color="primary"
-            :label="$t('addSupplier')"
-            @click="openDialog(null, 'add')"
-            no-caps
-            icon="add"
-            class="q-mr-md"
-          ></q-btn>
-        </div>
-
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <q-btn
+          color="primary"
+          :label="$t('addSupplier')"
+          @click="openDialog(null, 'add')"
+          no-caps
+          icon="add"
+          class="q-mr-md"
+        />
         <AddEditSupplier
           :supplier="formData"
           :model="model"

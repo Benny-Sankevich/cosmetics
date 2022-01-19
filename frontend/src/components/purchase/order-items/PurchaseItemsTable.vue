@@ -73,8 +73,8 @@ import {
   functionsService,
   areYouSureDialog,
 } from '../../../core/Export';
-import { PurchaseItem } from '../../../models/general-models';
-import { PurchaseOrder } from '../../../store/purchase/models';
+import { PurchaseItemInterface } from '../../../models/general-models';
+import { PurchaseItem, PurchaseOrder } from '../../../store/purchase/models';
 
 export default defineComponent({
   props: {
@@ -94,19 +94,17 @@ export default defineComponent({
     const data = ref([]);
     const VAT = ref(1);
     const model = ref(null);
-    const purchaseItem = ref({
-      purchaseOrderId: props.purchaseOrder?._id,
-      productId: null,
-      price: null,
-      amount: null,
-    });
+    const purchaseItem = ref(new PurchaseItem());
+    purchaseItem.value.purchaseOrderId = functionsService.copyStoreData(
+      props.purchaseOrder?._id
+    );
 
     if (props.purchaseOrder.addVAT) {
       VAT.value = 1.17;
     }
     const getPurchaseItems = (): void => {
       apiService.getItemsByOrderId(props.purchaseOrder?._id).then((res) => {
-        data.value = res as PurchaseItem[];
+        data.value = res as PurchaseItemInterface[];
         if (data.value.length > 0) {
           calculateTotalSumOfOrder();
         }
