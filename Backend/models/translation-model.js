@@ -7,26 +7,26 @@ const TranslationSchema = mongoose.Schema({
         minLength: [2, "Code must be minimum 2 chars."],
         maxLength: [40, "Code can`t exceed 40 chars."],
     },
-    value: {
+    en: {
         type: String,
         required: [true, "Missing value."],
         minLength: [2, "Value must be minimum 2 chars."],
         maxLength: [50, "Value can`t exceed 50 chars."],
-        match: [/^[A-Zא-ת].*$/, "Value  must start with a capital letter."]
+        match: [/^[A-Z].*$/, "Value  must start with a capital letter."]
     },
-    languageCode: {
+    he: {
         type: String,
-        required: [true, "Missing language code."],
-        minLength: [2, "Language code must be minimum 2 chars."],
-        maxLength: [20, "Language code can`t exceed 20 chars."],
+        required: [true, "Missing value."],
+        minLength: [2, "Value must be minimum 2 chars."],
+        maxLength: [50, "Value can`t exceed 50 chars."],
+        match: [/^[א-ת].*$/, "Value  must start with a capital letter."]
     },
-    moduleName: {
+    createdDate: {
         type: String,
-        required: [true, "Missing module name."],
-        minLength: [2, "Module name must be minimum 2 chars."],
-        maxLength: [20, "Module name can`t exceed 20 chars."],
-        match: [/^[A-Zא-ת].*$/, "Module name  must start with a capital letter."]
-    }
+    },
+    lastModified: {
+        type: String,
+    },
 },
     {
         versionKey: false,
