@@ -85,7 +85,7 @@ export default defineComponent({
         `${AppConstants.TreatmentModule}/${actionType}`,
         treatmentForm.value
       );
-      showInfo(i18n.global.t('msgSaveSavedSuccessfully'));
+      showInfo(i18n.global.t('msgSavedSuccessfully'));
       closeWindow();
     };
     const closeWindow = (): void => {
