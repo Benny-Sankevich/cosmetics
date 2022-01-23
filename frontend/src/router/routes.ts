@@ -4,6 +4,7 @@ import { AppConstants, i18n } from '../core/Export';
 import resolveMainData from '../resolvers/MainResolver';
 import resolveDashboard from '../resolvers/dashboard/DashboardResolver';
 import LoginPage from '../pages/LoginPage.vue';
+import LockScreenPage from '../pages/LockScreenPage.vue';
 import BlankLayout from '../layouts/BlankLayout.vue';
 import MainLayout from '../layouts/MainLayout.vue';
 import CustomerLayout from '../layouts/CustomerLayout.vue';
@@ -26,6 +27,11 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: AppConstants.Routes.Login,
         component: LoginPage,
+      },
+      {
+        path: 'lock',
+        name: AppConstants.Routes.LockScreen,
+        component: LockScreenPage,
       },
       {
         path: 'about',

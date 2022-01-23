@@ -68,7 +68,12 @@ httpClient.interceptors.response.use(
       Loading.hide();
     }
     if (error.response?.status === 403) {
-      Router.push('/');
+      if (error.response?.data === 'msgSessionExpired') {
+        Router.push({ name: AppConstants.Routes.LockScreen });
+      }
+      else{
+        Router.push({ name: AppConstants.Routes.Login });
+      }
     }
     showError(i18n.global.t(error.response?.data));
     return Promise.reject(error);
