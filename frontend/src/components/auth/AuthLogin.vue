@@ -1,50 +1,47 @@
 <template>
-    <q-card-section>
-      <q-form @submit="onLogin" class="q-px-sm q-pt-xl">
-        <q-input
-          square
-          clearable
-          v-model="loginForm.email"
-          lazy-rules
-          :rules="emailRules"
-          :label="$t('email')"
-        >
-          <template v-slot:prepend>
-            <q-icon name="email" />
-          </template>
-        </q-input>
-        <q-input
-          square
-          clearable
-          v-model="loginForm.password"
-          :type="passwordFieldType"
-          lazy-rules
-          :rules="passwordRules"
-          :label="$t('password')"
-        >
-          <template v-slot:prepend>
-            <q-icon name="lock" />
-          </template>
-          <template v-slot:append>
-            <q-icon
-              :name="visibilityIcon"
-              @click="switchVisibility"
-              class="cursor-pointer"
-            />
-          </template>
-        </q-input>
-        <q-card-actions class="q-px-lg">
-          <q-btn
-            unelevated
-            type="submit"
-            size="lg"
-            color="primary"
-            class="full-width text-white"
-            :label="$t('login')"
+  <q-card-section>
+    <q-form @submit="onLogin" class="q-px-sm q-pt-xl">
+      <q-input
+        square
+        clearable
+        v-model="loginForm.email"
+        lazy-rules
+        :rules="emailRules"
+        :label="$t('email')"
+      >
+        <template v-slot:prepend>
+          <q-icon name="email" />
+        </template>
+      </q-input>
+      <q-input
+        square
+        clearable
+        v-model="loginForm.password"
+        :type="passwordFieldType"
+        lazy-rules
+        :rules="passwordRules"
+        :label="$t('password')"
+      >
+        <template v-slot:append>
+          <q-icon
+            :name="visibilityIcon"
+            @click="switchVisibility"
+            class="cursor-pointer"
           />
-        </q-card-actions>
-      </q-form>
-    </q-card-section>
+        </template>
+      </q-input>
+      <q-card-actions class="q-px-lg">
+        <q-btn
+          unelevated
+          type="submit"
+          size="lg"
+          color="primary"
+          class="full-width text-white"
+          :label="$t('login')"
+        />
+      </q-card-actions>
+    </q-form>
+  </q-card-section>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
@@ -60,7 +57,7 @@ export default defineComponent({
     const passwordFieldType = ref('password');
     const visibility = ref(false);
     const visibilityIcon = ref('visibility');
-    let loginForm = ref(new LoginForm());
+    const loginForm = ref(new LoginForm());
     loginForm.value.email = 'admin@gmail.com';
     loginForm.value.password = 'pass4admin!';
     const onLogin = (): void => {

@@ -66,7 +66,7 @@
   </q-page>
 </template>
 
-<script>
+<script lang="ts">
 import {
   QCalendarMonth,
   daysBetween,
@@ -88,14 +88,18 @@ import {
 import { useStore } from '../../store';
 import { AppConstants } from '../../core/Export';
 import { Appointment } from '../../store/appointments/models';
+import {
+  CalendarEventInterface,
+  SizeInterface,
+} from '../../models/general-models';
 
 export default defineComponent({
   components: {
     QCalendarMonth,
     NavigationBar: defineAsyncComponent(() => import('./NavigationBar.vue')),
     AddEditMeeting: defineAsyncComponent(() => import('./AddEditMeeting.vue')),
-    ShowMeetingData: defineAsyncComponent(() =>
-      import('./ShowMeetingData.vue')
+    ShowMeetingData: defineAsyncComponent(
+      () => import('./ShowMeetingData.vue')
     ),
   },
   setup() {
@@ -108,6 +112,7 @@ export default defineComponent({
     const eventToShow = ref(null);
     const eventToEdit = ref(null);
     const model = ref(null);
+    const calendar = ref(null);
 
     const appointments = computed(
       () =>
@@ -116,35 +121,34 @@ export default defineComponent({
         ]
     );
 
-    const containerStyle = () => {
-      const styles = {
+    const containerStyle = (): SizeInterface => {
+      return {
         height: 'auto',
         width: 'auto',
       };
-      return styles;
     };
-    const updateData = () => {
+    const updateData = (): void => {
       if (appointments.value.length > 0) {
         events.value = [];
         appointments.value.forEach((appointment) => {
-          events.value.push({
-            _id: appointment._id,
-            userId: appointment.userId,
-            treatmentId: appointment.treatmentId,
-            name: appointment.treatment.name,
-            firstName: appointment.user.firstName,
-            lastName: appointment.user.lastName,
-            start: appointment.dateTimeStart.slice(0, 10),
-            end: appointment.dateTimeEnd.slice(0, 10),
-            startTime: appointment.dateTimeStart.slice(11, 16),
-            endTime: appointment.dateTimeEnd.slice(11, 16),
-            bgcolor: appointment.bgColor,
-            email: appointment.user.email,
-            phoneNumber: appointment.user.phoneNumber,
-            allDay: appointment.allDay,
-            isConfirmed: appointment.isConfirmed,
-            note: appointment.note,
-          });
+          const newEvent = new CalendarEventInterface();
+          (newEvent._id = appointment._id),
+            (newEvent.userId = appointment.userId),
+            (newEvent.treatmentId = appointment.treatmentId),
+            (newEvent.name = appointment.treatment.name),
+            (newEvent.firstName = appointment.user.firstName),
+            (newEvent.lastName = appointment.user.lastName),
+            (newEvent.start = appointment.dateTimeStart.slice(0, 10)),
+            (newEvent.end = appointment.dateTimeEnd.slice(0, 10)),
+            (newEvent.startTime = appointment.dateTimeStart.slice(11, 16)),
+            (newEvent.endTime = appointment.dateTimeEnd.slice(11, 16)),
+            (newEvent.bgcolor = appointment.bgColor),
+            (newEvent.email = appointment.user.email),
+            (newEvent.phoneNumber = appointment.user.phoneNumber),
+            (newEvent.allDay = appointment.allDay),
+            (newEvent.isConfirmed = appointment.isConfirmed),
+            (newEvent.note = appointment.note),
+            events.value.push(newEvent);
         });
       }
     };
@@ -152,7 +156,7 @@ export default defineComponent({
     watch(appointments.value, () => {
       updateData();
     });
-    const badgeClasses = (computedEvent) => {
+    const badgeClasses = (computedEvent: any): any => {
       if (computedEvent.event !== undefined) {
         return {
           'my-event': true,
@@ -166,14 +170,14 @@ export default defineComponent({
         'my-void-event': true,
       };
     };
-    const badgeStyles = (computedEvent, weekLength) => {
-      const s = {};
+    const badgeStyles = (computedEvent: any, weekLength: any): any => {
+      const s = { width: '' };
       if (computedEvent.size !== undefined) {
         s.width = (100 / weekLength) * computedEvent.size + '%';
       }
       return s;
     };
-    const getWeekEvents = (week) => {
+    const getWeekEvents = (week: Array<any>): any => {
       const firstDay = parsed(week[0].date + ' 00:00');
       const lastDay = parsed(week[week.length - 1].date + ' 23:59');
       const eventsWeek = [];
@@ -184,11 +188,11 @@ export default defineComponent({
           const left = daysBetween(firstDay, startDate, true);
           const right = daysBetween(endDate, lastDay, true);
           eventsWeek.push({
-            _id, // index event
-            left, // Position initial day [0-6]
-            right, // Number days available
-            size: week.length - (left + right), // Size current event (in days)
-            event, // Info
+            _id,
+            left,
+            right,
+            size: week.length - (left + right),
+            event,
           });
         }
       });
@@ -202,24 +206,20 @@ export default defineComponent({
       return events1;
     };
     const insertEvent = (
-      events,
-      weekLength,
-      infoWeek,
-      index,
-      availableDays,
-      level
-    ) => {
+      events: Array<any>,
+      weekLength: number,
+      infoWeek: Array<any>,
+      index: number,
+      availableDays: number,
+      level: number
+    ): void => {
       const iEvent = infoWeek[index];
       if (iEvent !== undefined && iEvent.left >= availableDays) {
-        // If you have space available, more events are placed
         if (iEvent.left - availableDays) {
-          // It is filled with empty events
           events.push({ size: iEvent.left - availableDays });
         }
-        // The event is built
         events.push({ size: iEvent.size, event: iEvent.event });
         if (level !== 0) {
-          // If it goes into recursion, then the item is deleted
           infoWeek.splice(index, 1);
         }
         const currentAvailableDays = iEvent.left + iEvent.size;
@@ -236,18 +236,17 @@ export default defineComponent({
             currentAvailableDays,
             level + 1
           );
-        } // else: There are no more days available, end of iteration
+        }
       } else {
         events.push({ size: weekLength - availableDays });
-        // end of iteration
       }
     };
-    const showEvent = (event) => {
+    const showEvent = (event: Appointment): void => {
       eventToShow.value = event;
       show_event.value = true;
     };
 
-    const openAddEvent = ({ scope }) => {
+    const openAddEvent = ({ scope }: any): void => {
       eventToEdit.value = new Appointment();
       eventToEdit.value.dateTimeStart = scope.timestamp.date + ' 08:00';
       eventToEdit.value.dateTimeEnd = scope.timestamp.date + ' 09:00';
@@ -256,23 +255,36 @@ export default defineComponent({
       model.value = 'add';
       show_add_edit_dialog.value = true;
     };
-    const closeAddEditEvent = () => {
+    const closeAddEditEvent = (): void => {
       show_add_edit_dialog.value = false;
     };
-    const closeEventToShowDialog = (event) => {
+    const closeEventToShowDialog = (event: CalendarEventInterface): void => {
       show_event.value = false;
       if (event) {
         openAddEditEvent(event);
       }
     };
-    const openAddEditEvent = (payload) => {
+    const openAddEditEvent = (payload: CalendarEventInterface): void => {
       eventToEdit.value = payload;
       eventToEdit.value.dateTimeStart = payload.start + ' ' + payload.startTime;
       eventToEdit.value.dateTimeEnd = payload.end + ' ' + payload.endTime;
       model.value = 'edit';
       show_add_edit_dialog.value = true;
     };
+    const onToday = (): void => {
+      calendar.value.moveToToday();
+    };
+    const onPrev = (): void => {
+      calendar.value.prev();
+    };
+    const onNext = (): void => {
+      calendar.value.next();
+    };
     return {
+      calendar,
+      onToday,
+      onPrev,
+      onNext,
       model,
       show_event,
       eventToShow,
@@ -289,17 +301,6 @@ export default defineComponent({
       getWeekEvents,
       openAddEvent,
     };
-  },
-  methods: {
-    onToday() {
-      this.$refs.calendar.moveToToday();
-    },
-    onPrev() {
-      this.$refs.calendar.prev();
-    },
-    onNext() {
-      this.$refs.calendar.next();
-    },
   },
 });
 </script>

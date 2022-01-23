@@ -61,7 +61,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { exportFile } from 'quasar';
 import { defineComponent, ref, computed } from 'vue';
 import {
@@ -94,7 +94,7 @@ export default defineComponent({
       column.label = i18n.global.t(column.label);
     }
 
-    const exportTable = () => {
+    const exportTable = (): void => {
       const content = [columns.value.map((col) => wrapCsvValue(col.label))]
         .concat(
           reportProperties.value.rows.map((row) =>
@@ -103,8 +103,7 @@ export default defineComponent({
                 wrapCsvValue(
                   typeof col.field === 'function'
                     ? col.field(row)
-                    : row[col.field === void 0 ? col.name : col.field],
-                  col.format
+                    : row[col.field === void 0 ? col.name : col.field]
                 )
               )
               .join(',')
@@ -116,8 +115,8 @@ export default defineComponent({
 
       if (!status) showError(i18n.global.t('msgBrowserDeniedFileDownload'));
     };
-    const wrapCsvValue = (val, formatFn) => {
-      let formatted = formatFn !== void 0 ? formatFn(val) : val;
+    const wrapCsvValue = (val: any): string => {
+      let formatted = val;
 
       formatted =
         formatted === void 0 || formatted === null ? '' : String(formatted);

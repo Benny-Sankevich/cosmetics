@@ -8,7 +8,7 @@
 
         <div class="row">
           <AboutIcon />
-          <q-space />
+         &nbsp;&nbsp;&nbsp;
           <LanguageAvatar />
         </div>
       </q-toolbar>

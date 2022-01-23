@@ -1,106 +1,100 @@
 <template>
-    <q-card-section>
-      <q-form @submit="onRegister" class="q-px-sm q-pt-xl">
-        <q-input
-          square
-          clearable
-          v-model="registerForm.firstName"
-          lazy-rules
-          :rules="nameRules"
-          :label="$t('firstName')"
-        >
-          <template v-slot:prepend>
-            <q-icon name="person" />
-          </template>
-        </q-input>
-        <q-input
-          square
-          clearable
-          v-model="registerForm.lastName"
-          lazy-rules
-          :rules="nameRules"
-          :label="$t('lastName')"
-        >
-          <template v-slot:prepend>
-            <q-icon name="person" />
-          </template>
-        </q-input>
-        <q-input
-          square
-          clearable
-          v-model="registerForm.phoneNumber"
-          lazy-rules
-          :rules="phoneNumberRules"
-          :label="$t('phoneNumber')"
-        >
-          <template v-slot:prepend>
-            <q-icon name="smartphone" />
-          </template>
-        </q-input>
-        <q-input
-          square
-          clearable
-          v-model="registerForm.email"
-          lazy-rules
-          :rules="emailRegisterRules"
-          :label="$t('email')"
-        >
-          <template v-slot:prepend>
-            <q-icon name="email" />
-          </template>
-        </q-input>
-        <q-input
-          square
-          clearable
-          v-model="registerForm.password"
-          :type="passwordFieldType"
-          lazy-rules
-          :rules="passwordRules"
-          :label="$t('password')"
-        >
-          <template v-slot:prepend>
-            <q-icon name="lock" />
-          </template>
-          <template v-slot:append>
-            <q-icon
-              :name="visibilityIcon"
-              @click="switchVisibility"
-              class="cursor-pointer"
-            />
-          </template>
-        </q-input>
-        <q-input
-          square
-          clearable
-          v-model="repassword"
-          :type="passwordFieldType"
-          lazy-rules
-          :rules="repasswordRules"
-          :label="$t('repassword')"
-        >
-          <template v-slot:prepend>
-            <q-icon name="lock" />
-          </template>
-          <template v-slot:append>
-            <q-icon
-              :name="visibilityIcon"
-              @click="switchVisibility"
-              class="cursor-pointer"
-            />
-          </template>
-        </q-input>
-        <q-card-actions class="q-px-lg">
-          <q-btn
-            unelevated
-            type="submit"
-            size="lg"
-            color="primary"
-            class="full-width text-white"
-            :label="$t('register')"
+  <q-card-section>
+    <q-form @submit="onRegister" class="q-px-sm q-pt-xl">
+      <q-input
+        square
+        clearable
+        v-model="registerForm.firstName"
+        lazy-rules
+        :rules="nameRules"
+        :label="$t('firstName')"
+      >
+        <template v-slot:prepend>
+          <q-icon name="person" />
+        </template>
+      </q-input>
+      <q-input
+        square
+        clearable
+        v-model="registerForm.lastName"
+        lazy-rules
+        :rules="nameRules"
+        :label="$t('lastName')"
+      >
+        <template v-slot:prepend>
+          <q-icon name="person" />
+        </template>
+      </q-input>
+      <q-input
+        square
+        clearable
+        v-model="registerForm.phoneNumber"
+        lazy-rules
+        :rules="phoneNumberRules"
+        :label="$t('phoneNumber')"
+      >
+        <template v-slot:prepend>
+          <q-icon name="smartphone" />
+        </template>
+      </q-input>
+      <q-input
+        square
+        clearable
+        v-model="registerForm.email"
+        lazy-rules
+        :rules="emailRegisterRules"
+        :label="$t('email')"
+      >
+        <template v-slot:prepend>
+          <q-icon name="email" />
+        </template>
+      </q-input>
+      <q-input
+        square
+        clearable
+        v-model="registerForm.password"
+        :type="passwordFieldType"
+        lazy-rules
+        :rules="passwordRules"
+        :label="$t('password')"
+      >
+        <template v-slot:append>
+          <q-icon
+            :name="visibilityIcon"
+            @click="switchVisibility"
+            class="cursor-pointer"
           />
-        </q-card-actions>
-      </q-form>
-    </q-card-section>
+        </template>
+      </q-input>
+      <q-input
+        square
+        clearable
+        v-model="repassword"
+        :type="passwordFieldType"
+        lazy-rules
+        :rules="repasswordRules"
+        :label="$t('repassword')"
+      >
+        <template v-slot:append>
+          <q-icon
+            :name="visibilityIcon"
+            @click="switchVisibility"
+            class="cursor-pointer"
+          />
+        </template>
+      </q-input>
+      <q-card-actions class="q-px-lg">
+        <q-btn
+          unelevated
+          type="submit"
+          size="lg"
+          color="primary"
+          class="full-width text-white"
+          :label="$t('register')"
+        />
+      </q-card-actions>
+    </q-form>
+  </q-card-section>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';

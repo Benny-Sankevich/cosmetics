@@ -17,9 +17,7 @@
             >
 
             <q-space></q-space>
-            <q-btn @click="logout" flat round dense icon="logout" size="sm">
-              <q-tooltip>{{ $t('logout') }}</q-tooltip>
-            </q-btn>
+            <AuthLogout />
           </q-toolbar>
         </div>
         <div class="row">
@@ -36,15 +34,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent, defineAsyncComponent, computed } from 'vue';
 import { useStore } from '../../store';
-import { AppConstants, i18n, showInfo } from '../../core/Export';
-import { useRouter } from 'vue-router';
+import { AppConstants } from '../../core/Export';
 
 export default defineComponent({
+  components: {
+    AuthLogout: defineAsyncComponent(() => import('../auth/AuthLogout.vue')),
+  },
   setup() {
     const store = useStore();
-    const router = useRouter();
     const pathUrl = process.env.imagesUrl;
     const user = computed(
       () =>
@@ -52,18 +51,9 @@ export default defineComponent({
           `${AppConstants.AuthModule}/${AppConstants.Auth.GetAuthUser}`
         ]
     );
-    const logout = (): void => {
-      store.dispatch(
-        `${AppConstants.AuthModule}/${AppConstants.Auth.ActionAuthLoggedOut}`
-      );
-      showInfo(i18n.global.t('msgYouHaveBeenLogout'));
-      router.push({ name: AppConstants.Routes.Login });
-    };
     return {
       pathUrl,
       user,
-      logout,
-      logoutLink: '',
       profileSettingsRoute: {
         name: AppConstants.Routes.ProfileSettings,
       },

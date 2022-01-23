@@ -56,16 +56,12 @@ export default defineComponent({
       () => import('../components/auth/AuthRegister.vue')
     ),
   },
-  data() {
-    const visibility = ref(false);
-    const visibilityIcon = ref('visibility');
+  setup() {
     const currentScreen = ref('login');
     const switchTypeForm = (type: string): void => {
       currentScreen.value = type;
     };
     return {
-      visibility,
-      visibilityIcon,
       currentScreen,
       switchTypeForm,
     };

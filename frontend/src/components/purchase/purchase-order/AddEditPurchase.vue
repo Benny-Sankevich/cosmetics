@@ -2,7 +2,7 @@
   <q-dialog v-model="show_dialog" persistent>
     <q-card style="width: 400px">
       <q-toolbar class="bg-primary text-white">
-        <q-toolbar-title>{{ $t('addOrder') }}</q-toolbar-title>
+        <q-toolbar-title>{{ $t(model) }}</q-toolbar-title>
         <q-btn
           flat
           round
@@ -97,7 +97,7 @@ export default defineComponent({
     },
     model: {
       type: String,
-      required: false,
+      required: true,
     },
   },
 

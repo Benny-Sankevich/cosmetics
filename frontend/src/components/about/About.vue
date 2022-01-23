@@ -52,7 +52,7 @@
       <div class="q-pa-sm text-grey-8">
         <span class="text-h6"
           >The website was built for a freelance beautician.<br />
-          Using lately Program language Frontend: Vue.js TS, Backend Node.js,
+          Using Program language Frontend: Vue.js TS, Backend Node.js,
           Database MongoDB. <br />
           The website contains a variety of options following needs: </span
         ><br /><br />
@@ -63,16 +63,18 @@
           <br />
           3. Monthly calendar with option to add appointments.<br />
           4. Yearly reports with data segmentation.<br />
+          5. Reports include an option to filter results and export them to an
+          Excel file. <br />
 
-          5. Purchase order. (Add\Edit\Delete) and the data exists in
+          6. Purchase order. (Add\Edit\Delete) and the data exists in
           reports.<br />
-          6. The site supports multiple languages. (Hebrew and English)<br />
+          7. The site supports multiple languages. (Hebrew and English)<br />
 
-          7. Customers can register.<br /><br />
+          8. Customers can register.<br /><br />
         </span>
         <span class="text-weight-bold">
-          The website is developed, Additional options will be in the more
-          future.</span
+          The website is under construction, Additional options will be added in
+          the future.</span
         >
       </div>
     </q-card-section>
