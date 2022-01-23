@@ -40,7 +40,6 @@
         class="no-shadow no-border"
         :rows="awaitingApproval"
         :columns="columns"
-        hide-bottom
         row-key="_id"
         selection="multiple"
         v-model:selected="selected"
