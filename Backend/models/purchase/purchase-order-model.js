@@ -23,10 +23,6 @@ const PurchaseOrderSchema = mongoose.Schema({
     lastModified: {
         type: String,
     },
-    addVAT: {
-        type: Boolean,
-        required: [true, "Missing add VAT."],
-    },
     isActive: {
         type: Boolean,
         default: true

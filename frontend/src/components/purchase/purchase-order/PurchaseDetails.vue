@@ -48,10 +48,6 @@
         {{ $t('createdDate') }}:
         {{ purchaseData.createdDate.slice(0, 10) }}
       </q-item-label>
-      <q-item-label caption class="text-black">
-        {{ $t('vat') }}:
-        {{ purchaseData.addVAT ? '17%' : '0%' }}
-      </q-item-label>
     </q-item-section>
   </q-item>
 </template>

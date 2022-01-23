@@ -92,16 +92,12 @@ export default defineComponent({
     const show_dialog = ref(false);
     const totalSum = ref(0);
     const data = ref([]);
-    const VAT = ref(1);
     const model = ref(null);
     const purchaseItem = ref(new PurchaseItem());
     purchaseItem.value.purchaseOrderId = functionsService.copyStoreData(
       props.purchaseOrder?._id
     );
 
-    if (props.purchaseOrder.addVAT) {
-      VAT.value = 1.17;
-    }
     const getPurchaseItems = (): void => {
       apiService.getItemsByOrderId(props.purchaseOrder?._id).then((res) => {
         data.value = res as PurchaseItemInterface[];
@@ -196,8 +192,7 @@ export default defineComponent({
       }
     };
     const calculateTotalSumOfOrder = (): void => {
-      totalSum.value =
-        functionsService.calculateTotalPriceArray(data.value) * VAT.value;
+      totalSum.value = functionsService.calculateTotalPriceArray(data.value);
     };
 
     return {

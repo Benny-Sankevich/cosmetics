@@ -52,10 +52,6 @@
               </q-icon>
             </template>
           </q-input>
-          <q-checkbox
-            v-model="purchaseForm.addVAT"
-            :label="$t('addVAT') + '?'"
-          />
           <q-card-actions align="right">
             <q-btn
               unelevated
