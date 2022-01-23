@@ -78,6 +78,7 @@ export default defineComponent({
     const getData = (year: number): void => {
       apiService.getReportDataByYear(year).then((res) => {
         barChart.value.data.datasets = res as YearReportData[];
+        addTranslationToLabel();
         reportsChart.value.update();
       });
     };
@@ -87,6 +88,13 @@ export default defineComponent({
       getData(year);
     });
 
+    const addTranslationToLabel = () => {
+      barChart.value.data.datasets.map((d) =>
+        d.dataType !== 'treatment'
+          ? (d.label = i18n.global.t(d.label))
+          : d.label
+      );
+    };
     return {
       barChart,
       reportsChart,

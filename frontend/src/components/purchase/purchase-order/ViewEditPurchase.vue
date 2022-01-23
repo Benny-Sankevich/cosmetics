@@ -11,6 +11,7 @@
         <AddEditPurchase
           v-if="show_dialog"
           :purchaseFormData="purchaseData"
+          :model="'editOrder'"
           @onCloseDialog="openCloseDialog"
         />
         <PurchaseItemsTable :purchaseOrder="purchaseData" />

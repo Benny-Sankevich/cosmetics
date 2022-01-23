@@ -1,11 +1,15 @@
 <template>
   <div class="q-gutter-md">
-    <q-btn v-if="isHomePage" round size="sm" :label="$t('login')">
+    <q-btn v-if="isHomePage" round size="sm">
+      <q-avatar size="sm">
+        <q-icon name="login" />
+      </q-avatar>
       <router-link
         exact
         :to="loginRoute"
         class="absolute full-width full-height"
       ></router-link>
+      <q-tooltip>{{ $t('login') }}</q-tooltip>
     </q-btn>
     <q-btn v-else round size="sm">
       <q-avatar size="sm">

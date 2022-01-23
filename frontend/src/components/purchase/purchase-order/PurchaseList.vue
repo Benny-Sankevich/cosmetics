@@ -34,6 +34,7 @@
         <AddEditPurchase
           v-if="show_dialog"
           :purchaseFormData="newPurchase"
+          :model="'addOrder'"
           @onCloseDialog="openCloseDialog"
         />
       </template>

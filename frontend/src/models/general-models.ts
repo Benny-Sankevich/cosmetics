@@ -64,3 +64,22 @@ export interface SizeInterface {
   width: string;
   height: string;
 }
+
+export class CalendarEventInterface {
+  _id: string;
+  userId: string;
+  treatmentId: string;
+  name: string;
+  firstName: string;
+  lastName: string;
+  start: string;
+  end: string;
+  startTime: string;
+  endTime: string;
+  bgcolor: string;
+  email: string;
+  phoneNumber: string;
+  allDay: boolean;
+  isConfirmed: boolean;
+  note: string;
+}
