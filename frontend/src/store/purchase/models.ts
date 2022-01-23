@@ -17,11 +17,9 @@ export class PurchaseOrder {
   constructor() {
     this.supplierId = null;
     this.orderDate = null;
-    this.addVAT = false;
   }
   _id: string;
   isConfirmed: boolean;
-  addVAT: boolean;
   supplierId: string;
   orderDate: Date;
   orderNumber: string;

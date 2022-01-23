@@ -49,9 +49,6 @@
               {{ props.row.supplier?.companyName }}
             </div>
           </q-td>
-          <q-td key="addVAT" :props="props">
-            {{ props.row.addVAT ? $t('including') : $t('notIncluding') }}
-          </q-td>
           <q-td key="totalPrice" :props="props">
             {{ props.row.totalPrice }}
           </q-td>
@@ -126,14 +123,6 @@ export default defineComponent({
         align: 'left',
         sortable: true,
         field: 'companyName',
-      },
-      {
-        name: 'addVAT',
-        required: true,
-        label: i18n.global.t('vat'),
-        align: 'left',
-        sortable: true,
-        field: 'addVAT',
       },
       {
         name: 'totalPrice',
