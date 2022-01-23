@@ -1,6 +1,7 @@
 export namespace AppConstants {
   export class Routes {
     public static Login = 'Login';
+    public static LockScreen = 'LockScreen';
     public static HomePage = 'HomePage';
     public static UsersPage = 'UsersPage';
     public static CustomerPage = 'CustomerPage';
