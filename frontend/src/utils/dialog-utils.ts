@@ -1,5 +1,5 @@
 import { Dialog } from 'quasar';
-import { i18n } from 'src/core/Export';
+import { i18n } from '../core/Export';
 
 const areYouSureDialog = () => {
   return Dialog.create({
