@@ -17,6 +17,10 @@ function calculateTotalPriceOfArray(array) {
     if (array.length === 0) return 0;
     return array.map(o => o.totalPrice).reduce((a, c) => { return a + c });
 }
+function calculateSumInArray(sumArray) {
+    if (!sumArray || sumArray.length === 0) return 0;
+    return sumArray.map(sum => sum).reduce((a, c) => { return a + c });
+}
 function calculateTotalPriceOfItem(item) {
     return item.amount * item.price;
 }
@@ -43,6 +47,16 @@ function translationAdapter(translation) {
     }
 }
 
+function getVisibleColumnsYearsList() {
+    const currentYear = new Date().getFullYear();
+    const minYear = 2020;
+    const yearOptions = [];
+    for (let year = minYear; year <= currentYear; year++) {
+        yearOptions.push(year.toString());
+    }
+    return yearOptions;
+}
+
 module.exports = {
     getDateTimeNow,
     getToday,
@@ -50,8 +64,10 @@ module.exports = {
     calculateSumOfArray,
     calculateTotalPriceOfArray,
     calculateTotalPriceOfItem,
+    calculateSumInArray,
     chartDataLineAdapter,
     chartDataBarAdapter,
     getRandomColor,
-    translationAdapter
+    translationAdapter,
+    getVisibleColumnsYearsList
 }

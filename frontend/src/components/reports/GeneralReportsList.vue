@@ -24,6 +24,7 @@
           }}</q-item-label>
         </q-item-section>
         <q-select
+          v-if="report.isYearly"
           class="col-md-3 col-sm-12 col-xs-12"
           outlined
           v-model="selectedYear"
@@ -69,6 +70,7 @@ export default defineComponent({
     const showReport = (reportParameters: ReportPropertiesToView): void => {
       reportParameters.year = selectedYear.value;
       apiService.getReportsData(reportParameters).then((res) => {
+        res.year = selectedYear.value;
         store.commit(
           `${AppConstants.ReportModule}/${AppConstants.Report.MutationSetReportProperties}`,
           res
