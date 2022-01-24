@@ -16,8 +16,8 @@ class FunctionsService {
     const currentYear = new Date().getFullYear();
     const minYear = 2020;
     const yearOptions = [];
-    for (let i = currentYear; i >= minYear; i--) {
-      yearOptions.push(i);
+    for (let year = currentYear; year >= minYear; year--) {
+      yearOptions.push(year);
     }
     return yearOptions;
   }

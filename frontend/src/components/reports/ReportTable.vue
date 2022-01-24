@@ -11,7 +11,10 @@
       :rows-per-page-options="[15, 20, 30, 40, 0]"
     >
       <template v-slot:top="props">
-        <div class="col-2 q-table__title">{{ $t(reportProperties.title) }}</div>
+        <div class="col-2 q-table__title">
+          {{ $t(reportProperties.title) }}
+          {{ reportProperties.isYearly ? reportProperties.year : '' }}
+        </div>
 
         <q-space />
         <q-input

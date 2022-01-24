@@ -11,6 +11,14 @@ const ReportSchema = mongoose.Schema({
         required: [true, "Missing description"],
         match: [/^[A-Zא-ת].*$/, "Description must start with a capital letter."]
     },
+    key: {
+        type: String,
+        required: [true, "Missing key"],
+    },
+    isYearly: {
+        type: Boolean,
+        required: [true, "Missing isYearly"],
+    },
     columns: {
         type: Array,
         required: [true, "Missing columns"],
