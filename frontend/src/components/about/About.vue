@@ -20,29 +20,27 @@
       <q-item-section side>
         <q-item-label>
           <q-btn
-            round
             clickable
+            icon="fab fa-linkedin"
+            flat
+            dense
+            color="blue-9"
             type="a"
             target="_blank"
             href="https://www.linkedin.com/in/benny-sankevich"
-          >
-            <q-avatar size="42px">
-              <q-img src="../../assets/images/linkedin.png" />
-            </q-avatar>
-          </q-btn>
+          />
         </q-item-label>
         <q-item-label>
           <q-btn
-            round
             clickable
+            icon="fab fa-github"
+            flat
+            dense
+            color="dark"
             type="a"
             target="_blank"
             href="https://github.com/Benny-Sankevich"
-          >
-            <q-avatar size="42px">
-              <img src="../../assets/images/GitHub.png" />
-            </q-avatar>
-          </q-btn>
+          />
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -52,8 +50,8 @@
       <div class="q-pa-sm text-grey-8">
         <span class="text-h6"
           >The website was built for a freelance beautician.<br />
-          Using Program language Frontend: Vue.js TS, Backend Node.js,
-          Database MongoDB. <br />
+          Using Program language Frontend: Vue.js TS, Backend Node.js, Database
+          MongoDB. <br />
           The website contains a variety of options following needs: </span
         ><br /><br />
         <span class="text-body1">
