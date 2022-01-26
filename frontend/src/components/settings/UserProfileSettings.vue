@@ -123,13 +123,15 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import { AppConstants, i18n, showInfo } from '../../core/Export';
-import { useStore } from '../../store';
 import {
+  AppConstants,
+  i18n,
+  showInfo,
   nameRules,
   emailRules,
   phoneNumberRules,
-} from '../../services/validations-fields';
+} from '../../core/Export';
+import { useStore } from '../../store';
 
 export default defineComponent({
   setup() {

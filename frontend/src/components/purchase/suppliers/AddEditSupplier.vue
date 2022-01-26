@@ -86,14 +86,12 @@ import {
   functionsService,
   i18n,
   showInfo,
-} from '../../../core/Export';
-import { useStore } from '../../../store';
-import { Supplier } from '../../../store/purchase/models';
-import {
   nameRules,
   emailRules,
   phoneNumberRules,
-} from '../../../services/validations-fields';
+} from '../../../core/Export';
+import { useStore } from '../../../store';
+import { Supplier } from '../../../store/purchase/models';
 export default defineComponent({
   props: {
     supplier: {
