@@ -54,8 +54,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from 'vue';
 import { useStore } from '../../store';
-import { AppConstants } from '../../core/AppConstants';
-import { passwordRules } from '../../services/validations-fields';
+import { AppConstants, passwordRules } from '../../core/Export';
 import { LoginForm } from '../../store/auth/models';
 import { useRouter } from 'vue-router';
 

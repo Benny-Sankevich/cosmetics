@@ -99,14 +99,12 @@ import {
   functionsService,
   i18n,
   showInfo,
-} from '../../core/Export';
-import { useStore } from '../../store';
-import { User } from '../../store/users/models';
-import {
   nameRules,
   emailRules,
   phoneNumberRules,
-} from '../../services/validations-fields';
+} from '../../core/Export';
+import { useStore } from '../../store';
+import { User } from '../../store/users/models';
 
 export default defineComponent({
   props: {

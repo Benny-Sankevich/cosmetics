@@ -99,14 +99,16 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useStore } from '../../store';
-import { AppConstants, showInfo, i18n } from '../../core/Export';
-import { useRouter } from 'vue-router';
 import {
+  AppConstants,
+  showInfo,
+  i18n,
   nameRules,
   phoneNumberRules,
   emailRegisterRules,
   passwordRules,
-} from '../../services/validations-fields';
+} from '../../core/Export';
+import { useRouter } from 'vue-router';
 import { RegisterForm } from '../../store/auth/models';
 export default defineComponent({
   setup() {

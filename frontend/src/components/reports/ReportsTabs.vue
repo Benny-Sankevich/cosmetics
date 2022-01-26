@@ -19,7 +19,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { AppConstants } from '../../core/AppConstants';
+import { AppConstants } from '../../core/Export';
 
 export default defineComponent({
   setup() {

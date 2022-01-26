@@ -45,10 +45,15 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { AppConstants, i18n, showInfo } from '../../core/Export';
+import {
+  AppConstants,
+  i18n,
+  showInfo,
+  emailRules,
+  passwordRules,
+} from '../../core/Export';
 import { useStore } from '../../store';
 import { useRouter } from 'vue-router';
-import { emailRules, passwordRules } from '../../services/validations-fields';
 import { LoginForm } from '../../store/auth/models';
 export default defineComponent({
   setup() {

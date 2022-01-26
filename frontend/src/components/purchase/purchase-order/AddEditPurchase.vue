@@ -80,10 +80,10 @@ import {
   functionsService,
   i18n,
   showInfo,
+  requiredRules,
 } from '../../../core/Export';
 import { useStore } from '../../../store';
 import { useRouter } from 'vue-router';
-import { requiredRules } from '../../../services/validations-fields';
 import { PurchaseOrder } from '../../../store/purchase/models';
 export default defineComponent({
   props: {

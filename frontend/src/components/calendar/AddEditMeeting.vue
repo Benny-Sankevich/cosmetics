@@ -130,8 +130,8 @@ import {
   functionsService,
   i18n,
   showInfo,
+  requiredRules,
 } from '../../core/Export';
-import { requiredRules } from '../../services/validations-fields';
 import { Appointment } from '../../store/appointments/models';
 
 export default defineComponent({

@@ -105,8 +105,13 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useStore } from '../../store';
-import { AppConstants, apiService, showInfo, i18n } from '../../core/Export';
-import { passwordRules } from '../../services/validations-fields';
+import {
+  AppConstants,
+  apiService,
+  showInfo,
+  i18n,
+  passwordRules,
+} from '../../core/Export';
 import { ResetPassword } from '../../models/general-models';
 
 export default defineComponent({
