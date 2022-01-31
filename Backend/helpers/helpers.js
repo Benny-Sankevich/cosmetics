@@ -6,8 +6,9 @@ function getToday() {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 }
 function getTomorrow() {
-    const date = new Date();
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() + 1);
+    var date = new Date();
+    date.setDate(date.getDate() + 1);
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate());
 }
 function calculateSumOfArray(sumArray) {
     if (sumArray.length === 0) return 0;
