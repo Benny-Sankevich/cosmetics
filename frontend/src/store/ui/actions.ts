@@ -9,7 +9,7 @@ const actions: ActionTree<UIStateInterface, MainStateInterface> = {
     context
   ): Promise<void | TranslationInterface[]> => {
     return httpClient
-      .post('translations/get-translations', {
+      .post('general/get-translations', {
         languageCode: context.getters[AppConstants.Ui.GetUserLangCode],
       })
       .then((response) => {

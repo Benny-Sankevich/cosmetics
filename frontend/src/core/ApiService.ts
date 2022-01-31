@@ -4,10 +4,14 @@ import {
   DateStartEnd,
   ResetPassword,
   Product,
+  ColorInterface,
 } from '../models/general-models';
 import { PurchaseItem } from '../store/purchase/models';
 import { Appointment } from '../store/appointments/models';
-import { ReportInterface, ReportPropertiesToView } from '../store/reports/models';
+import {
+  ReportInterface,
+  ReportPropertiesToView,
+} from '../store/reports/models';
 
 class ApiService {
   getTotalUsers(): Promise<number> {
@@ -126,6 +130,13 @@ class ApiService {
           return response.data;
         }
       });
+  }
+  getColors(): Promise<ColorInterface[]> {
+    return httpClient.post('general/get-colors').then((response) => {
+      if (response.status.toString() === '200') {
+        return response.data;
+      }
+    });
   }
 }
 export const apiService = new ApiService();

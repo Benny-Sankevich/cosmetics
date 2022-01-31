@@ -25,8 +25,13 @@ function getAllAppointmentsByUserAsync(userId) {
 function getAllAppointmentsAwaitingApprovalAsync() {
     return AppointmentModel.find({ $and: [{ isConfirmed: false }, { isActive: true }] }).populate('user', ['_id', 'firstName', 'lastName', 'email', 'phoneNumber']).populate('treatment', ['_id', 'name']).exec();
 }
+
 function getAppointmentByIdAsync(_id) {
     return AppointmentModel.findById(_id).populate('user', ['_id', 'firstName', 'lastName', 'email', 'phoneNumber']).populate('treatment', ['_id', 'name']).exec();
+}
+
+function getAllAppointmentsByTreatmentId(treatmentId) {
+    return AppointmentModel.find({ treatmentId }).exec();
 }
 
 async function addAppointmentAsync(appointment) {
@@ -44,6 +49,19 @@ async function updateAppointmentAsync(appointment) {
         return getAppointmentByIdAsync(appointmentUpdated._id);
     }
     return null;
+}
+
+async function updateAppointmentsBackgroundColorAsync(treatmentId, color) {
+    let appointmentsList = await getAllAppointmentsByTreatmentId(treatmentId);
+    if (appointmentsList.length > 0) {
+        appointmentsList.forEach(async appointment => {
+            await updateAppointmentBgColorAsync(appointment._id, { bgColor: color });
+        });
+    }
+}
+
+function updateAppointmentBgColorAsync(appointmentId, bgColor) {
+    return AppointmentModel.findByIdAndUpdate(appointmentId, bgColor, { returnOriginal: false }).exec();
 }
 
 async function deleteAppointmentAsync(appointment) {
@@ -90,6 +108,7 @@ module.exports = {
     getAllAppointmentsByUserAsync,
     addAppointmentAsync,
     updateAppointmentAsync,
+    updateAppointmentsBackgroundColorAsync,
     deleteAppointmentAsync,
     getSumOfOrdersBetweenDatesAsync,
     getAllAppointmentsAwaitingApprovalAsync,

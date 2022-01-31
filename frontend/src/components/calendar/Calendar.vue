@@ -1,68 +1,60 @@
 <template>
-  <q-page class="column" style="overflow: hidden">
-    <div class="subcontent">
-      <navigation-bar @today="onToday" @prev="onPrev" @next="onNext" />
-      <ShowMeetingData
-        :eventToShow="eventToShow"
-        @onCloseDialog="closeEventToShowDialog"
-        v-if="show_event"
-      />
-      <AddEditMeeting
-        :model="model"
-        :eventToEdit="eventToEdit"
-        @onCloseDialog="closeAddEditEvent"
-        v-if="show_add_edit_dialog"
-      />
-      <div class="calendar-container" :style="containerStyle">
-        <q-calendar-month
-          ref="calendar"
-          class="calendar"
-          style="height: calc(100vh - 50px)"
-          :key="keyValue"
-          v-model="selectedDate"
-          animated
-          bordered
-          focusable
-          hoverable
-          no-active-date
-          :day-height="100"
-          @click-date="openAddEvent"
-          @click-day="openAddEvent"
+  <q-page class="q-pa-sm bg-grey-3">
+    <NavigationBar @today="onToday" @prev="onPrev" @next="onNext" />
+    <ShowMeetingData
+      :eventToShow="eventToShow"
+      @onCloseDialog="closeEventToShowDialog"
+      v-if="show_event"
+    />
+    <AddEditMeeting
+      :model="model"
+      :eventToEdit="eventToEdit"
+      @onCloseDialog="closeAddEditEvent"
+      v-if="show_add_edit_dialog"
+    />
+    <q-calendar-month
+      ref="calendar"
+      :key="keyValue"
+      v-model="selectedDate"
+      animated
+      bordered
+      focusable
+      hoverable
+      no-active-date
+      :day-min-height="90"
+      :day-height="100"
+      @click-date="openAddEvent"
+      @click-day="openAddEvent"
+    >
+      <template #week="{ scope: { week, weekdays } }">
+        <template
+          v-for="(computedEvent, index) in getWeekEvents(week, weekdays)"
+          :key="index"
         >
-          <template #week="{ scope: { week, weekdays } }">
-            <template
-              v-for="(computedEvent, index) in getWeekEvents(week, weekdays)"
-              :key="index"
+          <div
+            :class="badgeClasses(computedEvent)"
+            :style="badgeStyles(computedEvent, week.length)"
+          >
+            <div
+              v-if="computedEvent.event"
+              class="title q-calendar__ellipsis"
+              @click="showEvent(computedEvent.event)"
             >
-              <div
-                :class="badgeClasses(computedEvent)"
-                :style="badgeStyles(computedEvent, week.length)"
-              >
-                <div
-                  v-if="computedEvent.event"
-                  class="title q-calendar__ellipsis"
-                  @click="showEvent(computedEvent.event)"
-                >
-                  <q-icon
-                    v-if="computedEvent.event.isConfirmed"
-                    name="check_box"
-                  />
-                  {{
-                    `${computedEvent.event.firstName}
+              <q-icon v-if="computedEvent.event.isConfirmed" name="check_box" />
+              {{
+                `${computedEvent.event.firstName}
                   ${computedEvent.event.lastName}` +
-                    (computedEvent.event.allDay
-                      ? ' - All day'
-                      : ` - ${computedEvent.event.startTime} -
+                (computedEvent.event.allDay
+                  ? ` - ${$t('allDay')}`
+                  : ` - ${computedEvent.event.startTime} -
                   ${computedEvent.event.endTime}`)
-                  }}
-                  <q-tooltip>{{ computedEvent.event.name }}</q-tooltip>
-                </div>
-              </div>
-            </template>
-          </template>
-        </q-calendar-month>
-      </div>
-    </div>
+              }}
+              <q-tooltip>{{ computedEvent.event.name }}</q-tooltip>
+            </div>
+          </div>
+        </template>
+      </template>
+    </q-calendar-month>
   </q-page>
 </template>
 

@@ -28,6 +28,10 @@ const TreatmentSchema = mongoose.Schema({
         type: String,
         required: [true, "Missing backgroundColor."],
     },
+    isForReportsAndCustomers: {
+        type: Boolean,
+        required: [true, "Missing backgroundColor."],
+    },
     createdDate: {
         type: String,
     },

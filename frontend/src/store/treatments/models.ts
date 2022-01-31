@@ -8,4 +8,5 @@ export class Treatment {
   duration: string;
   bgColor: string;
   backgroundColor: string;
+  isForReportsAndCustomers: boolean;
 }

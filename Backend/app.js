@@ -6,12 +6,12 @@ const imageUpload = require("express-fileupload");
 
 const authController = require("./controller-layer/auth-controller");
 const treatmentController = require("./controller-layer/treatment-controller");
-const translationController = require("./controller-layer/translation-controller");
+const generalController = require("./controller-layer/general-controller");
 const appointmentController = require("./controller-layer/appointment-controller");
 const supplierController = require("./controller-layer/supplier-controller");
 const productController = require("./controller-layer/product-controller");
-const purchaseController= require("./controller-layer/purchase-controller");
-const reportsController= require("./controller-layer/reports-controller");
+const purchaseController = require("./controller-layer/purchase-controller");
+const reportsController = require("./controller-layer/reports-controller");
 const userController = require("./controller-layer/user-controller");
 const summariesController = require("./controller-layer/summaries-controller");
 
@@ -23,7 +23,7 @@ server.use(express.json());
 server.use("/api/auth", authController);
 server.use("/api/users", userController);
 server.use("/api/treatments", treatmentController);
-server.use("/api/translations", translationController);
+server.use("/api/general", generalController);
 server.use("/api/appointments", appointmentController);
 server.use("/api/suppliers", supplierController);
 server.use("/api/products", productController);
