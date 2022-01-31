@@ -4,22 +4,40 @@ const treatmentLogic = require("./treatment-logic");
 const helpers = require("../helpers/helpers");
 
 function getAllSummariesByYear(year) {
-    return SummariesModel.find({ year }).exec()
+    return SummariesModel.find({ $and: [{ year }, { toShow: true }] }).exec()
 }
+
 function getSummaryByYear(year, condition) {
     return SummariesModel.findOne({ $and: [{ year }, condition] }).exec();
 }
+
 function getSummaryByDataType(dataType) {
     return SummariesModel.findOne({ dataType }).exec();
 }
-function getSummaryByTreatmentId(treatmentId) {
-    return SummariesModel.findOne({ treatmentId }).exec();
+
+function getAllSummariesByTreatmentId(treatmentId) {
+    return SummariesModel.find({ treatmentId }).exec();
 }
+
 function getSummaryByDataTypeOrTreatmentIdAsync(parameter, year) {
     return SummariesModel.findOne({ $or: [{ dataType: parameter }, { label: parameter }] }).and({ year }).exec();
 }
+
 function addSummaries(summaries) {
     return summaries.save();
+}
+
+function updateSummaryDataAsync(summaryId, summaryData) {
+    return SummariesModel.findByIdAndUpdate(summaryId, summaryData, { returnOriginal: false }).exec();
+}
+
+async function updateSummaryBgColorAndToShowAsync(treatmentId, color, toShow) {
+    let summariesList = await getAllSummariesByTreatmentId(treatmentId);
+    if (summariesList.length > 0) {
+        summariesList.forEach(async summary => {
+            await updateSummaryDataAsync(summary._id, { backgroundColor: color, toShow });
+        });
+    }
 }
 
 async function updateSummariesData(dataType, treatmentId, year, month, monthlySummary) {
@@ -30,34 +48,30 @@ async function updateSummariesData(dataType, treatmentId, year, month, monthlySu
         existingSummary = await addSummaries(newSummaries);
     }
     existingSummary.data[month - 1] = monthlySummary;
-    return SummariesModel.findByIdAndUpdate(existingSummary._id, existingSummary, { returnOriginal: false }).exec();
+    return await updateSummaryDataAsync(existingSummary._id, existingSummary);
 }
 
 function getDefaultSummariesData(dataType, year, treatmentId) {
     if (treatmentId) return getTreatmentSummaryData(year, treatmentId)
     return getSummaryData(dataType, year);
 }
+
 async function getTreatmentSummaryData(year, treatmentId) {
-    let treatment = await getSummaryByTreatmentId(treatmentId);
-    if (treatment) {
-        return getDefaultSummaries('treatment', treatment.type, treatment.label, treatmentId, year, treatment.borderWidth, undefined, treatment.backgroundColor, treatment.stack, undefined);
-    }
-    else {
-        treatment = await treatmentLogic.getTreatmentByIdAsync(treatmentId);
-        return getDefaultSummaries('treatment', 'bar', treatment.name, treatmentId, year, 1, null, null, 'Stack 3', null);
-    }
+    const treatment = await treatmentLogic.getTreatmentByIdAsync(treatmentId);
+    return getDefaultSummaries('treatment', 'bar', treatment.name, treatmentId, year, 1, null, treatment.backgroundColor, 'Stack 1', null, treatment.isForReportsAndCustomers);
 }
+
 async function getSummaryData(dataType, year) {
     const summary = await getSummaryByDataType(dataType);
     if (summary) {
-        return getDefaultSummaries(dataType, summary.type, summary.label, null, year, null, summary.borderColor, summary.backgroundColor, null, false);
+        return getDefaultSummaries(dataType, summary.type, summary.label, null, year, null, summary.borderColor, summary.backgroundColor, null, false, summary.toShow);
     }
     const randomColor = helpers.getRandomColor();
-    return getDefaultSummaries(dataType, 'line', dataType, null, year, null, randomColor, randomColor, null, false);
+    return getDefaultSummaries(dataType, 'line', dataType, null, year, null, randomColor, randomColor, null, false, true);
 
 }
 
-function getDefaultSummaries(dataType, type, label, treatmentId, year, borderWidth, borColor, bgColor, stack, fill) {
+function getDefaultSummaries(dataType, type, label, treatmentId, year, borderWidth, borColor, bgColor, stack, fill, toShow) {
     return new SummariesModel({
         dataType,
         type,
@@ -70,12 +84,13 @@ function getDefaultSummaries(dataType, type, label, treatmentId, year, borderWid
         backgroundColor: bgColor ? bgColor : helpers.getRandomColor(),
         stack: stack ? stack : undefined,
         fill: fill === false ? fill : undefined,
+        toShow
     });
 }
-
 
 module.exports = {
     getAllSummariesByYear,
     updateSummariesData,
-    getSummaryByDataTypeOrTreatmentIdAsync
+    getSummaryByDataTypeOrTreatmentIdAsync,
+    updateSummaryBgColorAndToShowAsync
 }

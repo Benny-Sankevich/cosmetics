@@ -41,6 +41,9 @@ const SummariesSchema = mongoose.Schema({
     },
     fill: {
         type: Boolean,
+    },
+    toShow: {
+        type: Boolean,
     }
 },
     {

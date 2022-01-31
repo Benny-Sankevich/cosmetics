@@ -17,9 +17,10 @@
         />
         <q-tab
           name="add"
-          :class="tab == 'notification' ? 'text-blue' : ''"
+          :class="tab == 'add' ? 'text-blue' : ''"
           icon="playlist_add"
           :label="$t('addTreatment')"
+          :disable="tab == 'update'"
           @click="addEditTreatment(null, 'add')"
         >
         </q-tab>
@@ -87,7 +88,7 @@
           <AddEditTreatment
             :treatment="formData"
             :model="model"
-            @onClose="closeWindow()"
+            @onClose="closeWindow"
           />
         </q-tab-panel>
 
@@ -95,7 +96,7 @@
           <AddEditTreatment
             :treatment="formData"
             :model="model"
-            @onClose="closeWindow()"
+            @onClose="closeWindow"
           />
         </q-tab-panel>
       </q-tab-panels>
@@ -148,14 +149,14 @@ export default defineComponent({
       if (treatmentData) {
         formData.value = { ...treatmentData };
       } else {
-        formData.value.bgColor = 'teal';
-        formData.value.backgroundColor = '#6499ED';
+        formData.value.isForReportsAndCustomers = true;
       }
       model.value = type;
       tab.value = type;
     };
     const closeWindow = () => {
       tab.value = 'treatments';
+      formData.value = new Treatment();
     };
     return {
       formData,

@@ -1,3 +1,4 @@
+import { ColorInterface } from './../models/general-models';
 import { User } from '../store/users/models';
 
 class FunctionsService {
@@ -32,6 +33,14 @@ class FunctionsService {
       (s) =>
         s.firstName.toLowerCase().includes(search.toLowerCase()) ||
         s.lastName.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+  getColorsSearchResult(
+    search: string,
+    colorsArray: Array<ColorInterface>
+  ): Array<ColorInterface> {
+    return colorsArray.filter((s) =>
+      s.color.toLowerCase().includes(search.toLowerCase())
     );
   }
 }

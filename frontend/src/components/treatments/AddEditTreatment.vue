@@ -19,8 +19,7 @@
           lazy-rules
           :rules="priceRules"
           :label="$t('price')"
-        >
-        </q-input>
+        />
         <q-input
           square
           clearable
@@ -28,8 +27,36 @@
           lazy-rules
           :rules="nameRules"
           :label="$t('treatmentDuration')"
+        />
+        <q-select
+          square
+          v-model="treatmentForm.bgColor"
+          :options="colorsOptions"
+          option-value="color"
+          option-label="color"
+          :label="$t('backgroundColor')"
+          :bg-color="treatmentForm.bgColor"
+          map-options
+          :emit-value="true"
+          lazy-rules
+          :rules="requiredRules"
+          use-input
+          input-debounce="0"
+          @filter="searchColor"
+          behavior="menu"
         >
-        </q-input>
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">
+                {{ $t('noResults') }}
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+        <q-checkbox
+          v-model="treatmentForm.isForReportsAndCustomers"
+          :label="$t('isForReportsAndCustomers')"
+        />
 
         <q-card-actions align="right">
           <q-btn
@@ -54,9 +81,19 @@
 <script lang="ts">
 import { useStore } from '../../store';
 import { defineComponent, ref, PropType } from 'vue';
-import { AppConstants, i18n, showInfo } from '../../core/Export';
+import {
+  AppConstants,
+  i18n,
+  showInfo,
+  nameRules,
+  priceRules,
+  requiredRules,
+  functionsService,
+  apiService,
+} from '../../core/Export';
 import { Treatment } from '../../store/treatments/models';
-import { nameRules, priceRules } from '../../services/validations-fields';
+import { colors } from 'quasar';
+
 export default defineComponent({
   props: {
     treatment: {
@@ -72,11 +109,16 @@ export default defineComponent({
   setup(props, { emit }) {
     const store = useStore();
     const treatmentForm = ref(props.treatment);
-    const treatmentNameRef = ref(null);
-    const treatmentPriceRef = ref(null);
-    const treatmentDurationRef = ref(null);
+    const colorsList = ref([]);
+
+    apiService.getColors().then((res) => (colorsList.value = res));
+
+    const colorsOptions = ref(colorsList);
 
     const onSaveTreatment = (): void => {
+      treatmentForm.value.backgroundColor = colors.getPaletteColor(
+        treatmentForm.value.bgColor
+      );
       let actionType = AppConstants.Treatments.ActionSaveTreatment;
       if (treatmentForm.value._id) {
         actionType = AppConstants.Treatments.ActionEditTreatment;
@@ -90,17 +132,40 @@ export default defineComponent({
     };
     const closeWindow = (): void => {
       emit('onClose');
-      treatmentForm.value = null;
+      onReset();
     };
+
+    const onReset = (): void => {
+      treatmentForm.value = new Treatment();
+    };
+
+    const searchColor = (searchInput: string, update: any) => {
+      if (searchInput === '') {
+        console.log(searchInput);
+
+        update(() => {
+          colorsOptions.value = colorsList.value;
+        });
+        return;
+      }
+
+      update(() => {
+        colorsOptions.value = functionsService.getColorsSearchResult(
+          searchInput,
+          colorsList.value
+        );
+      });
+    };
+
     return {
+      colorsOptions,
       treatmentForm,
-      treatmentNameRef,
-      treatmentDurationRef,
-      treatmentPriceRef,
       nameRules,
       priceRules,
+      requiredRules,
       closeWindow,
       onSaveTreatment,
+      searchColor,
     };
   },
 });

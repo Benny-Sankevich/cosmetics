@@ -1,5 +1,6 @@
 require("../data-access-layer/dal");
 const TranslationModel = require("../models/translation-model");
+const ColorsModel = require("../models/colors-model");
 const helpers = require("../helpers/helpers");
 
 async function getAllTranslationsByLanguageCodeAsync(languageCode) {
@@ -13,7 +14,12 @@ function addTranslationAsync(translation) {
     return translation.save();
 }
 
+function getAllColorsAsync() {
+    return ColorsModel.find().exec();
+}
+
 module.exports = {
     getAllTranslationsByLanguageCodeAsync,
-    addTranslationAsync
+    addTranslationAsync,
+    getAllColorsAsync
 }

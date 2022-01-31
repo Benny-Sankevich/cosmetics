@@ -83,3 +83,8 @@ export class CalendarEventInterface {
   isConfirmed: boolean;
   note: string;
 }
+
+export interface ColorInterface {
+  _id: string;
+  color: string;
+}
