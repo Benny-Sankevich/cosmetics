@@ -36,7 +36,7 @@ router.post("/update-product", async (request, response) => {
         const error = product.validateSync();
         if (error) return response.status(400).send(errorHelper.getError(error));
         const productUpdated = await productLogic.updateProductAsync(product);
-        if (!productUpdated) return response.status(404).send('Product has not found please try again');
+        if (!productUpdated) return response.status(404).send(errorHelper.getError('Product has not found please try again'));
         response.status(201).json(productUpdated);
     }
     catch (err) {
