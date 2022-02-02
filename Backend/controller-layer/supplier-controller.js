@@ -36,7 +36,7 @@ router.post("/update-supplier", async (request, response) => {
         const error = supplier.validateSync();
         if (error) return response.status(400).send(errorHelper.getError(error));
         const supplierUpdated = await supplierLogic.updateSupplierAsync(supplier);
-        if (!supplierUpdated) return response.status(404).send('Supplier has not found please try again');
+        if (!supplierUpdated) return response.status(404).send(errorHelper.getError('Supplier has not found please try again'));
         response.status(201).json(supplierUpdated);
     }
     catch (err) {

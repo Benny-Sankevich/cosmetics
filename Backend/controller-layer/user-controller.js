@@ -63,7 +63,7 @@ router.post("/update-user", verifyIsLoggedIn, async (request, response) => {
         const error = user.validateSync();
         if (error) return response.status(400).send(errorHelper.getError(error));
         const userUpdated = await userLogic.updateUserAsync(user, (request.files?.profileImage ? request.files.profileImage : null));
-        if (!userUpdated) return response.status(404).send('User has not found please try again');
+        if (!userUpdated) return response.status(404).send(errorHelper.getError('User has not found please try again'));
         response.status(201).json(userUpdated);
     }
     catch (err) {

@@ -50,7 +50,7 @@ router.post("/update-purchase-order", async (request, response) => {
         const error = purchaseOrder.validateSync();
         if (error) return response.status(400).send(errorHelper.getError(error));
         const purchaseOrderUpdated = await purchaseOrderLogic.updatePurchaseOrderAsync(purchaseOrder);
-        if (!purchaseOrderUpdated) return response.status(404).send('Purchase order has not found please try again');
+        if (!purchaseOrderUpdated) return response.status(404).send(errorHelper.getError('Purchase order has not found please try again'));
         response.status(201).json(purchaseOrderUpdated);
     }
     catch (err) {
