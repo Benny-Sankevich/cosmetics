@@ -1,5 +1,5 @@
 require("../data-access-layer/dal");
-const AppointmentModel = require("../models/appointment-model");
+const AppointmentModel = require("../models/appointments/appointment-model");
 const summariesLogic = require("./summaries-logic");
 const helpers = require("../helpers/helpers");
 
@@ -102,6 +102,23 @@ async function approveAwaitingAppointmentAsync(appointments) {
     return appointmentsApproved;
 }
 
+function checkAppointmentsBetweenRangeAsync(rangeStart, rangeEnd) {
+    // need to fix if the range start or end with another meeting
+    return AppointmentModel.find({
+        $or: [{
+            dateTimeStart: {
+                $gte: rangeStart,
+                $lt: rangeEnd
+            }
+        }, {
+            dateTimeEnd: {
+                $gte: rangeStart,
+                $lt: rangeEnd
+            }
+        }]
+    }).and({ isActive: true }).exec();
+}
+
 module.exports = {
     getAllAppointmentsAsync,
     getAllAppointmentsTodayAsync,
@@ -112,5 +129,6 @@ module.exports = {
     deleteAppointmentAsync,
     getSumOfOrdersBetweenDatesAsync,
     getAllAppointmentsAwaitingApprovalAsync,
-    approveAwaitingAppointmentAsync
+    approveAwaitingAppointmentAsync,
+    checkAppointmentsBetweenRangeAsync
 }

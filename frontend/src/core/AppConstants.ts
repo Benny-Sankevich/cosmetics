@@ -22,6 +22,8 @@ export namespace AppConstants {
     public static GeneralReports = 'GeneralReports';
     public static ReportGenerator = 'ReportGenerator';
     public static ReportTable = 'ReportTable';
+    public static AvailableAppointmentsPage = 'AvailableAppointmentsPage';
+    public static SettingsPage = 'SettingsPage';
   }
 
   // Modules

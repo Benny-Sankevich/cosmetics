@@ -7,11 +7,12 @@ import LoginPage from '../pages/LoginPage.vue';
 import LockScreenPage from '../pages/LockScreenPage.vue';
 import BlankLayout from '../layouts/BlankLayout.vue';
 import MainLayout from '../layouts/MainLayout.vue';
-import CustomerLayout from '../layouts/CustomerLayout.vue';
 import ProfileSettingsPage from '../pages/ProfileSettingsPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import CustomerPage from '../pages/CustomerPage.vue';
 import AboutPage from '../pages/AboutPage.vue';
+import AvailableAppointmentsPage from '../pages/AvailableAppointmentsPage.vue';
+import SettingsPage from '../pages/SettingsPage.vue';
 import { calendarRoutes } from './calendar/routes';
 import { appStore } from '../store/index';
 import { showError } from '../utils/notification-utils';
@@ -66,7 +67,13 @@ const routes: RouteRecordRaw[] = [
       { path: '', name: AppConstants.Routes.HomePage, component: HomePage },
       {
         path: 'settings',
-        component: () => import('../pages/SettingsPage.vue'),
+        name: AppConstants.Routes.SettingsPage,
+        component: SettingsPage,
+      },
+      {
+        path: 'available-appointments',
+        name: AppConstants.Routes.AvailableAppointmentsPage,
+        component: AvailableAppointmentsPage,
       },
       calendarRoutes,
       usersRoutes,
@@ -95,7 +102,7 @@ const routes: RouteRecordRaw[] = [
       }
     },
     path: '/customer',
-    component: CustomerLayout,
+    component: MainLayout,
     children: [
       {
         path: '',
@@ -124,7 +131,7 @@ const routes: RouteRecordRaw[] = [
     component: MainLayout,
     children: [
       {
-        path: 'profile',
+        path: '',
         name: AppConstants.Routes.ProfileSettings,
         component: ProfileSettingsPage,
       },
@@ -134,8 +141,6 @@ const routes: RouteRecordRaw[] = [
     },
   },
 
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/Error404.vue'),

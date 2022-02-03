@@ -88,3 +88,17 @@ export interface ColorInterface {
   _id: string;
   color: string;
 }
+
+export class AppointmentAvailable {
+  _id: string;
+  dateTimeStart: Date;
+  dateTimeEnd: Date;
+  createdDate: Date;
+}
+
+export class Range {
+  duration: number;
+  date: Date;
+  timeStart: string;
+  timeEnd: string;
+}

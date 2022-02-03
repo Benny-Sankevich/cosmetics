@@ -5,6 +5,8 @@ import {
   ResetPassword,
   Product,
   ColorInterface,
+  AppointmentAvailable,
+  Range,
 } from '../models/general-models';
 import { PurchaseItem } from '../store/purchase/models';
 import { Appointment } from '../store/appointments/models';
@@ -137,6 +139,56 @@ class ApiService {
         return response.data;
       }
     });
+  }
+  getAllAppointmentsAvailable(): Promise<AppointmentAvailable[]> {
+    return httpClient
+      .post('appointments/get-all-appointments-available')
+      .then((response) => {
+        if (response.status.toString() === '200') {
+          return response.data;
+        }
+      });
+  }
+  addAppointmentsAvailable(
+    appointmentsAvailable: AppointmentAvailable
+  ): Promise<AppointmentAvailable> {
+    return httpClient
+      .post('appointments/add-appointment-available', appointmentsAvailable)
+      .then((response) => {
+        if (response.status.toString() === '201') {
+          return response.data;
+        }
+      });
+  }
+  addAppointmentsAvailableByRange(
+    range: Range
+  ): Promise<AppointmentAvailable[]> {
+    return httpClient
+      .post('appointments/add-appointments-available-by-range', range)
+      .then((response) => {
+        if (response.status.toString() === '201') {
+          return response.data;
+        }
+      });
+  }
+  updateAppointmentsAvailable(
+    appointmentsAvailable: AppointmentAvailable
+  ): Promise<AppointmentAvailable> {
+    return httpClient
+      .post('appointments/update-appointment-available', appointmentsAvailable)
+      .then((response) => {
+        if (response.status.toString() === '201') {
+          return response.data;
+        }
+      });
+  }
+  deleteAppointmentsAvailable(
+    appointmentsAvailable: AppointmentAvailable
+  ): Promise<void> {
+    return httpClient.post(
+      'appointments/delete-appointment-available',
+      appointmentsAvailable
+    );
   }
 }
 export const apiService = new ApiService();
