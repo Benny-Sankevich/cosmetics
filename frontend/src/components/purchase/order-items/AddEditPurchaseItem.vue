@@ -14,7 +14,7 @@
         ></q-btn>
       </q-toolbar>
       <q-card-section class="inset-shadow">
-        <q-form @submit="onSaveItem" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSaveItem" class="q-gutter-md">
           <q-select
             transition-show="scale"
             transition-hide="scale"
@@ -45,14 +45,6 @@
             :label="$t('price')"
           />
           <q-card-actions align="right">
-            <q-btn
-              v-if="model === 'add'"
-              unelevated
-              type="reset"
-              color="secondary"
-              class="text-white"
-              :label="$t('reset')"
-            />
             <q-btn
               unelevated
               type="submit"
@@ -110,13 +102,6 @@ export default defineComponent({
     };
     const closeDialog = (dataToSave: PurchaseItem): void => {
       emit('onCloseDialog', dataToSave);
-      onReset();
-    };
-    const onReset = (): void => {
-      purchaseItemForm.value._id = null;
-      purchaseItemForm.value.productId = null;
-      purchaseItemForm.value.price = null;
-      purchaseItemForm.value.amount = null;
     };
     return {
       requiredRules,
@@ -126,7 +111,6 @@ export default defineComponent({
       products,
       closeDialog,
       onSaveItem,
-      onReset,
     };
   },
 });
