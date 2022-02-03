@@ -94,9 +94,6 @@ export default defineComponent({
     const data = ref([]);
     const model = ref(null);
     const purchaseItem = ref(new PurchaseItem());
-    purchaseItem.value.purchaseOrderId = functionsService.copyStoreData(
-      props.purchaseOrder?._id
-    );
 
     const getPurchaseItems = (): void => {
       apiService.getItemsByOrderId(props.purchaseOrder?._id).then((res) => {
@@ -144,20 +141,7 @@ export default defineComponent({
         },
       ];
     });
-    const editedItem = ref({
-      name: '',
-      price: 0,
-      amount: 0,
-      totalPrice: 0,
-    });
 
-    const openDialog = (purchaseItemData: PurchaseItem, type: string): void => {
-      model.value = type;
-      if (purchaseItemData) {
-        purchaseItem.value = { ...purchaseItemData };
-      }
-      show_dialog.value = true;
-    };
     const addItem = (payload: PurchaseItem): void => {
       apiService.addPurchaseItem(payload).then(() => {
         showInfo(i18n.global.t('msgSavedSuccessfully'));
@@ -181,6 +165,20 @@ export default defineComponent({
         showInfo(i18n.global.t('msgDoneSuccessfully'));
       });
     };
+
+    const openDialog = (purchaseItemData: PurchaseItem, type: string): void => {
+      model.value = type;
+      if (purchaseItemData) {
+        purchaseItem.value = { ...purchaseItemData };
+      } else {
+        purchaseItem.value = new PurchaseItem();
+        purchaseItem.value.purchaseOrderId = functionsService.copyStoreData(
+          props.purchaseOrder?._id
+        );
+      }
+      show_dialog.value = true;
+    };
+
     const closeDialog = (event: PurchaseItem): void => {
       show_dialog.value = false;
       if (event) {
@@ -201,7 +199,6 @@ export default defineComponent({
       show_dialog,
       totalSum,
       columns,
-      editedItem,
       data,
       closeDialog,
       openDialog,
