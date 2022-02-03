@@ -50,7 +50,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent, ref } from 'vue';
+import { defineComponent, defineAsyncComponent, computed, ref } from 'vue';
+import { AppConstants } from '../core/Export';
+import { useStore } from '../store';
 
 export default defineComponent({
   components: {
@@ -61,8 +63,9 @@ export default defineComponent({
   },
 
   setup() {
+    const store = useStore();
     const leftDrawerOpen = ref(false);
-    const essentialLinks = [
+    const managerEssentialLinks = [
       {
         title: 'homePage',
         icon: 'dashboard',
@@ -77,6 +80,11 @@ export default defineComponent({
         title: 'calendar',
         icon: 'event',
         link: '/manager/calendar',
+      },
+      {
+        title: 'availableAppointments',
+        icon: 'list',
+        link: '/manager/available-appointments',
       },
       {
         title: 'reports',
@@ -94,6 +102,23 @@ export default defineComponent({
         link: '/manager/settings',
       },
     ];
+    const customerEssentialLinks = [
+      {
+        title: 'homePage',
+        icon: 'dashboard',
+        link: '/customer/',
+      },
+    ];
+    const systemRole = computed(
+      () =>
+        store.getters[
+          `${AppConstants.AuthModule}/${AppConstants.Auth.GetSystemRole}`
+        ]
+    );
+    const essentialLinks = computed(() =>
+      systemRole.value ? managerEssentialLinks : customerEssentialLinks
+    );
+
     const toggleLeftDrawer = (): void => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
     };
