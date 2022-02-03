@@ -43,5 +43,21 @@ class FunctionsService {
       s.color.toLowerCase().includes(search.toLowerCase())
     );
   }
+  getDate = (dateStr: string): string => {
+    const date = new Date(dateStr);
+    const month = date.getMonth() + 1;
+    return `${functionsService.checkNumber(date.getDate()) + date.getDate()}-${
+      functionsService.checkNumber(month) + month
+    }-${date.getFullYear()}`;
+  };
+  getTime = (dateStr: string): string => {
+    const date = new Date(dateStr);
+    return `${
+      functionsService.checkNumber(date.getHours()) + date.getHours()
+    }:${functionsService.checkNumber(date.getMinutes()) + date.getMinutes()}`;
+  };
+  checkNumber = (num: number): string => {
+    return num < 10 ? '0' : '';
+  };
 }
 export const functionsService = new FunctionsService();

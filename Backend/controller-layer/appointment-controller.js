@@ -1,7 +1,9 @@
 const express = require("express");
 const errorHelper = require("../helpers/errors-helper");
-const AppointmentModel = require("../models/appointment-model");
+const AppointmentModel = require("../models/appointments/appointment-model");
+const AppointmentAvailableModel = require("../models/appointments/appointments-available-model");
 const appointmentLogic = require("../business-logic-layer/appointment-logic");
+const appointmentAvailableLogic = require("../business-logic-layer/available-appointments-logic");
 const verifyIsAdmin = require("../middleware/verify-isAdmin");
 
 const router = express.Router();
@@ -103,7 +105,7 @@ router.post("/update-appointment", async (request, response) => {
         const error = appointment.validateSync();
         if (error) return response.status(400).send(errorHelper.getError(error));
         const updatedAppointment = await appointmentLogic.updateAppointmentAsync(appointment);
-        if (!updatedAppointment) return response.status(404).send('Appointment has not found please try again');
+        if (!updatedAppointment) return response.status(404).send(errorHelper.getError('Appointment has not found please try again'));
         response.status(201).json(updatedAppointment);
     }
     catch (err) {
@@ -115,6 +117,79 @@ router.post("/delete-appointment", async (request, response) => {
     try {
         const appointment = request.body;
         await appointmentLogic.deleteAppointmentAsync(appointment);
+        response.sendStatus(204);
+    }
+    catch (err) {
+        response.status(500).send(errorHelper.getError(err));
+    }
+});
+
+// Appointments available
+
+router.post("/get-all-appointments-available", async (request, response) => {
+    try {
+        const appointmentAvailable = await appointmentAvailableLogic.getAllAppointmentAvailableAsync();
+        response.json(appointmentAvailable);
+    }
+    catch (err) {
+        response.status(500).send(errorHelper.getError(err));
+    }
+});
+
+router.post("/get-appointments-available-by-date", async (request, response) => {
+    try {
+        const { date } = request.body;
+        const appointmentAvailable = await appointmentAvailableLogic.getAppointmentAvailableByDateAsync(date);
+        response.json(appointmentAvailable);
+    }
+    catch (err) {
+        response.status(500).send(errorHelper.getError(err));
+    }
+});
+
+router.post("/add-appointment-available", async (request, response) => {
+    try {
+        const appointmentAvailable = new AppointmentAvailableModel(request.body);
+        const error = appointmentAvailable.validateSync();
+        if (error) return response.status(400).send(errorHelper.getError(error));
+        const appointmentAvailableAdded = await appointmentAvailableLogic.addAppointmentAvailableAsync(appointmentAvailable);
+        response.status(201).json(appointmentAvailableAdded);
+    }
+    catch (err) {
+        response.status(500).send(errorHelper.getError(err));
+    }
+});
+
+router.post("/add-appointments-available-by-range", async (request, response) => {
+    try {
+        const { date, timeStart, timeEnd, duration } = request.body;
+        const appointmentAvailableListAdded = await appointmentAvailableLogic.onAddAppointmentAvailableByRangeAsync(date, timeStart, timeEnd, duration);
+        if (typeof appointmentAvailableListAdded === 'string') return response.status(404).send(errorHelper.getError(appointmentAvailableListAdded));
+        response.json(appointmentAvailableListAdded);
+    }
+    catch (err) {
+        response.status(500).send(errorHelper.getError(err));
+    }
+});
+
+router.post("/update-appointment-available", async (request, response) => {
+    try {
+        const appointmentAvailable = new AppointmentAvailableModel(request.body);
+        const error = appointmentAvailable.validateSync();
+        if (error) return response.status(400).send(errorHelper.getError(error));
+        const appointmentAvailableUpdated = await appointmentAvailableLogic.updateAppointmentAvailableAsync(appointmentAvailable);
+        if (!appointmentAvailableUpdated) return response.status(404).send(errorHelper.getError('Appointment available has not found please try again'));
+        response.status(201).json(appointmentAvailableUpdated);
+    }
+    catch (err) {
+        response.status(500).send(errorHelper.getError(err));
+    }
+});
+
+router.post("/delete-appointment-available", async (request, response) => {
+    try {
+        const appointmentAvailable = request.body;
+        await appointmentAvailableLogic.deleteAppointmentAvailableAsync(appointmentAvailable);
         response.sendStatus(204);
     }
     catch (err) {
