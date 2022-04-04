@@ -135,4 +135,10 @@ export namespace AppConstants {
     public static GetReportProperties = 'getReportProperties';
     public static MutationSetReportProperties = 'mutationSetReportProperties';
   }
+
+  export enum DataTypeEnum {
+    Appointments,
+    AvailableAppointments,
+    Notifications
+  }
 }

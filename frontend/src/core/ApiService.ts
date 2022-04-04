@@ -1,3 +1,4 @@
+import { Treatment } from './../store/treatments/models';
 import { httpClient } from '../utils/http-client';
 import {
   ChartReportInterface,
@@ -189,6 +190,23 @@ class ApiService {
       'appointments/delete-appointment-available',
       appointmentsAvailable
     );
+  }
+  getAppointmentsByUser(userId: string): Promise<Appointment[]> {
+    return httpClient
+      .post('appointments/get-appointments-by-user', { userId })
+      .then((response) => {
+        if (response.status.toString() === '200') {
+          return response.data;
+        }
+      });
+  }
+
+  getCustomersTreatments(): Promise<Treatment[]> {
+    return httpClient.post('treatments/get-customers-treatments').then((response) => {
+      if (response.status.toString() === '200') {
+        return response.data;
+      }
+    });
   }
 }
 export const apiService = new ApiService();

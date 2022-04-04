@@ -102,3 +102,13 @@ export class Range {
   timeStart: string;
   timeEnd: string;
 }
+
+export interface ILocation {
+  lat: number;
+  lng: number;
+}
+
+export interface IMarkerOptions {
+  position: ILocation;
+  label: string;
+}

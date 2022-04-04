@@ -19,7 +19,13 @@ function getAllAppointmentsTodayAsync() {
 }
 
 function getAllAppointmentsByUserAsync(userId) {
-    return AppointmentModel.find({ $and: [{ userId }, { isActive: true }] }).exec();
+    return AppointmentModel.find({
+        $and: [{ userId }, { isActive: true }, {
+            dateTimeStart: {
+                $gte: helpers.getToday(),
+            }
+        }]
+    }).populate('treatment', ['_id', 'name']).sort({ dateTimeStart: 1 }).exec();
 }
 
 function getAllAppointmentsAwaitingApprovalAsync() {

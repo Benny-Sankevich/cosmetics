@@ -3,6 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-btn
+          v-if="systemRole"
           flat
           dense
           round
@@ -10,8 +11,18 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
+        <q-btn v-if="!systemRole" flat dense round aria-label="Menu">
+          <q-avatar size="md">
+            <q-icon name="dashboard" />
+          </q-avatar>
+          <router-link
+            exact
+            :to="customerHomeRoute"
+            class="absolute full-width full-height"
+          ></router-link>
+        </q-btn>
 
-        <q-toolbar-title>
+        <q-toolbar-title @click="navigateToMainPage">
           {{ $t('mainHeaderWebsite') }}
         </q-toolbar-title>
 
@@ -31,7 +42,13 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered class="bg-grey-1">
+    <q-drawer
+      v-if="systemRole"
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      class="bg-grey-1"
+    >
       <q-list>
         <q-item-label header>
           <AsideMenu
@@ -65,7 +82,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const leftDrawerOpen = ref(false);
-    const managerEssentialLinks = [
+    const essentialLinks = [
       {
         title: 'homePage',
         icon: 'dashboard',
@@ -102,30 +119,26 @@ export default defineComponent({
         link: '/manager/settings',
       },
     ];
-    const customerEssentialLinks = [
-      {
-        title: 'homePage',
-        icon: 'dashboard',
-        link: '/customer/',
-      },
-    ];
+
     const systemRole = computed(
       () =>
         store.getters[
           `${AppConstants.AuthModule}/${AppConstants.Auth.GetSystemRole}`
         ]
     );
-    const essentialLinks = computed(() =>
-      systemRole.value ? managerEssentialLinks : customerEssentialLinks
-    );
 
     const toggleLeftDrawer = (): void => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
     };
+
     return {
+      systemRole,
       essentialLinks,
       leftDrawerOpen,
       toggleLeftDrawer,
+      customerHomeRoute: {
+        name: AppConstants.Routes.CustomerPage,
+      },
     };
   },
 });
