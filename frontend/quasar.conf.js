@@ -61,7 +61,8 @@ module.exports = configure(function (ctx) {
         baseApiUrl: ctx.dev ? "http://127.0.0.1:3001/api/" : "https://cosmetics-app.herokuapp.com/api/",
         imagesUrl: ctx.dev ? "http://127.0.0.1:3001/api/users/images/" : "https://cosmetics-app.herokuapp.com/api/users/images/",
         adminKey: 'sara-admin',
-        defaultUserImage: 'default-image.jpg'
+        defaultUserImage: 'default-image.jpg',
+        apiKey: ''
       },
       // transpile: false,
       // publicPath: '/',

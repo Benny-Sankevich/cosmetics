@@ -8,11 +8,10 @@ const usersRoutes: RouteRecordRaw = {
   meta: {
     resolve: resolveUsers,
   },
-  redirect: { name: AppConstants.Routes.UsersList },
   component: () => import('../../pages/UsersPage.vue'),
   children: [
     {
-      path: 'list',
+      path: '',
       name: AppConstants.Routes.UsersList,
       component: () => import('../../components/users/UsersList.vue'),
     },

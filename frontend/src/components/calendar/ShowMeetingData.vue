@@ -73,7 +73,7 @@
               </div>
               <div v-if="event.allDay" class="row full-width justify-start">
                 <div class="col-5" style="padding-left: 20px">
-                  <strong>{{ $t('duration') }}:</strong>
+                  <strong>{{ $t('treatmentDuration') }}:</strong>
                 </div>
                 <div class="col-7">{{ $t('allDay') }}</div>
               </div>
