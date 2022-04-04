@@ -5,11 +5,11 @@ const AppointmentAvailableModel = require("../models/appointments/appointments-a
 const appointmentLogic = require("../business-logic-layer/appointment-logic");
 const appointmentAvailableLogic = require("../business-logic-layer/available-appointments-logic");
 const verifyIsAdmin = require("../middleware/verify-isAdmin");
+const verifyIsLoggedIn = require("../middleware/verify-logged-in");
 
 const router = express.Router();
-router.use(verifyIsAdmin);
 
-router.post("/get-appointments", async (request, response) => {
+router.post("/get-appointments", verifyIsAdmin, async (request, response) => {
     try {
         const appointments = await appointmentLogic.getAllAppointmentsAsync();
         response.json(appointments);
@@ -19,7 +19,7 @@ router.post("/get-appointments", async (request, response) => {
     }
 });
 
-router.post("/get-appointments-by-user", async (request, response) => {
+router.post("/get-appointments-by-user", verifyIsLoggedIn, async (request, response) => {
     try {
         const { userId } = request.body;
         const appointments = await appointmentLogic.getAllAppointmentsByUserAsync(userId);
@@ -30,7 +30,7 @@ router.post("/get-appointments-by-user", async (request, response) => {
     }
 });
 
-router.post("/get-appointments-awaiting-approval", async (request, response) => {
+router.post("/get-appointments-awaiting-approval", verifyIsAdmin, async (request, response) => {
     try {
         const appointmentsAwaitingApproval = await appointmentLogic.getAllAppointmentsAwaitingApprovalAsync();
         response.json(appointmentsAwaitingApproval);
@@ -40,7 +40,7 @@ router.post("/get-appointments-awaiting-approval", async (request, response) => 
     }
 });
 
-router.post("/get-appointments-today", async (request, response) => {
+router.post("/get-appointments-today", verifyIsAdmin, async (request, response) => {
     try {
         const appointmentsToday = await appointmentLogic.getAllAppointmentsTodayAsync();
         response.json(appointmentsToday);
@@ -50,7 +50,7 @@ router.post("/get-appointments-today", async (request, response) => {
     }
 });
 
-router.post("/get-sum-between-date", async (request, response) => {
+router.post("/get-sum-between-date", verifyIsAdmin, async (request, response) => {
     try {
         const date = request.body;
         const sum = await appointmentLogic.getSumOfOrdersBetweenDatesAsync(date.fromTime, date.toTime, {});
@@ -61,7 +61,7 @@ router.post("/get-sum-between-date", async (request, response) => {
     }
 });
 
-router.post("/add-appointment", async (request, response) => {
+router.post("/add-appointment", verifyIsAdmin, async (request, response) => {
     try {
         const appointment = new AppointmentModel(request.body);
         const error = appointment.validateSync();
@@ -74,7 +74,7 @@ router.post("/add-appointment", async (request, response) => {
     }
 });
 
-router.post("/approve-appointments", async (request, response) => {
+router.post("/approve-appointments", verifyIsAdmin, async (request, response) => {
     try {
         const appointmentsToApprove = request.body;
         let errorMessage = null;
@@ -99,7 +99,7 @@ router.post("/approve-appointments", async (request, response) => {
     }
 });
 
-router.post("/update-appointment", async (request, response) => {
+router.post("/update-appointment", verifyIsAdmin, async (request, response) => {
     try {
         const appointment = new AppointmentModel(request.body);
         const error = appointment.validateSync();
@@ -113,7 +113,7 @@ router.post("/update-appointment", async (request, response) => {
     }
 });
 
-router.post("/delete-appointment", async (request, response) => {
+router.post("/delete-appointment", verifyIsAdmin, async (request, response) => {
     try {
         const appointment = request.body;
         await appointmentLogic.deleteAppointmentAsync(appointment);
@@ -126,7 +126,7 @@ router.post("/delete-appointment", async (request, response) => {
 
 // Appointments available
 
-router.post("/get-all-appointments-available", async (request, response) => {
+router.post("/get-all-appointments-available", verifyIsLoggedIn, async (request, response) => {
     try {
         const appointmentAvailable = await appointmentAvailableLogic.getAllAppointmentAvailableAsync();
         response.json(appointmentAvailable);
@@ -136,18 +136,7 @@ router.post("/get-all-appointments-available", async (request, response) => {
     }
 });
 
-router.post("/get-appointments-available-by-date", async (request, response) => {
-    try {
-        const { date } = request.body;
-        const appointmentAvailable = await appointmentAvailableLogic.getAppointmentAvailableByDateAsync(date);
-        response.json(appointmentAvailable);
-    }
-    catch (err) {
-        response.status(500).send(errorHelper.getError(err));
-    }
-});
-
-router.post("/add-appointment-available", async (request, response) => {
+router.post("/add-appointment-available", verifyIsAdmin, async (request, response) => {
     try {
         const appointmentAvailable = new AppointmentAvailableModel(request.body);
         const error = appointmentAvailable.validateSync();
@@ -160,11 +149,11 @@ router.post("/add-appointment-available", async (request, response) => {
     }
 });
 
-router.post("/add-appointments-available-by-range", async (request, response) => {
+router.post("/add-appointments-available-by-range", verifyIsAdmin, async (request, response) => {
     try {
         const { date, timeStart, timeEnd, duration } = request.body;
         const appointmentAvailableListAdded = await appointmentAvailableLogic.onAddAppointmentAvailableByRangeAsync(date, timeStart, timeEnd, duration);
-        if (typeof appointmentAvailableListAdded === 'string') return response.status(404).send(errorHelper.getError(appointmentAvailableListAdded));
+        if (typeof appointmentAvailableListAdded === 'string') return response.status(404).send(appointmentAvailableListAdded);
         response.json(appointmentAvailableListAdded);
     }
     catch (err) {
@@ -172,7 +161,7 @@ router.post("/add-appointments-available-by-range", async (request, response) =>
     }
 });
 
-router.post("/update-appointment-available", async (request, response) => {
+router.post("/update-appointment-available", verifyIsAdmin, async (request, response) => {
     try {
         const appointmentAvailable = new AppointmentAvailableModel(request.body);
         const error = appointmentAvailable.validateSync();
@@ -186,7 +175,7 @@ router.post("/update-appointment-available", async (request, response) => {
     }
 });
 
-router.post("/delete-appointment-available", async (request, response) => {
+router.post("/delete-appointment-available", verifyIsAdmin, async (request, response) => {
     try {
         const appointmentAvailable = request.body;
         await appointmentAvailableLogic.deleteAppointmentAvailableAsync(appointmentAvailable);
