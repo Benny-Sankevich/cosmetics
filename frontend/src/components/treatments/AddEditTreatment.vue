@@ -141,8 +141,6 @@ export default defineComponent({
 
     const searchColor = (searchInput: string, update: any) => {
       if (searchInput === '') {
-        console.log(searchInput);
-
         update(() => {
           colorsOptions.value = colorsList.value;
         });

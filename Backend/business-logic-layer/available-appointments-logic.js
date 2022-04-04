@@ -4,18 +4,13 @@ const appointmentLogic = require("./appointment-logic");
 const helpers = require("../helpers/helpers");
 
 function getAllAppointmentAvailableAsync() {
-    return AppointmentAvailableModel.find({ isActive: true }).exec();
-}
-
-function getAppointmentAvailableByDateAsync(date) {
     return AppointmentAvailableModel.find({
         $and: [{ isActive: true }, {
             dateTimeStart: {
-                $gte: `${date} 00:01:00`,
-                $lt: `${date} 23:59:00`
+                $gte: helpers.getToday(),
             }
         }]
-    }).exec();
+    }).sort({ dateTimeStart: 1 }).exec();
 }
 
 function addAppointmentAvailableAsync(appointmentAvailable) {
@@ -103,7 +98,6 @@ function getTimeRange(timeStr) {
 
 module.exports = {
     getAllAppointmentAvailableAsync,
-    getAppointmentAvailableByDateAsync,
     onAddAppointmentAvailableByRangeAsync,
     addAppointmentAvailableAsync,
     updateAppointmentAvailableAsync,
