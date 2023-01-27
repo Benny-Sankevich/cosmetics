@@ -17,7 +17,6 @@
         <q-form @submit="onSave" @reset="onReset" class="q-gutter-md">
           <q-input
             autofocus
-            clearable
             square
             v-model="supplierForm.companyName"
             lazy-rules
@@ -26,34 +25,22 @@
           />
           <q-input
             square
-            clearable
             v-model="supplierForm.email"
-            lazy-rules
-            :rules="emailRules"
             :label="$t('email')"
           />
           <q-input
             square
-            clearable
             v-model="supplierForm.phoneNumber"
-            lazy-rules
-            :rules="phoneNumberRules"
             :label="$t('phoneNumber')"
           />
           <q-input
             square
-            clearable
             v-model="supplierForm.address"
-            lazy-rules
-            :rules="nameRules"
             :label="$t('address')"
           />
           <q-input
             square
-            clearable
             v-model="supplierForm.contact"
-            lazy-rules
-            :rules="nameRules"
             :label="$t('contact')"
           />
 
@@ -87,8 +74,6 @@ import {
   i18n,
   showInfo,
   nameRules,
-  emailRules,
-  phoneNumberRules,
 } from '../../../core/Export';
 import { useStore } from '../../../store';
 import { Supplier } from '../../../store/purchase/models';
@@ -132,8 +117,6 @@ export default defineComponent({
       show_dialog,
       supplierForm,
       nameRules,
-      phoneNumberRules,
-      emailRules,
       closeDialog,
       onSave,
       onReset,

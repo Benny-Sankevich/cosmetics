@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-mt-sm">
+  <q-card class="q-mt-sm" v-if="awaitingApproval.length > 0">
     <q-card-section class="text-h6 q-pb-none">
       <q-item>
         <q-item-section>
@@ -9,24 +9,12 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>
-            <q-btn
-              v-if="selected.length > 0"
-              color="primary"
-              class="text-white"
-              :label="$t('confirm')"
-              @click="approveData"
-            />
+            <q-btn v-if="selected.length > 0" color="primary" class="text-white" :label="$t('confirm')" @click="approveData" />
           </q-item-label>
         </q-item-section>
         <q-item-section>
           <q-item-label>
-            <q-input
-              borderless
-              dense
-              debounce="300"
-              v-model="filter"
-              :placeholder="$t('search')"
-            >
+            <q-input borderless dense debounce="300" v-model="filter" :placeholder="$t('search')">
               <template v-slot:append>
                 <q-icon name="search" />
               </template>
@@ -36,15 +24,7 @@
       </q-item>
     </q-card-section>
     <q-card-section class="q-pa-none q-ma-none">
-      <q-table
-        class="no-shadow no-border"
-        :rows="awaitingApproval"
-        :columns="columns"
-        row-key="_id"
-        selection="multiple"
-        v-model:selected="selected"
-        :filter="filter"
-      >
+      <q-table class="no-shadow no-border" :rows="awaitingApproval" :columns="columns" row-key="_id" selection="multiple" v-model:selected="selected" :filter="filter">
       </q-table>
     </q-card-section>
   </q-card>
@@ -63,7 +43,7 @@ export default defineComponent({
     const awaitingApproval = computed(
       () =>
         store.getters[
-          `${AppConstants.AppointmentModule}/${AppConstants.Appointment.GetAwaitingAppointments}`
+        `${AppConstants.AppointmentModule}/${AppConstants.Appointment.GetAwaitingAppointments}`
         ]
     );
     const columns = computed(() => {

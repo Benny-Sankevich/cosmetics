@@ -18,7 +18,6 @@
           <q-input
             autofocus
             square
-            clearable
             v-model="userForm.firstName"
             lazy-rules
             :rules="nameRules"
@@ -31,7 +30,6 @@
           <q-input
             autofocus
             square
-            clearable
             v-model="userForm.lastName"
             lazy-rules
             :rules="nameRules"
@@ -43,10 +41,7 @@
           </q-input>
           <q-input
             square
-            clearable
             v-model="userForm.email"
-            lazy-rules
-            :rules="emailRules"
             :label="$t('email')"
           >
             <template v-slot:prepend>
@@ -55,7 +50,6 @@
           </q-input>
           <q-input
             square
-            clearable
             v-model="userForm.phoneNumber"
             lazy-rules
             :rules="phoneNumberRules"
@@ -100,7 +94,7 @@ import {
   i18n,
   showInfo,
   nameRules,
-  emailRules,
+  emailWithoutRequiredRules,
   phoneNumberRules,
 } from '../../core/Export';
 import { useStore } from '../../store';
@@ -130,9 +124,10 @@ export default defineComponent({
       store.dispatch(
         `${AppConstants.UsersModule}/${actionType}`,
         userForm.value
-      );
-      showInfo(i18n.global.t('msgSavedSuccessfully'));
-      closeDialog();
+      ).then(()=>{
+          showInfo(i18n.global.t('msgSavedSuccessfully'));
+          closeDialog();
+      });
     };
 
     const closeDialog = (): void => {
@@ -147,7 +142,7 @@ export default defineComponent({
       userForm,
       nameRules,
       phoneNumberRules,
-      emailRules,
+      emailWithoutRequiredRules,
       closeDialog,
       onSaveUser,
       onReset,

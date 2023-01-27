@@ -63,8 +63,8 @@ export default defineComponent({
     const visibility = ref(false);
     const visibilityIcon = ref('visibility');
     const loginForm = ref(new LoginForm());
-    loginForm.value.email = 'admin@gmail.com';
-    loginForm.value.password = 'pass4admin!';
+    loginForm.value.email = process.env.defaultUserName;
+    loginForm.value.password = process.env.defaultPassword;
     const onLogin = (): void => {
       store
         .dispatch(

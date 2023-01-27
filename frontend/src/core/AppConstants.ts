@@ -24,6 +24,7 @@ export namespace AppConstants {
     public static ReportTable = 'ReportTable';
     public static AvailableAppointmentsPage = 'AvailableAppointmentsPage';
     public static SettingsPage = 'SettingsPage';
+    public static TasksPage = 'TasksPage';
   }
 
   // Modules

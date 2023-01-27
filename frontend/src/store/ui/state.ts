@@ -13,7 +13,7 @@ const state: UIStateInterface = {
   routeParamId: '',
   userLangCode: JSON.parse(localStorage.getItem('lang'))
     ? JSON.parse(localStorage.getItem('lang'))
-    : 'en',
+    : 'he',
 };
 
 export default state;

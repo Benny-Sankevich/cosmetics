@@ -58,11 +58,13 @@ module.exports = configure(function (ctx) {
       rtl: true,
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       env: {
-        baseApiUrl: ctx.dev ? "http://127.0.0.1:3001/api/" : "https://cosmetics-app.herokuapp.com/api/",
-        imagesUrl: ctx.dev ? "http://127.0.0.1:3001/api/users/images/" : "https://cosmetics-app.herokuapp.com/api/users/images/",
-        adminKey: 'sara-admin',
+        baseApiUrl: ctx.dev ? "http://127.0.0.1:3001/api/" : "",
+        imagesUrl: ctx.dev ? "http://127.0.0.1:3001/api/users/images/" : "",
+        defaultUserName: ctx.dev ? '': '',
+        defaultPassword: ctx.dev ? '':'',
+        adminKey: 'sari-admin',
         defaultUserImage: 'default-image.jpg',
-        apiKey: ''
+        apiKey: 'AIzaSyAyTkHhVfvSvqEKkUg9OYP_t7owAbZPuYg'
       },
       // transpile: false,
       // publicPath: '/',
