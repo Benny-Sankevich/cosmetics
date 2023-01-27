@@ -42,19 +42,28 @@ async function deletePurchaseOrderAsync(purchaseOrder) {
 }
 
 async function getSumOfPurchaseOrdersBetweenDatesAsync(fromTime, toTime) {
+    const lastDayOfMonth = getLastDayOfMonth(toTime.year, toTime.month - 1);
     const purchaseOrders = await PurchaseOrderModel.find({
         $and: [{ isActive: true }, {
             orderDate: {
-                $gte: fromTime,
-                $lt: toTime
+                $gte: `${fromTime.year}-${add0(fromTime.month) + fromTime.month}-01T00:00:00.000+00:00`,
+                $lt: `${toTime.year}-${add0(toTime.month) + toTime.month}-${add0(lastDayOfMonth) + lastDayOfMonth}T23:59:59.000+00:00`
             }
         }]
     }).select("totalPrice").exec();
     return helpers.calculateTotalPriceOfArray(purchaseOrders);
 }
 
+function getLastDayOfMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate().toLocaleString();
+}
+
+function add0(num) {
+    return num < 10 ? '0' : ''
+}
+
 async function updateSummaries(year, month) {
-    const monthlySummary = await getSumOfPurchaseOrdersBetweenDatesAsync(`${year}-${month}-01`, `${year}-${month}-31`);
+    const monthlySummary = await getSumOfPurchaseOrdersBetweenDatesAsync({ year, month }, { year, month });
     summariesLogic.updateSummariesData('purchaseOrders', null, year, month, monthlySummary)
 }
 

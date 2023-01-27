@@ -43,7 +43,7 @@ async function getRowsReportKeyCustomersYearlyReport(reportData, year) {
     for (const customer of customersList) {
         const yearlySumData = [];
         for (let month = 1; month <= 12; month++) {
-            yearlySumData.push(await appointmentLogic.getSumOfOrdersBetweenDatesAsync(`${year}-${month}-01`, `${year}-${month}-31`, { userId: customer._id }));
+            yearlySumData.push(await appointmentLogic.getSumOfOrdersBetweenDatesAsync({ year, month }, { year, month }, { userId: customer._id }));
         }
         rows.push(getObjReportRow(reportData.visibleColumns, `${customer.firstName} ${customer.lastName}`, yearlySumData));
     }
