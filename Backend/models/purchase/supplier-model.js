@@ -16,14 +16,12 @@ const SupplierSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, "Missing Email."],
         minLength: [7, "Email must be minimum 7 chars."],
         maxLength: [50, "Email can`t exceed 50 chars."],
         match: [/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, "Email must be valid."]
     },
     phoneNumber: {
         type: String,
-        required: [true, "Missing phone number."],
         unique: [true, "Phone number already exist."],
         match: [/\d{3}-\d{7}/, "Phone number must be 9 or 10 digits."]
     },

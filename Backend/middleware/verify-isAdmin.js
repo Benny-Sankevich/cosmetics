@@ -15,7 +15,7 @@ function verifyLoggedIn(request, response, next) {
 
         if (err) return response.status(401).send('msgYouAreNotLoggedIn');
 
-        if (payload.user.isAdmin !== 'sara-admin') return response.status(403).send('msgYouDontAuthorizedToAccessThatPage');
+        if (payload.user.isAdmin !== 'sari-admin') return response.status(403).send('msgYouDontAuthorizedToAccessThatPage');
 
         next();
     });

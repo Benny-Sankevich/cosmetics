@@ -9,9 +9,10 @@ const verifyIsLoggedIn = require("../middleware/verify-logged-in");
 
 const router = express.Router();
 
-router.post("/get-appointments", verifyIsAdmin, async (request, response) => {
+router.post("/get-monthly-appointments", verifyIsLoggedIn, async (request, response) => {
     try {
-        const appointments = await appointmentLogic.getAllAppointmentsAsync();
+        const { date } = request.body;
+        const appointments = await appointmentLogic.getMonthlyAppointmentsAsync(date);
         response.json(appointments);
     }
     catch (err) {
@@ -50,7 +51,7 @@ router.post("/get-appointments-today", verifyIsAdmin, async (request, response) 
     }
 });
 
-router.post("/get-sum-between-date", verifyIsAdmin, async (request, response) => {
+router.post("/get-sum-between-date", async (request, response) => {
     try {
         const date = request.body;
         const sum = await appointmentLogic.getSumOfOrdersBetweenDatesAsync(date.fromTime, date.toTime, {});
@@ -104,7 +105,7 @@ router.post("/update-appointment", verifyIsAdmin, async (request, response) => {
         const appointment = new AppointmentModel(request.body);
         const error = appointment.validateSync();
         if (error) return response.status(400).send(errorHelper.getError(error));
-        const updatedAppointment = await appointmentLogic.updateAppointmentAsync(appointment);
+        const updatedAppointment = await appointmentLogic.updateAppointmentAsync(appointment, true);
         if (!updatedAppointment) return response.status(404).send(errorHelper.getError('Appointment has not found please try again'));
         response.status(201).json(updatedAppointment);
     }
