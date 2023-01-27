@@ -1,53 +1,21 @@
 <template>
   <q-page class="q-pa-sm bg-grey-3">
     <NavigationBar @today="onToday" @prev="onPrev" @next="onNext" />
-    <ShowMeetingData
-      :eventToShow="eventToShow"
-      @onCloseDialog="closeEventToShowDialog"
-      v-if="show_event"
-    />
-    <AddEditMeeting
-      :model="model"
-      :eventToEdit="eventToEdit"
-      @onCloseDialog="closeAddEditEvent"
-      v-if="show_add_edit_dialog"
-    />
-    <q-calendar-month
-      ref="calendar"
-      :key="keyValue"
-      v-model="selectedDate"
-      animated
-      bordered
-      focusable
-      hoverable
-      no-active-date
-      :day-min-height="90"
-      :day-height="100"
-      @click-date="openAddEvent"
-      @click-day="openAddEvent"
-    >
+    <ShowMeetingData :eventToShow="eventToShow" @onCloseDialog="closeEventToShowDialog" v-if="show_event" />
+    <AddEditMeeting :model="model" :eventToEdit="eventToEdit" @onCloseDialog="closeAddEditEvent($event)" v-if="show_add_edit_dialog" />
+    <q-calendar-month ref="calendar" :key="keyValue" v-model="selectedDate" animated bordered focusable hoverable no-active-date :day-min-height="90" :day-height="100" @click-date="openAddEvent" @click-day="openAddEvent">
       <template #week="{ scope: { week, weekdays } }">
-        <template
-          v-for="(computedEvent, index) in getWeekEvents(week, weekdays)"
-          :key="index"
-        >
-          <div
-            :class="badgeClasses(computedEvent)"
-            :style="badgeStyles(computedEvent, week.length)"
-          >
-            <div
-              v-if="computedEvent.event"
-              class="title q-calendar__ellipsis"
-              @click="showEvent(computedEvent.event)"
-            >
+        <template v-for="(computedEvent, index) in getWeekEvents(week, weekdays)" :key="index">
+          <div :class="badgeClasses(computedEvent)" :style="badgeStyles(computedEvent, week.length)">
+            <div v-if="computedEvent.event" class="title q-calendar__ellipsis" @click="showEvent(computedEvent.event)">
               <q-icon v-if="computedEvent.event.isConfirmed" name="check_box" />
               {{
-                `${computedEvent.event.firstName}
-                  ${computedEvent.event.lastName}` +
-                (computedEvent.event.allDay
-                  ? ` - ${$t('allDay')}`
-                  : ` - ${computedEvent.event.startTime} -
-                  ${computedEvent.event.endTime}`)
+              `${computedEvent.event.firstName}
+              ${computedEvent.event.lastName}` +
+  (computedEvent.event.allDay
+    ? ` - ${$t('allDay')}`
+    : ` - ${computedEvent.event.startTime} -
+              ${computedEvent.event.endTime}`)
               }}
               <q-tooltip>{{ computedEvent.event.name }}</q-tooltip>
             </div>
@@ -73,12 +41,10 @@ import '@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass';
 import {
   defineComponent,
   defineAsyncComponent,
-  computed,
   ref,
   watch,
 } from 'vue';
-import { useStore } from '../../store';
-import { AppConstants } from '../../core/Export';
+import { apiService } from '../../core/Export';
 import { Appointment } from '../../store/appointments/models';
 import {
   CalendarEventInterface,
@@ -95,7 +61,6 @@ export default defineComponent({
     ),
   },
   setup() {
-    const store = useStore();
     const keyValue = ref(0);
     const selectedDate = ref(today());
     const events = ref([]);
@@ -105,13 +70,16 @@ export default defineComponent({
     const eventToEdit = ref(null);
     const model = ref(null);
     const calendar = ref(null);
+    const calendarMonthDate = ref(new Date());
+    const appointments = ref([]);
 
-    const appointments = computed(
-      () =>
-        store.getters[
-          `${AppConstants.AppointmentModule}/${AppConstants.Appointment.GetAppointments}`
-        ]
-    );
+    const getMonthAppointments = (): void => {
+      apiService.getMonthlyAppointments(calendarMonthDate.value).then(res => {
+        appointments.value = res;
+        updateData();
+      })
+    }
+    getMonthAppointments();
 
     const containerStyle = (): SizeInterface => {
       return {
@@ -119,6 +87,7 @@ export default defineComponent({
         width: 'auto',
       };
     };
+
     const updateData = (): void => {
       if (appointments.value.length > 0) {
         events.value = [];
@@ -144,7 +113,7 @@ export default defineComponent({
         });
       }
     };
-    updateData();
+
     watch(appointments.value, () => {
       updateData();
     });
@@ -162,6 +131,7 @@ export default defineComponent({
         'my-void-event': true,
       };
     };
+
     const badgeStyles = (computedEvent: any, weekLength: any): any => {
       const s = { width: '' };
       if (computedEvent.size !== undefined) {
@@ -169,6 +139,7 @@ export default defineComponent({
       }
       return s;
     };
+
     const getWeekEvents = (week: Array<any>): any => {
       const firstDay = parsed(week[0].date + ' 00:00');
       const lastDay = parsed(week[week.length - 1].date + ' 23:59');
@@ -197,6 +168,7 @@ export default defineComponent({
       }
       return events1;
     };
+
     const insertEvent = (
       events: Array<any>,
       weekLength: number,
@@ -233,6 +205,7 @@ export default defineComponent({
         events.push({ size: weekLength - availableDays });
       }
     };
+
     const showEvent = (event: Appointment): void => {
       eventToShow.value = event;
       show_event.value = true;
@@ -242,20 +215,24 @@ export default defineComponent({
       eventToEdit.value = new Appointment();
       eventToEdit.value.dateTimeStart = scope.timestamp.date + ' 08:00';
       eventToEdit.value.dateTimeEnd = scope.timestamp.date + ' 09:00';
-      eventToEdit.value.isConfirmed = false;
+      eventToEdit.value.isConfirmed = true;
       eventToEdit.value.allDay = false;
       model.value = 'add';
       show_add_edit_dialog.value = true;
     };
-    const closeAddEditEvent = (): void => {
+
+    const closeAddEditEvent = (isSubmitted: boolean): void => {
       show_add_edit_dialog.value = false;
+      if (isSubmitted) getMonthAppointments();
     };
+
     const closeEventToShowDialog = (event: CalendarEventInterface): void => {
       show_event.value = false;
       if (event) {
         openAddEditEvent(event);
       }
     };
+
     const openAddEditEvent = (payload: CalendarEventInterface): void => {
       eventToEdit.value = payload;
       eventToEdit.value.dateTimeStart = payload.start + ' ' + payload.startTime;
@@ -263,15 +240,25 @@ export default defineComponent({
       model.value = 'edit';
       show_add_edit_dialog.value = true;
     };
+
     const onToday = (): void => {
+      calendarMonthDate.value = new Date();
+      getMonthAppointments();
       calendar.value.moveToToday();
     };
+
     const onPrev = (): void => {
+      calendarMonthDate.value = new Date(calendarMonthDate.value.setMonth(calendarMonthDate.value.getMonth() - 1));
+      getMonthAppointments();
       calendar.value.prev();
     };
+
     const onNext = (): void => {
+      calendarMonthDate.value = new Date(calendarMonthDate.value.setMonth(calendarMonthDate.value.getMonth() + 1));
+      getMonthAppointments();
       calendar.value.next();
     };
+
     return {
       calendar,
       onToday,

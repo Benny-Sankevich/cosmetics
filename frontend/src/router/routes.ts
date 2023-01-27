@@ -12,6 +12,7 @@ import HomePage from '../pages/HomePage.vue';
 import CustomerPage from '../pages/CustomerPage.vue';
 import AboutPage from '../pages/AboutPage.vue';
 import AvailableAppointmentsPage from '../pages/AvailableAppointmentsPage.vue';
+import TasksPage from '../pages/TasksPage.vue';
 import SettingsPage from '../pages/SettingsPage.vue';
 import { calendarRoutes } from './calendar/routes';
 import { appStore } from '../store/index';
@@ -74,6 +75,11 @@ const routes: RouteRecordRaw[] = [
         path: 'available-appointments',
         name: AppConstants.Routes.AvailableAppointmentsPage,
         component: AvailableAppointmentsPage,
+      },
+      {
+        path: 'tasks',
+        name: AppConstants.Routes.TasksPage,
+        component: TasksPage,
       },
       calendarRoutes,
       usersRoutes,

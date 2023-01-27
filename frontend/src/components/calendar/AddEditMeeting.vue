@@ -30,6 +30,7 @@
             input-debounce="0"
             @filter="searchUser"
             behavior="menu"
+            autofocus
           >
             <template v-slot:no-option>
               <q-item>
@@ -179,6 +180,7 @@ export default defineComponent({
         );
       });
     };
+
     const saveEvent = () => {
       const treatment = treatments.value.find(
         (x) => x._id == eventForm.value.treatmentId
@@ -194,10 +196,11 @@ export default defineComponent({
         eventForm.value
       );
       showInfo(i18n.global.t('msgSavedSuccessfully'));
-      closeDialog();
+      closeDialog(true);
     };
-    const closeDialog = () => {
-      emit('onCloseDialog', false);
+
+    const closeDialog = (isSubmitted = false) => {
+      emit('onCloseDialog', isSubmitted);
     };
     return {
       show_dialog,

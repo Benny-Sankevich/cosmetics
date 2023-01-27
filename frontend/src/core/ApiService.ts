@@ -1,3 +1,4 @@
+import { Task } from './../models/general-models';
 import { Treatment } from './../store/treatments/models';
 import { httpClient } from '../utils/http-client';
 import {
@@ -202,11 +203,51 @@ class ApiService {
   }
 
   getCustomersTreatments(): Promise<Treatment[]> {
-    return httpClient.post('treatments/get-customers-treatments').then((response) => {
+    return httpClient
+      .post('treatments/get-customers-treatments')
+      .then((response) => {
+        if (response.status.toString() === '200') {
+          return response.data;
+        }
+      });
+  }
+
+  getAllTasks(): Promise<Task[]> {
+    return httpClient.post('tasks/get-all-tasks').then((response) => {
       if (response.status.toString() === '200') {
         return response.data;
       }
     });
+  }
+
+  addTask(task: Task): Promise<Task> {
+    return httpClient.post('tasks/add-task', task).then((response) => {
+      if (response.status.toString() === '201') {
+        return response.data;
+      }
+    });
+  }
+
+  updateTask(task: Task): Promise<Task> {
+    return httpClient.post('tasks/update-task', task).then((response) => {
+      if (response.status.toString() === '201') {
+        return response.data;
+      }
+    });
+  }
+
+  deleteTask(task: Task): Promise<void> {
+    return httpClient.post('tasks/delete-task', task);
+  }
+
+  getMonthlyAppointments(date: Date): Promise<Appointment[]> {
+    return httpClient
+      .post('appointments/get-monthly-appointments', { date })
+      .then((response) => {
+        if (response.status.toString() === '200') {
+          return response.data;
+        }
+      });
   }
 }
 export const apiService = new ApiService();

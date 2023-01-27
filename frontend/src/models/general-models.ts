@@ -9,8 +9,13 @@ export interface YearReportData {
 }
 
 export interface DateStartEnd {
-  fromTime: string;
-  toTime: string;
+  fromTime: DateRange;
+  toTime: DateRange;
+}
+
+export interface DateRange {
+  year: number;
+  month: number;
 }
 
 export class ResetPassword {
@@ -111,4 +116,23 @@ export interface ILocation {
 export interface IMarkerOptions {
   position: ILocation;
   label: string;
+}
+
+export class Task {
+  constructor() {
+    this.id = '';
+    this.message = '';
+    this.title = '';
+    this.isCompleted = false;
+  }
+  id: string;
+  title: string;
+  message: string;
+  createdDate: string;
+  lastModified: string;
+  isCompleted: boolean;
+}
+
+export class Tasks {
+  tasks!: Task[];
 }

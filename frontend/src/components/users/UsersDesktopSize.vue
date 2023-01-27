@@ -161,6 +161,7 @@ export default defineComponent({
       if (userData) {
         formData.value = { ...userData };
       } else {
+        formData.value.email = '';
         formData.value.isActive = true;
         formData.value.imageName = process.env.defaultUserImage;
       }
