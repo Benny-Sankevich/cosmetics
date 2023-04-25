@@ -20,7 +20,7 @@ router.post("/get-report-list", async (request, response) => {
 router.post("/get-report-data", async (request, response) => {
     try {
         const reportParameters = request.body;
-        const reportData = await reportsLogic.getReportDataAsync(reportParameters._id, reportParameters.year);
+        const reportData = await reportsLogic.getReportDataAsync(reportParameters._id, reportParameters.year, reportParameters.month);
         if (!reportData) return response.status(404).send(errorHelper.getError('Report has not found please try again'));
         response.json(reportData);
     }

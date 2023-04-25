@@ -42,7 +42,7 @@ async function deletePurchaseOrderAsync(purchaseOrder) {
 }
 
 async function getSumOfPurchaseOrdersBetweenDatesAsync(fromTime, toTime) {
-    const lastDayOfMonth = getLastDayOfMonth(toTime.year, toTime.month - 1);
+    const lastDayOfMonth = helpers.getLastDayOfMonth(toTime.year, toTime.month - 1);
     const purchaseOrders = await PurchaseOrderModel.find({
         $and: [{ isActive: true }, {
             orderDate: {
@@ -54,9 +54,7 @@ async function getSumOfPurchaseOrdersBetweenDatesAsync(fromTime, toTime) {
     return helpers.calculateTotalPriceOfArray(purchaseOrders);
 }
 
-function getLastDayOfMonth(year, month) {
-    return new Date(year, month + 1, 0).getDate().toLocaleString();
-}
+
 
 function add0(num) {
     return num < 10 ? '0' : ''

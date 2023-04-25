@@ -6,7 +6,7 @@ const appointmentLogic = require("./appointment-logic");
 const helpers = require("../helpers/helpers");
 
 function getReportsListAsync() {
-    return ReportModel.find({ isActive: true }).select(['title', 'description', 'letter', 'isYearly']).exec();
+    return ReportModel.find({ isActive: true }).select(['title', 'description', 'letter', 'isYearly', 'isMonthly']).exec();
 }
 
 function getReportDataByReportIdAsync(_id) {
@@ -18,14 +18,14 @@ function addReportAsync(report) {
     return report.save()
 }
 
-async function getReportDataAsync(_id, year) {
+async function getReportDataAsync(_id, year, month) {
     const reportData = await getReportDataByReportIdAsync(_id);
     if (!reportData) return null;
-    reportData.rows = await getReportRows(reportData, year);
+    reportData.rows = await getReportRows(reportData, year, month);
     return reportData;
 }
 
-async function getReportRows(reportData, year) {
+async function getReportRows(reportData, year, month) {
     switch (reportData.key) {
         case 'customersYearlyReport':
             return await getRowsReportKeyCustomersYearlyReport(reportData, year);
@@ -33,6 +33,8 @@ async function getReportRows(reportData, year) {
             return await getRowsReportKeyYearReport(reportData, year);
         case 'yearsOrdersAndPurchaseSum':
             return await getRowsReportKeyYearsOrdersAndPurchaseSum(reportData);
+        case 'customersMonthlyReport':
+            return await getRowsReportKeyMonthlyCustomersOrdersSum(year, month);
     }
     return []
 }
@@ -75,6 +77,29 @@ async function getRowsReportKeyYearsOrdersAndPurchaseSum(reportData) {
             rows.push(getObjReportRow(reportData.visibleColumns, parameter.name, yearlySummary));
         }
     }
+    return rows;
+}
+
+async function getRowsReportKeyMonthlyCustomersOrdersSum(year, month) {
+    const lastDayOfMonth = helpers.getLastDayOfMonth(year, month - 1);
+    var appointments = await appointmentLogic.getAppointmentsBetweenDatesAsync(
+        new Date(year, month - 1, 1, 00, 00, 01),
+        new Date(year, month - 1, lastDayOfMonth, 23, 59, 00)
+    );
+
+    let rows = [];
+    for (const appointment of appointments) {
+        rows.push({
+            'firstName': appointment.user.firstName,
+            'lastName': appointment.user.lastName,
+            'dateTimeStart': dateFormat = date.getHours() + ":" + date.getMinutes() + ", " + date.toDateString(),
+            'treatmentName': appointment.treatment.name,
+            'phoneNumber': appointment.user.phoneNumber,
+            'price': appointment.price,
+            'note': appointment.note,
+        })
+    }
+
     return rows;
 }
 

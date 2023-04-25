@@ -7,7 +7,9 @@ export interface ReportPropertiesToView {
   description: string;
   letter: string;
   year: number;
+  month: number;
   isYearly: boolean;
+  isMonthly: boolean;
 }
 export interface ReportInterface {
   letter: string;
@@ -20,6 +22,7 @@ export interface ReportInterface {
   visibleColumns: Array<string>;
   rows: Array<any>;
   year: number;
+  month: number;
 }
 export interface Column {
   name: string;
