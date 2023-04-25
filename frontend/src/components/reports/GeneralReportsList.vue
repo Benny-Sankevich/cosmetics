@@ -5,12 +5,7 @@
     </q-toolbar>
 
     <q-list bordered separator>
-      <q-item
-        v-for="report in reportsList"
-        :key="report._id"
-        class="q-my-sm"
-        v-ripple
-      >
+      <q-item v-for="report in reportsList" :key="report._id" class="q-my-sm" v-ripple>
         <q-item-section avatar>
           <q-avatar color="primary" text-color="white">
             {{ report.letter }}
@@ -23,24 +18,11 @@
             $t(report.description)
           }}</q-item-label>
         </q-item-section>
-        <q-select
-          v-if="report.isYearly"
-          class="col-md-3 col-sm-12 col-xs-12"
-          outlined
-          v-model="selectedYear"
-          :options="yearOptions"
-          :label="$t('chooseYear')"
-          style="overflow: auto"
-        />
+        <q-select v-if="report.isMonthly" class="col-2 q-pr-lg" outlined v-model="selectedMonth" :options="monthOptions" :label="$t('chooseMonth')" style="overflow: auto" />
+        <q-select v-if="report.isYearly" class="col-3" outlined v-model="selectedYear" :options="yearOptions" :label="$t('chooseYear')" style="overflow: auto" />
+
         <q-item-section side>
-          <q-btn
-            @click="showReport(report)"
-            flat
-            round
-            dense
-            icon="summarize"
-            color="green"
-          >
+          <q-btn @click="showReport(report)" flat round dense icon="summarize" color="green">
             <q-tooltip>{{ $t('showReport') }}</q-tooltip>
           </q-btn>
         </q-item-section>
@@ -61,16 +43,21 @@ export default defineComponent({
     const store = useStore();
     const reportsList = ref(null);
     const currentYear = ref(functionsService.getCurrentYear());
+    const currentMonth = ref(functionsService.getCurrentMonth());
     const yearOptions = ref(functionsService.getYearsList());
+    const monthOptions = ref(functionsService.getMonthsList());
     const selectedYear = ref(currentYear);
+    const selectedMonth = ref(currentMonth);
 
     apiService.getReportsList().then((res) => {
       reportsList.value = res;
     });
     const showReport = (reportParameters: ReportPropertiesToView): void => {
       reportParameters.year = selectedYear.value;
+      reportParameters.month = selectedMonth.value;
       apiService.getReportsData(reportParameters).then((res) => {
         res.year = selectedYear.value;
+        res.month = selectedMonth.value;
         store.commit(
           `${AppConstants.ReportModule}/${AppConstants.Report.MutationSetReportProperties}`,
           res
@@ -83,7 +70,9 @@ export default defineComponent({
     return {
       reportsList,
       yearOptions,
+      monthOptions,
       selectedYear,
+      selectedMonth,
       showReport,
     };
   },

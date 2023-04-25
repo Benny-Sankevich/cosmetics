@@ -29,7 +29,10 @@ function getAppointmentsBetweenDatesAsync(fromDate, toDate) {
                 $lt: toDate
             }
         }]
-    }).populate('user', ['_id', 'firstName', 'lastName', 'email', 'phoneNumber']).populate('treatment', ['_id', 'name']).exec();
+    })
+    .sort({dateTimeStart: 'asc' })
+    .populate('user', ['_id', 'firstName', 'lastName', 'email', 'phoneNumber'])
+    .populate('treatment', ['_id', 'name']).exec();
 }
 
 function getAllAppointmentsByUserAsync(userId) {
@@ -92,7 +95,7 @@ async function deleteAppointmentAsync(appointment) {
 }
 
 async function getSumOfOrdersBetweenDatesAsync(fromTime, toTime, condition) {
-    const lastDayOfMonth = getLastDayOfMonth(toTime.year, toTime.month - 1);
+    const lastDayOfMonth = helpers.getLastDayOfMonth(toTime.year, toTime.month - 1);
     const sumOfOrdersArr = await AppointmentModel.find({
         $and: [{ isActive: true }, condition, {
             dateTimeStart: {
@@ -102,10 +105,6 @@ async function getSumOfOrdersBetweenDatesAsync(fromTime, toTime, condition) {
         }]
     }).select("price").exec();
     return helpers.calculateSumOfArray(sumOfOrdersArr);
-}
-
-function getLastDayOfMonth(year, month) {
-    return new Date(year, month + 1, 0).getDate().toLocaleString();
 }
 
 function add0(num) {
@@ -153,6 +152,7 @@ module.exports = {
     getMonthlyAppointmentsAsync,
     getAllAppointmentsTodayAsync,
     getAllAppointmentsByUserAsync,
+    getAppointmentsBetweenDatesAsync,
     addAppointmentAsync,
     updateAppointmentAsync,
     updateAppointmentsBackgroundColorAsync,

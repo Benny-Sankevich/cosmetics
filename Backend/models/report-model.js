@@ -19,6 +19,10 @@ const ReportSchema = mongoose.Schema({
         type: Boolean,
         required: [true, "Missing isYearly"],
     },
+    isMonthly: {
+        type: Boolean,
+        required: [true, "Missing isMonthly"],
+    },
     columns: {
         type: Array,
         required: [true, "Missing columns"],

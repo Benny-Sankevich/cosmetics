@@ -14,6 +14,7 @@
         <div class="col-2 q-table__title">
           {{ $t(reportProperties.title) }}
           {{ reportProperties.isYearly ? reportProperties.year : '' }}
+          {{ reportProperties.isMonthly ? ` / ${reportProperties.month}` : '' }}
         </div>
 
         <q-space />
