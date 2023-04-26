@@ -89,10 +89,11 @@ async function getRowsReportKeyMonthlyCustomersOrdersSum(year, month) {
 
     let rows = [];
     for (const appointment of appointments) {
+        const date = new Date(appointment.dateTimeStart);
         rows.push({
             'firstName': appointment.user.firstName,
             'lastName': appointment.user.lastName,
-            'dateTimeStart': dateFormat = date.getHours() + ":" + date.getMinutes() + ", " + date.toDateString(),
+            'dateTimeStart': date.getHours() + ":" + date.getMinutes() + ", " + date.toDateString(),
             'treatmentName': appointment.treatment.name,
             'phoneNumber': appointment.user.phoneNumber,
             'price': appointment.price,
