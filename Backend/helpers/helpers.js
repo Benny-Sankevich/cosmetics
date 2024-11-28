@@ -58,7 +58,7 @@ function translationAdapter(translation) {
 
 function getVisibleColumnsYearsList() {
     const currentYear = new Date().getFullYear();
-    const minYear = 2020;
+    const minYear = 2022;
     const yearOptions = [];
     for (let year = minYear; year <= currentYear; year++) {
         yearOptions.push(year.toString());

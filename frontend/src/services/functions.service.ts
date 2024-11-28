@@ -18,7 +18,7 @@ class FunctionsService {
 
   getYearsList(): Array<number> {
     const currentYear = new Date().getFullYear();
-    const minYear = 2020;
+    const minYear = 2022;
     const yearOptions = [];
     for (let year = currentYear; year >= minYear; year--) {
       yearOptions.push(year);
@@ -77,6 +77,11 @@ class FunctionsService {
 
   checkNumber = (num: number): string => {
     return num < 10 ? '0' : '';
+  };
+
+  convertMsToMinutes = (milliseconds: number): number => {
+    const seconds = Math.floor(milliseconds / 1000);
+    return Math.floor(seconds / 60);
   };
 }
 

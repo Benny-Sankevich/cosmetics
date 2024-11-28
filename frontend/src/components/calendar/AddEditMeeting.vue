@@ -150,13 +150,18 @@ export default defineComponent({
   setup(props, { emit }) {
     const store = useStore();
     const show_dialog = ref(true);
-    const eventForm = ref({ ...props.eventToEdit });
+    let eventForm = ref({ ...props.eventToEdit });
     const treatments = computed(
       () =>
         store.getters[
           `${AppConstants.TreatmentModule}/${AppConstants.Treatments.GetTreatments}`
         ]
     );
+
+    if (props.model == 'add') {
+      eventForm.value.treatmentId = '635ebee3745fd563d61af3bc';
+    }
+
     const users = computed(
       () =>
         store.getters[
@@ -195,6 +200,7 @@ export default defineComponent({
         `${AppConstants.AppointmentModule}/${actionType}`,
         eventForm.value
       );
+      //benny - need to add functions to add or edit and the close the window after saving in then func
       showInfo(i18n.global.t('msgSavedSuccessfully'));
       closeDialog(true);
     };
