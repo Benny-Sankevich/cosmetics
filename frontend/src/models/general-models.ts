@@ -87,6 +87,7 @@ export class CalendarEventInterface {
   allDay: boolean;
   isConfirmed: boolean;
   note: string;
+  duration: number;
 }
 
 export interface ColorInterface {

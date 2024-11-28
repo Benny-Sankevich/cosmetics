@@ -10,12 +10,12 @@
             <div v-if="computedEvent.event" class="title q-calendar__ellipsis" @click="showEvent(computedEvent.event)">
               <q-icon v-if="computedEvent.event.isConfirmed" name="check_box" />
               {{
-              `${computedEvent.event.firstName}
-              ${computedEvent.event.lastName}` +
-  (computedEvent.event.allDay
-    ? ` - ${$t('allDay')}`
-    : ` - ${computedEvent.event.startTime} -
-              ${computedEvent.event.endTime}`)
+                `${computedEvent.event.firstName}
+                            ${computedEvent.event.lastName}` +
+                (computedEvent.event.allDay
+                  ? ` - ${$t('allDay')}`
+                  : ` - ${computedEvent.event.startTime} -
+                            ${computedEvent.event.endTime}`)
               }}
               <q-tooltip>{{ computedEvent.event.name }}</q-tooltip>
             </div>
@@ -44,7 +44,7 @@ import {
   ref,
   watch,
 } from 'vue';
-import { apiService } from '../../core/Export';
+import { apiService, functionsService } from '../../core/Export';
 import { Appointment } from '../../store/appointments/models';
 import {
   CalendarEventInterface,
@@ -109,7 +109,10 @@ export default defineComponent({
             (newEvent.allDay = appointment.allDay),
             (newEvent.isConfirmed = appointment.isConfirmed),
             (newEvent.note = appointment.note),
-            events.value.push(newEvent);
+            (newEvent.duration =
+              getAppointmentDuration(appointment.dateTimeStart, appointment.dateTimeEnd)
+            )
+          events.value.push(newEvent);
         });
       }
     };
@@ -132,12 +135,29 @@ export default defineComponent({
       };
     };
 
-    const badgeStyles = (computedEvent: any, weekLength: any): any => {
-      const s = { width: '' };
+    const badgeStyles = (computedEvent: any, weekLength: any, timeStartPos = null, timeDurationHeight = null): any => {
+      const s = { width: '', top: '', position: '', left: '', height: '' };
       if (computedEvent.size !== undefined) {
         s.width = (100 / weekLength) * computedEvent.size + '%';
       }
-      return s;
+      if (timeStartPos) {
+        s.top = timeStartPos(computedEvent.time, false) + 'px'
+        s.position = 'absolute'
+        if (computedEvent.side !== undefined) {
+          s.width = '50%'
+          if (computedEvent.side === 'right') {
+            s.left = '50%'
+          }
+        }
+        else {
+          s.width = '100%'
+        }
+      }
+      if (timeDurationHeight) {
+        s.height = timeDurationHeight(computedEvent.duration) + 'px'
+      }
+      s['align-items'] = 'flex-start'
+      return s
     };
 
     const getWeekEvents = (week: Array<any>): any => {
@@ -248,6 +268,7 @@ export default defineComponent({
     };
 
     const onPrev = (): void => {
+      calendarMonthDate.value.setDate(1);
       calendarMonthDate.value = new Date(calendarMonthDate.value.setMonth(calendarMonthDate.value.getMonth() - 1));
       getMonthAppointments();
       calendar.value.prev();
@@ -259,11 +280,13 @@ export default defineComponent({
       calendar.value.next();
     };
 
+    const getAppointmentDuration = (start: string, end: string): number => {
+      const msDuration = new Date(end).getTime() - new Date(start).getTime();
+      return functionsService.convertMsToMinutes(msDuration);
+    }
+
     return {
       calendar,
-      onToday,
-      onPrev,
-      onNext,
       model,
       show_event,
       eventToShow,
@@ -271,6 +294,9 @@ export default defineComponent({
       eventToEdit,
       keyValue,
       selectedDate,
+      onToday,
+      onPrev,
+      onNext,
       containerStyle,
       showEvent,
       closeEventToShowDialog,
@@ -278,7 +304,7 @@ export default defineComponent({
       badgeClasses,
       badgeStyles,
       getWeekEvents,
-      openAddEvent,
+      openAddEvent
     };
   },
 });
