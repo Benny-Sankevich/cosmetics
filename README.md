@@ -14,5 +14,3 @@ The website contains a variety of options following needs:
 The website is under construction, Additional options will be added in the future.
 
 All Rights Reserved.
-
-Link to the website in Heroku: https://cosmetics-app.herokuapp.com/#/
